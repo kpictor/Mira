@@ -36,6 +36,16 @@ overlay 不是新的主框架，而是额外的验证视角。
 - 单看公司本体不足以解释估值倍数、行业轮动、资金流或风险溢价变化
 - 需要判断新宏观数据或政策口径是否改变 thesis
 
+### `strategic-catalyst`
+
+适用于以下情形：
+
+- 小盘股或事件驱动标的可能因为巨头合作、投资、并购、客户认证、独家授权、平台接入或供应链导入而重估
+- 关键线索可能先出现在社交平台、行业聊天、异常量价、招聘、专利、会议纪要或非正式渠道
+- 市场正在交易“谁会合作 / 谁会收购 / 谁会投资 / 谁会成为大客户”
+- 单一战略关系足以改变收入确定性、融资能力、生存风险或估值锚
+- 需要把已确认事实、媒体报道、社交信号和未确认传闻分层输出
+
 ## Selection Questions
 
 判断是否启用 `supply-chain` overlay 时，至少回答：
@@ -55,6 +65,15 @@ overlay 不是新的主框架，而是额外的验证视角。
 - 新数据或政策口径相对预期是 surprise 还是 confirmation？
 - 如果宏观判断错了，最可能导致哪类投资误判？
 
+判断是否启用 `strategic-catalyst` overlay 时，至少回答：
+
+- 这条线索指向什么具体催化剂：合作、订单、认证、投资、并购、授权、平台接入还是供应链导入？
+- 交易对手是否是巨头、核心客户、产业链关键节点或潜在收购方？
+- 信息状态是 `confirmed`、`reported`、`social_signal` 还是 `unverified_rumor`？
+- 如果线索成真，它改变的是收入、融资、生存性、估值锚、市场叙事还是控制权预期？
+- 当前市场是否已经 price in，还是仍处于早期扩散？
+- 下一步最直接的确认或证伪来源是什么？
+
 ## Usage Rule
 
 启用 overlay 后，必须记录：
@@ -72,6 +91,18 @@ overlay 不是新的主框架，而是额外的验证视角。
 - `market_pricing`
 - `what_is_already_priced`
 - `macro_refresh_triggers`
+
+如果启用 `strategic-catalyst` overlay，还必须记录：
+
+- `catalyst_status`
+  one of `confirmed`, `reported`, `social_signal`, `unverified_rumor`
+- `counterparty_quality`
+- `economic_materiality`
+- `expected_timeline`
+- `verification_path`
+- `what_would_confirm`
+- `what_would_disconfirm`
+- `next_refresh_trigger`
 
 如果不启用，也允许明确写：
 
@@ -94,6 +125,15 @@ overlay 不是新的主框架，而是额外的验证视角。
 - macro-to-asset transmission chain
 - asset impact table
 - refresh triggers
+- falsification conditions
+
+`strategic-catalyst` overlay 通常应补充以下内容：
+
+- catalyst map
+- counterparty map
+- signal quality table
+- market-pricing status
+- confirmation path
 - falsification conditions
 
 ## Regime-Specific Notes
@@ -121,6 +161,7 @@ overlay 不是新的主框架，而是额外的验证视角。
 - 从客户集中度判断收入确定性
 - 从单一供应商、单一订单或单一产能约束判断脆弱点
 - 从竞品和同层级公司看公司叙事是不是伪稀缺
+- 用 `strategic-catalyst` 捕捉巨头合作、投资、并购、客户认证和供应链导入的早期 alpha 线索
 - `macro` 通常只作为背景，除非融资环境、流动性或风险偏好直接影响融资生存性
 
 这里更像在看：
@@ -128,6 +169,7 @@ overlay 不是新的主框架，而是额外的验证视角。
 - 收入确定性
 - 成本弹性
 - 生存性和兑现风险
+- 战略关系是否能重写估值锚
 
 ### With `mid-cap`
 
