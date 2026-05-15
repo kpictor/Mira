@@ -36,6 +36,10 @@
 
 {{ overlay_takeaways }}
 
+## Alpha Signals / Rumor Watch
+
+{{ alpha_signals }}
+
 ## Major Risks
 
 {{ major_risks }}

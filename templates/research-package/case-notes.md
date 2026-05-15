@@ -30,6 +30,10 @@
 
 {{ event_notes }}
 
+### Alpha Signals / Rumor Watch
+
+{{ alpha_signal_notes }}
+
 ### Overlays
 
 {{ overlay_notes }}

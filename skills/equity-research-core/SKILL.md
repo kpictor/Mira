@@ -81,6 +81,7 @@ overlay 不改变主框架，只补充一条高价值研究路径。
 
 - [supply-chain-overlay](references/supply-chain-overlay.md)
 - [macro-overlay](references/macro-overlay.md)
+- [strategic-catalyst-overlay](references/strategic-catalyst-overlay.md)
 
 overlay 选择规则见：
 
@@ -100,12 +101,20 @@ overlay 选择规则见：
 - 宏观变量通过哪条链影响收入、利润率、估值、融资、仓位或催化剂
 - 新数据或政策口径是否会改变 thesis
 
+`strategic-catalyst` overlay 适用于以下问题：
+
+- 巨头合作、投资、并购、客户认证、独家授权、平台接入或供应链导入是否会重写小盘股预期
+- 社交传闻、行业聊天、异常量价或非正式线索是否值得纳入 alpha signal 监控
+- 线索应如何区分为 `confirmed`、`reported`、`social_signal` 或 `unverified_rumor`
+- 下一步确认或证伪路径是什么
+
 ## Required Source Types
 
 - `L1` 公司披露或官方材料
 - `L5` 市场数据
 - `L4` 事件/新闻材料可选但建议使用
 - 如果启用 `macro` overlay，至少补充官方宏观数据、政策材料或市场定价数据中的两类
+- 如果启用 `strategic-catalyst` overlay，允许使用 `social_and_community` 作为 alpha signal，但必须降级标记并写入验证路径
 
 ## Output Package
 
@@ -165,3 +174,4 @@ overlay 选择规则见：
 - 如果启用 overlay，必须解释它补充验证了什么
 - 如果使用 `variant perception`，必须给出可观察的 `consensus proxy` 和 `falsification condition`
 - 如果启用 `macro` overlay，必须写明 `macro_weight`、`dominant_macro_chain`、`market_pricing` 和 `macro_refresh_triggers`
+- 如果启用 `strategic-catalyst` overlay，必须写明 `catalyst_status`、`verification_path`、`what_would_confirm` 和 `what_would_disconfirm`

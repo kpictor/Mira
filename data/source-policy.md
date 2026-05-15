@@ -36,14 +36,14 @@
 - `A` 级来源可作为 `primary` 或 `secondary`。
 - `B` 级来源通常作为 `secondary`，部分可作为补充性 `primary`。
 - `C` 级来源默认作为 `signal`，只有证据链清晰时才可升为 `secondary`。
-- `D` 级来源默认不高于 `signal`，其中 `rumor` 必须为 `blocked`。
+- `D` 级来源默认不高于 `signal`。其中 `rumor` 只允许进入 `alpha_signal` 或 `rumor_watch`，不得支撑核心结论。
 
 ## Content-Type Rules
 
 - `fact` 与 `evidence` 权重高于 `opinion` 与 `sentiment`。
 - 有上游来源可复核的 `logic` 高于纯观点式 `opinion`。
 - `sentiment` 适合观察叙事变化，不直接支撑核心 thesis。
-- `rumor` 只可用于线索发现，不得写入正式 memo。
+- `rumor` 只可用于线索发现和 alpha 暴露监控。若写入正式 memo，必须放在单独的 `Alpha Signals / Rumor Watch` 区域，并标记为未确认，不能混入事实、核心结论或已验证催化剂。
 
 ## Usage Rules
 
@@ -90,6 +90,14 @@
 - 大V长文、长视频、播客和访谈可作为 `C` 级观点源。
 - X、论坛、短视频和社区帖子默认作为 `signal`。
 - 只有当观点源给出明确证据链和可验证逻辑时，才可从 `signal` 升级到 `secondary`。
+- 小盘股、事件驱动和催化剂研究允许放宽社交线索收集标准，以减少漏掉早期 alpha 的风险。
+- 放宽只适用于研究输入，不适用于结论权重。输出时必须标记：
+  - `confirmed`: 已被公司披露、监管文件、交易所公告或高可信新闻确认。
+  - `reported`: 有署名媒体、行业媒体或可追溯消息源报道，但尚未被公司确认。
+  - `social_signal`: 来自社交平台、论坛、社区、播客、长文或交易员讨论，可用于叙事和线索观察。
+  - `unverified_rumor`: 来源不透明或不可复核，只能作为 rumor watch。
+- 对 `social_signal` 和 `unverified_rumor`，必须写明 `verification_path`、`what_would_confirm`、`what_would_disconfirm` 和 `next_refresh_trigger`。
+- 同一传闻被多个账号重复不等于多个独立来源。只有上游不同、时间线不同、证据形态不同，才可视为交叉验证。
 
 ## Citation Rules For Cases
 
@@ -100,6 +108,7 @@
 - 如果写事件催化剂，至少一个 `L4` 或 `L1` 来源支撑
 - 如果出现推断或情景分析，必须写明其上游来源
 - 如果使用 `sellside_research` 或 `social_and_community`，应明确其 `research_role`
+- 如果使用 `social_signal` 或 `unverified_rumor`，必须放入 evidence log，并在 memo 中降级展示为 alpha signal，不能写成事实。
 
 ## Explicitly Disallowed
 
@@ -108,5 +117,6 @@
 - 把没有日期的数据写入正式 memo
 - 用没有登记到 `evidence log` 的来源支撑投资结论
 - 把 X、短视频、匿名论坛帖子直接写成核心事实
+- 把 `social_signal` 或 `unverified_rumor` 写入 `Core Conclusion`、`Bull Case` 或 `Bear Case` 时不做显式降级标记
 - 把观点型来源当作原始证据引用
 - 在未确认购买前假设付费研报已可用
