@@ -244,6 +244,8 @@ PM / 组合研究视角使用 [memory/research/INDEX.md](memory/research/INDEX.m
 
 交付前用 [templates/delivery-checklist.md](templates/delivery-checklist.md) 做自检。
 
+状态和动作字段必须使用 [data/controlled-vocabulary.md](data/controlled-vocabulary.md)。如果需要更细解释，写到 `basis`、`notes`、`risk` 或正文，不要发明新 token。
+
 ## 6. 证据和结论规则
 
 Mira 输出里必须分开写：

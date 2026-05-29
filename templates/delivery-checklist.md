@@ -19,7 +19,7 @@ Use this before handing off a formal research output.
 - [ ] Framework mismatch risk is stated.
 - [ ] Valuation and expectation quant is present or explicitly waived.
 - [ ] Actionability bridge is present or explicitly waived.
-- [ ] Actionability uses research actions only: `watch`, `add_to_watch`, `increase_attention`, `reduce_attention`, `hedge_review`, `no_action` or similar.
+- [ ] Actionability uses only [../data/controlled-vocabulary.md](../data/controlled-vocabulary.md) research-action tokens.
 
 ## Thesis System Additions
 

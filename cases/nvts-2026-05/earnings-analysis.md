@@ -1,6 +1,7 @@
 # Navitas Semiconductor (NVTS) Earnings Analysis
 
 - market: US / Nasdaq
+- output_language: en
 - report_period: 2026Q1
 - report_type: quarterly earnings / Form 10-Q
 - fiscal_period_end: 2026-03-31

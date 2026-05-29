@@ -12,6 +12,7 @@
 - company: Navitas Semiconductor
 - ticker: NVTS
 - market: US
+- output_language: en
 - report_period: FY2026 Q1
 - release_date: 2026-05-05
 - analysis_cutoff_date: 2026-05-29

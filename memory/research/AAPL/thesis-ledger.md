@@ -5,7 +5,7 @@
 - owner_agent: research-orchestrator
 - last_updated: 2026-05-29
 - based_on_cases: `cases/aapl-2026-04`
-- state: active
+- state: stale
 - thesis_horizon: 12-24 months
 - selected_framework: large-mega
 - selected_overlays: macro, supply-chain optional
@@ -46,7 +46,7 @@ The variant view is weak-to-moderate. The market broadly recognizes Apple qualit
 
 | date | from_state | to_state | trigger | evidence_ref |
 | --- | --- | --- | --- | --- |
-| 2026-05-29 | draft | active | Migration from existing AAPL memory and April 2026 research package into Thesis System format. | `cases/aapl-2026-04/` |
+| 2026-05-29 | draft | stale | Migration from existing AAPL memory and April 2026 research package into Thesis System format; refresh required before live use. | `cases/aapl-2026-04/` |
 
 ## Must Refresh If
 

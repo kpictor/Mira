@@ -29,6 +29,7 @@ Every formal output must:
 | Event or earnings delta | [loops/event-delta-loop.md](loops/event-delta-loop.md) | earnings skill and event-delta template |
 | PM / book review | [loops/portfolio-review-loop.md](loops/portfolio-review-loop.md) | portfolio register template and research index |
 | Evidence logging | [data/evidence-log-schema.md](data/evidence-log-schema.md) | [data/claim-taxonomy.md](data/claim-taxonomy.md) |
+| State/action tokens | [data/controlled-vocabulary.md](data/controlled-vocabulary.md) | task-specific template |
 | Final self-check | [templates/delivery-checklist.md](templates/delivery-checklist.md) | task-specific quality bar |
 
 Do not load all `memory/`, all `skills/` or all cases at startup. Retrieve only the files required by the routed task.
@@ -62,4 +63,4 @@ Stop or downgrade when:
 - the case is past `stale_after` and the user wants live use
 - facts, inferences and judgments cannot be separated
 
-When stopped, return `source_gap`, `watch_only`, `no_action` or `needs_refresh` instead of forcing a stronger conclusion.
+When stopped, return `source_gap`, `watch_only`, `no_action` or `needs_refresh` instead of forcing a stronger conclusion. Use [data/controlled-vocabulary.md](data/controlled-vocabulary.md) for machine-facing state/action tokens.
