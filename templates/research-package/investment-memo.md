@@ -20,6 +20,18 @@
 - stale_after: {{ stale_after }}
 - not_investment_advice: true
 
+## Decision Header
+
+| field | value |
+| --- | --- |
+| research_action | {{ research_action }} |
+| conviction | {{ conviction }} |
+| horizon | {{ horizon }} |
+| what_is_priced_in | {{ what_is_priced_in }} |
+| invalidation_level_or_condition | {{ invalidation_level_or_condition }} |
+| implied_risk_reward | {{ implied_risk_reward }} |
+| next_catalyst_date | {{ next_catalyst_date }} |
+
 ## Core Conclusion
 
 {{ core_conclusion }}

@@ -6,6 +6,7 @@
 
 - case_status: historical_example
 - not_investment_advice: true
+- legacy_evidence_schema: true
 - stale_after: 2026-05-16 for listed-product status; earlier if issuer, exchange, or fund data changes
 - refresh_policy: refresh before any live trading or portfolio decision
 

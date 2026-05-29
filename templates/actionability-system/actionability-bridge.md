@@ -30,6 +30,7 @@ Allowed values:
 | what_is_priced_in | {{ what_is_priced_in }} |
 | mira_variant | {{ mira_variant }} |
 | revision_path | {{ revision_path }} |
+| implied_risk_reward | {{ implied_risk_reward }} |
 
 ## Scenario And Risk
 

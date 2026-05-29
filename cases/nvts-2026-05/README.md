@@ -23,5 +23,7 @@ Files:
 - `financial-snapshot.csv`
 - `peer-comparison.csv`
 - `evidence-log.csv`
+- `expectation-map.csv`
+- `actionability-bridge.md`
 
 Refresh on 2026Q2 earnings, guidance changes, material AI data center customer/ramp disclosure, financing activity, or distributor concentration changes.
