@@ -48,10 +48,11 @@ Agents should load the project in this order:
 
 1. [AGENTS.md](AGENTS.md) or [CLAUDE.md](CLAUDE.md), depending on the tool.
 2. This file, [MIRA.md](MIRA.md), for the wake word and identity contract.
-3. [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md), when the user needs prompt patterns or output locations.
-4. [loops/analysis-routing.md](loops/analysis-routing.md), before formal analysis.
-5. The selected loop or skill for the routed task.
-6. Relevant `memory/` files only when they are directly useful to the current task.
+3. [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md), for the one-screen lazy-loading contract.
+4. [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md), when the user needs prompt patterns or output locations.
+5. [loops/analysis-routing.md](loops/analysis-routing.md), before formal analysis.
+6. The selected loop or skill for the routed task.
+7. Relevant `memory/` files only when they are directly useful to the current task.
 
 Do not load all memory indiscriminately. Retrieve only the memory layer needed for the task.
 

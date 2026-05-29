@@ -3,29 +3,29 @@
 - report_date: 2026-05-29
 - validator: `scripts/validate_repo.py --report-only`
 - schema_ref: `data/evidence-log-schema.md`
-- status: migration_required
+- status: strict_validator_green_with_legacy_warnings
 
 ## Summary
 
-Current repository state after introducing canonical evidence schema:
+Current repository state after introducing canonical evidence schema and `legacy_evidence_schema` handling:
 
-- errors: 12
-- warnings: 0
+- strict errors: 0
+- warnings: 9 as of 2026-05-29
 - new templates: canonical
 - migrated canonical cases:
   - `cases/nvts-2026-05/evidence-log.csv`
   - `cases/aapl-2026-04/evidence-log.csv`
   - `cases/crwv-2026-05/evidence-log.csv`
   - `cases/wolf-2026-05/evidence-log.csv`
-- remaining historical cases: migration required
+- remaining historical cases: explicitly marked `legacy_evidence_schema: true`
 
-This report intentionally does not hide legacy drift. Existing case outputs remain useful as historical research artifacts, but they should not be treated as canonical evidence-log examples until migrated.
+This report intentionally does not hide legacy drift. Existing legacy case outputs remain useful as historical research artifacts, but they should not be treated as canonical evidence-log examples until migrated.
 
-## P0 Findings
+## Legacy Findings
 
 ### Source-Record Schema Used As Evidence Log
 
-These remaining files use source-registry style columns inside `evidence-log.csv`:
+These remaining files use source-registry style columns inside `evidence-log.csv` and are now explicitly marked `legacy_evidence_schema: true`:
 
 - `cases/a-share-etf-options-underlyings-2026-05-26/evidence-log.csv`
 - `cases/ai-hardware-bottleneck-watchlist-2026-05/evidence-log.csv`
@@ -38,7 +38,7 @@ Required action:
 
 ### Missing Claim-Level Required Fields
 
-These files are old claim logs but lack canonical claim fields such as `claim_text`, `source_speaker`, `verification_status`, `authority_level`, `source_date`, `url_or_path`, or `upstream_sources`:
+These files are old claim logs but lack canonical claim fields such as `claim_text`, `source_speaker`, `verification_status`, `authority_level`, `source_date`, `url_or_path`, or `upstream_sources`, and are now explicitly marked `legacy_evidence_schema: true`:
 
 - `cases/abf-2026-05/evidence-log.csv`
 - `cases/cohr-2026-05/evidence-log.csv`

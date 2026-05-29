@@ -1,0 +1,99 @@
+# Portfolio Review Loop
+
+`portfolio-review-loop` is for PM-facing review of multiple Mira theses.
+
+It is not a portfolio management system and does not produce trade orders. It turns single-name thesis objects into a book-level research view: what is active, stale, crowded, correlated, over-dependent on one theme, or missing follow-up.
+
+## Loop Input
+
+- `book_scope`
+- `research_objects`
+- `review_date`
+- `market_scope`
+- `portfolio_context`
+  optional; use only if the user provides it
+- `constraints`
+  optional; examples: liquidity, mandate, risk budget, no live positions
+
+## States
+
+### `define-book`
+
+Define the review boundary:
+
+- active thesis set
+- watchlist set
+- excluded objects
+- review date
+- whether this is research-only or tied to a user-provided portfolio context
+
+### `load-thesis-index`
+
+Read [../memory/research/INDEX.md](../memory/research/INDEX.md) first.
+
+Only load individual thesis ledgers when the index is insufficient, stale, or the object is part of the current review set.
+
+### `classify-exposures`
+
+Classify each thesis by:
+
+- theme
+- horizon
+- thesis state
+- conviction
+- actionability
+- next catalyst
+- stale status
+- primary risk driver
+- evidence quality
+
+If real portfolio positions are not provided, use `research_exposure_only`.
+
+### `detect-clusters`
+
+Identify book-level risks:
+
+- single theme concentration
+- same catalyst across multiple objects
+- common macro factor
+- common funding/liquidity risk
+- same supplier/customer chain
+- crowded narrative or consensus proxy overlap
+
+Do not infer position size unless the user provides it.
+
+### `prioritize-follow-up`
+
+Rank research maintenance by:
+
+- stale or near-stale thesis
+- high-conviction thesis with weak evidence
+- near catalyst
+- high actionability but missing valuation anchor
+- contradicted or unresolved evidence
+- missing postmortem after outcome
+
+### `package`
+
+Output a PM-facing review:
+
+- `portfolio_register.csv` or updated thesis index
+- book-level exposure notes
+- stale thesis list
+- catalyst calendar
+- follow-up queue
+- actionability boundary
+
+## Exit Criteria
+
+- Every included thesis has a state, horizon, stale condition and primary reference.
+- Any cluster or concentration claim is tied to listed objects.
+- Research actions remain separate from trade instructions.
+- Stale or source-gap items are marked before any stronger conclusion.
+- Follow-up list is sorted by research urgency.
+
+## Stop Rules
+
+- If no thesis index or thesis ledgers exist, create a draft register from available case files and mark confidence `low`.
+- If the user asks for portfolio advice without providing positions or mandate, return a research-only view and ask for the missing portfolio context before any position-level conclusion.
+- If evidence is stale, use `needs_refresh` instead of upgrading conviction.

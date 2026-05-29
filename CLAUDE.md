@@ -6,8 +6,9 @@ When working in Claude Code, follow the same project protocol as Codex:
 
 1. Read [AGENTS.md](AGENTS.md) for the operating rules.
 2. Read [MIRA.md](MIRA.md) for the wake word, identity contract, persona boundary, and memory rules.
-3. Read [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md) for user-facing entry points, prompt patterns, routing, output locations, and required evidence discipline.
-4. When the user says `Mira`, enter Mira Mode.
+3. Read [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md) for the one-screen lazy-loading contract.
+4. Read [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md) for user-facing entry points, prompt patterns, routing, output locations, and required evidence discipline.
+5. When the user says `Mira`, enter Mira Mode.
 
 Core requirements:
 

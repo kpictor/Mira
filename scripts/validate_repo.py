@@ -12,6 +12,7 @@ import csv
 import re
 import sys
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 
 
@@ -94,6 +95,7 @@ VERIFICATION_STATUSES = {
 AUTHORITY_LEVELS = {"L1", "L2", "L3", "L4", "L5", "L6"}
 CONFIDENCE_LEVELS = {"high", "medium", "low"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+STALE_AFTER_RE = re.compile(r"stale_after:\s*(\d{4}-\d{2}-\d{2})", re.IGNORECASE)
 
 SOURCE_RECORD_COLUMNS = {
     "source_name",
@@ -139,6 +141,14 @@ def is_template(path: Path) -> bool:
     return "templates" in path.parts
 
 
+def is_legacy_evidence_schema(path: Path) -> bool:
+    """Allow archived historical cases to keep old evidence schema explicitly."""
+    readme = path.parent / "README.md"
+    if not readme.exists():
+        return False
+    return "legacy_evidence_schema: true" in read_text(readme).lower()
+
+
 def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]], list[Issue]]:
     issues: list[Issue] = []
     try:
@@ -156,6 +166,16 @@ def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]], list[Issue]]:
 
 
 def validate_evidence_log(path: Path) -> list[Issue]:
+    if is_legacy_evidence_schema(path):
+        return [
+            Issue(
+                "WARN",
+                path,
+                1,
+                "legacy_evidence_schema=true; canonical claim-level evidence validation skipped",
+            )
+        ]
+
     header, rows, issues = read_csv(path)
     if not header:
         return issues
@@ -265,6 +285,28 @@ def validate_case_readme(case_dir: Path) -> list[Issue]:
     return issues
 
 
+def validate_staleness(path: Path, as_of: date) -> list[Issue]:
+    if not path.exists() or path.is_dir():
+        return []
+
+    issues: list[Issue] = []
+    for i, line in enumerate(read_text(path).splitlines(), start=1):
+        match = STALE_AFTER_RE.search(line)
+        if not match:
+            continue
+        stale_after = date.fromisoformat(match.group(1))
+        if stale_after < as_of:
+            issues.append(
+                Issue(
+                    "WARN",
+                    path,
+                    i,
+                    f"stale_after {stale_after.isoformat()} is before validation date {as_of.isoformat()}",
+                )
+            )
+    return issues
+
+
 def validate_methodology_adoption(root: Path) -> list[Issue]:
     path = root / "memory" / "methodologies" / "adopted.md"
     if not path.exists():
@@ -308,12 +350,16 @@ def validate_root_readiness(root: Path) -> list[Issue]:
     return issues
 
 
-def validate_repo(root: Path) -> list[Issue]:
+def validate_repo(root: Path, as_of: date) -> list[Issue]:
     issues = validate_root_readiness(root)
     for path in sorted(root.glob("**/evidence-log.csv")):
         if ".git" in path.parts:
             continue
         issues.extend(validate_evidence_log(path))
+    for path in sorted(root.glob("**/*.md")):
+        if ".git" in path.parts:
+            continue
+        issues.extend(validate_staleness(path, as_of))
     cases_dir = root / "cases"
     if cases_dir.exists():
         for case_dir in sorted(path for path in cases_dir.iterdir() if path.is_dir()):
@@ -322,7 +368,7 @@ def validate_repo(root: Path) -> list[Issue]:
     return issues
 
 
-def validate_paths(paths: list[Path]) -> list[Issue]:
+def validate_paths(paths: list[Path], as_of: date) -> list[Issue]:
     issues: list[Issue] = []
     for path in paths:
         if path.is_dir():
@@ -334,6 +380,10 @@ def validate_paths(paths: list[Path]) -> list[Issue]:
             readme = path / "README.md"
             if readme.exists():
                 issues.extend(validate_case_readme(path))
+                issues.extend(validate_staleness(readme, as_of))
+            for md_path in sorted(path.glob("*.md")):
+                if md_path != readme:
+                    issues.extend(validate_staleness(md_path, as_of))
         elif path.name == "evidence-log.csv":
             issues.extend(validate_evidence_log(path))
         else:
@@ -354,13 +404,19 @@ def main() -> int:
         action="store_true",
         help="print issues but exit 0; useful while migrating legacy cases",
     )
+    parser.add_argument(
+        "--as-of",
+        default=date.today().isoformat(),
+        help="validation date for stale_after checks, in YYYY-MM-DD format",
+    )
     args = parser.parse_args()
 
     root = Path(args.root)
+    as_of = date.fromisoformat(args.as_of)
     if args.paths:
-        issues = validate_paths([root / path for path in args.paths])
+        issues = validate_paths([root / path for path in args.paths], as_of)
     else:
-        issues = validate_repo(root)
+        issues = validate_repo(root, as_of)
     errors = [issue for issue in issues if issue.severity == "ERROR"]
     warnings = [issue for issue in issues if issue.severity == "WARN"]
 

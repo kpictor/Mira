@@ -77,6 +77,8 @@ Mira, 研究 CRWV
 
 正式分析前必须先运行 [loops/analysis-routing.md](loops/analysis-routing.md)，不要直接套股票模板。
 
+如果 context 紧张，先读 [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md)。它给出最短 loading map：每一步只读当前需要的 loop、skill 或模板。
+
 | 用户意图 | 默认路由 | 输出 |
 | --- | --- | --- |
 | 首次研究或重建 thesis | [loops/research-loop.md](loops/research-loop.md) | `investment-memo.md`, `case-notes.md`, `evidence-log.csv` |
@@ -84,6 +86,7 @@ Mira, 研究 CRWV
 | 更新 thesis object / 看预期差 / 复盘判断 | [loops/thesis-update-loop.md](loops/thesis-update-loop.md) | thesis-ledger, expectation-map, decision-log, postmortem |
 | 事件前后 delta | [loops/event-delta-loop.md](loops/event-delta-loop.md) | event-delta, expectation map update, thesis impact |
 | 财报、业绩会、指引 | [skills/earnings-report-analysis/SKILL.md](skills/earnings-report-analysis/SKILL.md) | earnings package |
+| 多 thesis / PM 组合视角 | [loops/portfolio-review-loop.md](loops/portfolio-review-loop.md) | thesis register, exposure notes, follow-up queue |
 | 单一股票 | [skills/equity-research-core/SKILL.md](skills/equity-research-core/SKILL.md) | research package |
 | 产业、技术、供应链概念 | [skills/industry-concept-analysis/SKILL.md](skills/industry-concept-analysis/SKILL.md) | industry package |
 | 宏观、利率、通胀、美元、信用、流动性 | [skills/macro-economic-analysis/SKILL.md](skills/macro-economic-analysis/SKILL.md) | macro note 或 macro overlay |
@@ -162,6 +165,14 @@ Mira, 这个方法靠谱吗: <方法/指标/框架>
 请按 methodology research loop 评估假设、适用范围、失效模式、证据质量、可复现性和是否进入 trial/adopted。
 ```
 
+## 4.1 分角色入口
+
+| 你是谁 | 默认问法 | 默认产出 |
+| --- | --- | --- |
+| 研究员 | `Mira, 研究 <对象>，重点判断 <问题>` | research package、evidence log、thesis objects |
+| 交易员 | `Mira, 看 <对象> 的预期差和失效条件` | actionability bridge、invalidation、risk/reward frame、next catalyst |
+| PM | `Mira, 复盘这组 thesis / 看组合层风险` | thesis index、portfolio register、主题/因子/催化剂暴露和 follow-up queue |
+
 ## 5. 输出位置
 
 新研究建议放到 [cases/](cases)：
@@ -202,6 +213,13 @@ memory/research/<OBJECT>/
 └── postmortem.md
 ```
 
+PM / 组合研究对象：
+
+```text
+memory/research/INDEX.md
+templates/portfolio-system/portfolio-register.csv
+```
+
 产业概念：
 
 ```text
@@ -213,6 +231,18 @@ cases/<concept>-<YYYY-MM>/
 ```
 
 模板在 [templates/](templates)。
+
+## 5.1 完整样板
+
+优先参考：
+
+- [cases/aapl-2026-04/](cases/aapl-2026-04/)：标准单票 research package，包含 `investment-memo.md`、canonical `evidence-log.csv`、`expectation-map.csv` 和 `actionability-bridge.md`。
+- [cases/aapl-2026-04/](cases/aapl-2026-04/) 也是 golden case：case 包内放了 `thesis-ledger.md` 和 `decision-log.csv`，用于 agent few-shot。
+- [cases/nvts-2026-05/](cases/nvts-2026-05/)：财报事件样板，包含 earnings package、同行验证、canonical `evidence-log.csv`、`expectation-map.csv` 和 `actionability-bridge.md`。
+
+PM / 组合研究视角使用 [memory/research/INDEX.md](memory/research/INDEX.md) 作为 thesis 总览板。
+
+交付前用 [templates/delivery-checklist.md](templates/delivery-checklist.md) 做自检。
 
 ## 6. 证据和结论规则
 

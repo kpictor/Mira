@@ -9,6 +9,18 @@
 - thesis_horizon: near_term_execution to medium_term_revision
 - stale_after: 2026Q2 earnings release or earlier if NVTS updates AI data center design wins, backlog, financing, customer concentration, or guidance
 
+## Decision Header
+
+| field | value |
+| --- | --- |
+| research_action | `upgrade_watch` |
+| conviction | medium-low; sequential recovery improved, durable scale unproven |
+| horizon | near-term execution to FY1/FY2 revision |
+| what_is_priced_in | market appears to price a large AI/data-center power semiconductor opportunity, not current earnings power |
+| invalidation_level_or_condition | Q2 revenue below $9.5M, gross margin below guide, no customer/design-win conversion, or worsening cash burn |
+| implied_risk_reward | asymmetric but unquantified; upside requires multi-quarter revenue ramp, downside is large if narrative detaches from revenue |
+| next_catalyst_date | Q2 2026 earnings / next material customer or NVIDIA 800V ecosystem update |
+
 ## Setup
 
 Routing: `task_mode=earnings_event`, `research_object=single_equity`, `market_scope=US small/mid-cap semiconductor`, `time_boundary=1Q-2Q plus FY1/FY2 revision`. Primary loop is `skills/earnings-report-analysis`; single-equity framework is `micro-small` with `narrative_and_revision` secondary regime. NVTS still has weak earnings/FCF valuation anchors, high operating losses, and stock reaction tied heavily to AI power semiconductor narrative.

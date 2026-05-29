@@ -4,7 +4,7 @@ Agent-native investment research workspace for evidence-tracked, refreshable inv
 
 Mira 是一个面向 AI agent 和研究使用者的投资研究工作台。
 
-如果你想用 Codex、Claude Code 或其他代码型 agent 直接引用本项目做股票、产业、ETF、财报或宏观经济分析，先读 [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md)。Mira 的唤醒词、身份边界和 memory contract 在 [MIRA.md](MIRA.md)，Codex 的项目规则在 [AGENTS.md](AGENTS.md)，Claude Code 的入口在 [CLAUDE.md](CLAUDE.md)。
+如果你想用 Codex、Claude Code 或其他代码型 agent 直接引用本项目做股票、产业、ETF、财报或宏观经济分析，先读 [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md) 和 [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md)。Mira 的唤醒词、身份边界和 memory contract 在 [MIRA.md](MIRA.md)，Codex 的项目规则在 [AGENTS.md](AGENTS.md)，Claude Code 的入口在 [CLAUDE.md](CLAUDE.md)。
 
 它的目标不是生成一份孤立的股票报告，也不是把一次问答包装成研究结论，而是把多源材料组织成可追溯、可复核、可持续更新的投资判断。Mira 关注的是投资 thesis：这个判断基于什么证据、在什么时间点成立、哪些变量会证伪它、后续应该如何监控。
 
@@ -71,17 +71,26 @@ Mira 当前支持这些研究动作：
    ```
    Mira 不应自动更新仓库；是否执行 `git pull --ff-only` 由用户决定。
 2. 读 [AGENTS.md](AGENTS.md)，确认 `Mira Mode` 的触发规则和输出要求。
-3. 选择任务类型：
+3. 读 [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md)，按 lazy-loading map 只加载当前任务需要的 loop、skill 和模板。
+4. 选择任务类型：
    - 首次研究或 thesis 重建：走 [loops/research-loop.md](loops/research-loop.md)。
    - 已有 thesis 更新：走 [loops/monitoring-loop.md](loops/monitoring-loop.md)。
    - 方法论评估：走 [loops/methodology-research-loop.md](loops/methodology-research-loop.md)。
-4. 先运行总路由：[loops/analysis-routing.md](loops/analysis-routing.md)。
-5. 如果进入单票研究，再使用：
+   - PM / 多 thesis 组合视角：走 [loops/portfolio-review-loop.md](loops/portfolio-review-loop.md)。
+5. 先运行总路由：[loops/analysis-routing.md](loops/analysis-routing.md)。
+6. 如果进入单票研究，再使用：
    - [skills/equity-research-core/references/thesis-horizon-routing.md](skills/equity-research-core/references/thesis-horizon-routing.md)
    - [skills/equity-research-core/references/framework-routing.md](skills/equity-research-core/references/framework-routing.md)
    - [skills/equity-research-core/references/overlay-routing.md](skills/equity-research-core/references/overlay-routing.md)
-6. 从 [templates/](templates/) 复制对应研究包结构，输出 memo、evidence log 和 notes。
-7. 对照 [examples/README.md](examples/README.md) 选择一个历史案例，检查最终产物长什么样。
+7. 从 [templates/](templates/) 复制对应研究包结构，输出 memo、evidence log 和 notes。
+8. 用 [templates/delivery-checklist.md](templates/delivery-checklist.md) 做交付前自检。
+
+当前推荐先看两个完整样板：
+
+- [AAPL research package](cases/aapl-2026-04/README.md)：展示标准单票 golden case，包括 memo、canonical evidence log、expectation map、thesis ledger、decision log 和 actionability bridge。
+- [NVTS earnings package](cases/nvts-2026-05/README.md)：展示财报事件、同行验证、canonical evidence log、expectation map 和 actionability bridge。
+
+PM 视角总览见 [memory/research/INDEX.md](memory/research/INDEX.md)，组合层模板见 [templates/portfolio-system/portfolio-register.csv](templates/portfolio-system/portfolio-register.csv)。
 
 典型 prompt：
 

@@ -4,6 +4,8 @@ This repository is the `Mira` research workspace.
 
 For the canonical wake word, identity, persona boundary, and memory contract, read `MIRA.md`.
 
+For the one-screen lazy-loading contract, read `OPERATING_CONTRACT.md`.
+
 For a user-facing quickstart that works across Codex and Claude Code, read `AGENT_QUICKSTART.md`.
 
 When the user says `Mira` in this repo context, treat it as an instruction to enter Mira Mode: a disciplined market-research operating mode built around source quality, framework routing, evidence logs, and explicit thesis refresh conditions.
@@ -14,6 +16,7 @@ When the user says `Mira` in this repo context, treat it as an instruction to en
 - `Mira, 研究 X`: use `loops/research-loop.md` unless the user clearly asks for a narrower task.
 - `Mira, 更新 X`: use `loops/monitoring-loop.md` and focus on incremental changes and thesis impact.
 - `Mira, 这个方法靠谱吗`: use `loops/methodology-research-loop.md`.
+- PM or multi-thesis review should use `loops/portfolio-review-loop.md`.
 - Earnings-specific requests should use `skills/earnings-report-analysis/` before updating the standard research package.
 
 ## Operating Rules

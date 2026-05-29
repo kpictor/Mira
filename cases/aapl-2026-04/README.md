@@ -1,6 +1,6 @@
 # AAPL Case
 
-这是首个单票深度案例，用于展示 MVP 如何在真实公司上跑通。
+这是首个单票 golden case，用于展示当前 Mira 单票研究脚手架如何在真实公司上跑通：memo、canonical evidence log、expectation map、thesis ledger、decision log 和 actionability bridge 在同一 case 包内闭环。
 
 ## Open Source Notice
 
@@ -25,9 +25,14 @@
 - 同时具备公司、财务、技术面和事件面材料
 - 可清楚演示 `L1`、`L4`、`L5` 三类以上来源如何并存
 - 可用单一 skill + 单一 orchestrator 跑出完整研究包
+- 可作为 agent few-shot 样例；不要模仿 legacy case 的旧 evidence-log schema
 
 ## Package Files
 
 - `investment-memo.md`
 - `evidence-log.csv`
 - `case-notes.md`
+- `expectation-map.csv`
+- `thesis-ledger.md`
+- `decision-log.csv`
+- `actionability-bridge.md`
