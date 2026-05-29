@@ -1,6 +1,7 @@
 # Apple Inc. (AAPL) Investment Memo
 
 - market: US
+- output_language: zh-CN
 - research_question: Apple 在 2026-04-14 时点是否仍是值得继续研究和持有的中长线平台型资产
 - research_cutoff_date: 2026-04-14
 - financial_data_through: fiscal Q1 2026 ended 2025-12-27
@@ -12,7 +13,7 @@
 
 | field | value |
 | --- | --- |
-| research_action | `no_action` / `watch_only` |
+| research_action | `no_action` |
 | conviction | medium on business quality, low on new upside actionability |
 | horizon | 12-24 months, stale before live use |
 | what_is_priced_in | Apple quality, installed base resilience and capital return are mostly priced in |
@@ -59,7 +60,7 @@ This memo therefore cannot support a strong new action. It can support a watch t
 
 | field | value |
 | --- | --- |
-| research_action | `no_action` / `watch_only` |
+| research_action | `no_action` |
 | setup_type | quality compounder watch, not variant-dislocation trade |
 | invalidation | services/margin deterioration, material tariff/regulatory hit, or major multiple reset |
 | implied_risk_reward | `source_gap`; old 245 support / 285 resistance context is insufficient without current price and valuation model |

@@ -14,6 +14,7 @@
 - company: Apple Inc.
 - ticker: AAPL
 - market: US
+- output_language: zh-CN
 - research_cutoff_date: 2026-04-14
 - financial_data_through: fiscal Q1 2026 ended 2025-12-27
 - price_date: 2026-04-13

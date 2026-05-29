@@ -95,7 +95,55 @@ VERIFICATION_STATUSES = {
 AUTHORITY_LEVELS = {"L1", "L2", "L3", "L4", "L5", "L6"}
 CONFIDENCE_LEVELS = {"high", "medium", "low"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+DATE_IN_TEXT_RE = re.compile(r"\b(\d{4}-\d{2}-\d{2})\b")
 STALE_AFTER_RE = re.compile(r"stale_after:\s*(\d{4}-\d{2}-\d{2})", re.IGNORECASE)
+FIELD_RE = re.compile(r"^-\s*(state|research_action):\s*(.+?)\s*$")
+
+THESIS_STATES = {
+    "draft",
+    "active",
+    "watch",
+    "upgrade_watch",
+    "downgrade_watch",
+    "narrative_watch",
+    "stale",
+    "retired",
+}
+
+RESEARCH_ACTIONS = {
+    "watch_only",
+    "upgrade_watch",
+    "downgrade_watch",
+    "add_to_research_queue",
+    "reduce_research_priority",
+    "hedge_context",
+    "event_setup",
+    "post_event_follow_through",
+    "valuation_reset_watch",
+    "risk_reduction_context",
+    "needs_refresh",
+    "no_action",
+    "retire_thesis",
+}
+
+SETUP_TYPES = {
+    "watch_only",
+    "upgrade_watch",
+    "event_setup",
+    "post_event_follow_through",
+    "valuation_reset_watch",
+    "risk_reduction_context",
+    "needs_refresh",
+    "no_action",
+}
+
+POSITION_SIZING = {
+    "not_applicable",
+    "watchlist_only",
+    "small_if_confirmed",
+    "normal_only_after_confirmation",
+    "reduce_risk_context",
+}
 
 SOURCE_RECORD_COLUMNS = {
     "source_name",
@@ -139,6 +187,15 @@ def has_any(text: str, markers: tuple[str, ...]) -> bool:
 
 def is_template(path: Path) -> bool:
     return "templates" in path.parts
+
+
+def normalize_token(value: str) -> str:
+    return value.strip().strip("`").strip()
+
+
+def is_placeholder(value: str) -> bool:
+    stripped = value.strip()
+    return stripped.startswith("{{") and stripped.endswith("}}")
 
 
 def is_legacy_evidence_schema(path: Path) -> bool:
@@ -269,6 +326,31 @@ def validate_evidence_log(path: Path) -> list[Issue]:
     return issues
 
 
+def validate_decision_log(path: Path) -> list[Issue]:
+    if is_template(path):
+        return []
+
+    header, rows, issues = read_csv(path)
+    if issues:
+        return issues
+    if "decision_type" not in header:
+        issues.append(Issue("ERROR", path, 1, "decision-log.csv missing `decision_type` column"))
+        return issues
+
+    for i, row in enumerate(rows, start=2):
+        decision_type = normalize_token(row.get("decision_type", ""))
+        if decision_type and not is_placeholder(decision_type) and decision_type not in RESEARCH_ACTIONS:
+            issues.append(
+                Issue(
+                    "ERROR",
+                    path,
+                    i,
+                    f"invalid decision_type `{decision_type}`; use data/controlled-vocabulary.md",
+                )
+            )
+    return issues
+
+
 def validate_case_readme(case_dir: Path) -> list[Issue]:
     readme = case_dir / "README.md"
     if not readme.exists():
@@ -304,6 +386,132 @@ def validate_staleness(path: Path, as_of: date) -> list[Issue]:
                     f"stale_after {stale_after.isoformat()} is before validation date {as_of.isoformat()}",
                 )
             )
+    return issues
+
+
+def first_token_after_heading(lines: list[str], heading: str) -> tuple[int, str] | None:
+    for i, line in enumerate(lines):
+        if line.strip() != heading:
+            continue
+        for j in range(i + 1, len(lines)):
+            candidate = lines[j].strip()
+            if not candidate:
+                continue
+            if candidate.startswith("## "):
+                return None
+            return j + 1, normalize_token(candidate)
+    return None
+
+
+def split_markdown_row(line: str) -> list[str]:
+    return [cell.strip() for cell in line.strip().strip("|").split("|")]
+
+
+def validate_markdown_vocabulary(path: Path) -> list[Issue]:
+    if is_template(path) or path.name == "controlled-vocabulary.md":
+        return []
+
+    issues: list[Issue] = []
+    lines = read_text(path).splitlines()
+    for i, line in enumerate(lines, start=1):
+        match = FIELD_RE.match(line.strip())
+        if not match:
+            continue
+        field, raw_value = match.groups()
+        value = normalize_token(raw_value)
+        if is_placeholder(value):
+            continue
+        allowed = THESIS_STATES if field == "state" else RESEARCH_ACTIONS
+        if value not in allowed:
+            issues.append(
+                Issue(
+                    "ERROR",
+                    path,
+                    i,
+                    f"invalid {field} `{value}`; use data/controlled-vocabulary.md",
+                )
+            )
+
+    setup = first_token_after_heading(lines, "## Setup Type")
+    if setup:
+        line_no, value = setup
+        if not is_placeholder(value) and value not in SETUP_TYPES:
+            issues.append(
+                Issue(
+                    "ERROR",
+                    path,
+                    line_no,
+                    f"invalid setup_type `{value}`; use data/controlled-vocabulary.md",
+                )
+            )
+
+    sizing = first_token_after_heading(lines, "## Position Sizing Implication")
+    if sizing:
+        line_no, value = sizing
+        if not is_placeholder(value) and value not in POSITION_SIZING:
+            issues.append(
+                Issue(
+                    "ERROR",
+                    path,
+                    line_no,
+                    f"invalid position_sizing_implication `{value}`; use data/controlled-vocabulary.md",
+                )
+            )
+    return issues
+
+
+def validate_research_index(path: Path, as_of: date) -> list[Issue]:
+    if not path.exists():
+        return []
+
+    issues: list[Issue] = []
+    lines = read_text(path).splitlines()
+    for i, line in enumerate(lines, start=1):
+        if not line.startswith("| ") or "research_object" in line or line.startswith("| ---"):
+            continue
+        cells = split_markdown_row(line)
+        if len(cells) < 8:
+            continue
+        research_object, state, _, _, stale_after, _, actionability, _ = cells[:8]
+        state_token = normalize_token(state)
+        if state_token not in THESIS_STATES:
+            issues.append(
+                Issue(
+                    "ERROR",
+                    path,
+                    i,
+                    f"{research_object} has invalid state `{state_token}`; use data/controlled-vocabulary.md",
+                )
+            )
+
+        action_tokens = [
+            normalize_token(token)
+            for token in re.split(r"[/,;]", actionability)
+            if normalize_token(token)
+        ]
+        allowed_actions = RESEARCH_ACTIONS | POSITION_SIZING
+        for token in action_tokens:
+            if token not in allowed_actions:
+                issues.append(
+                    Issue(
+                        "ERROR",
+                        path,
+                        i,
+                        f"{research_object} has invalid actionability token `{token}`; use data/controlled-vocabulary.md",
+                    )
+                )
+
+        for date_match in DATE_IN_TEXT_RE.finditer(stale_after):
+            stale_date = date.fromisoformat(date_match.group(1))
+            if stale_date < as_of:
+                issues.append(
+                    Issue(
+                        "WARN",
+                        path,
+                        i,
+                        f"{research_object} index stale_after {stale_date.isoformat()} is before validation date {as_of.isoformat()}",
+                    )
+                )
     return issues
 
 
@@ -356,10 +564,16 @@ def validate_repo(root: Path, as_of: date) -> list[Issue]:
         if ".git" in path.parts:
             continue
         issues.extend(validate_evidence_log(path))
+    for path in sorted(root.glob("**/decision-log.csv")):
+        if ".git" in path.parts:
+            continue
+        issues.extend(validate_decision_log(path))
     for path in sorted(root.glob("**/*.md")):
         if ".git" in path.parts:
             continue
         issues.extend(validate_staleness(path, as_of))
+        issues.extend(validate_markdown_vocabulary(path))
+    issues.extend(validate_research_index(root / "memory" / "research" / "INDEX.md", as_of))
     cases_dir = root / "cases"
     if cases_dir.exists():
         for case_dir in sorted(path for path in cases_dir.iterdir() if path.is_dir()):
@@ -384,8 +598,14 @@ def validate_paths(paths: list[Path], as_of: date) -> list[Issue]:
             for md_path in sorted(path.glob("*.md")):
                 if md_path != readme:
                     issues.extend(validate_staleness(md_path, as_of))
+                    issues.extend(validate_markdown_vocabulary(md_path))
+            decision_log = path / "decision-log.csv"
+            if decision_log.exists():
+                issues.extend(validate_decision_log(decision_log))
         elif path.name == "evidence-log.csv":
             issues.extend(validate_evidence_log(path))
+        elif path.name == "decision-log.csv":
+            issues.extend(validate_decision_log(path))
         else:
             issues.append(Issue("ERROR", path, 0, "expected evidence-log.csv or case directory"))
     return issues

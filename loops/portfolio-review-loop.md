@@ -33,6 +33,13 @@ Read [../memory/research/INDEX.md](../memory/research/INDEX.md) first.
 
 Only load individual thesis ledgers when the index is insufficient, stale, or the object is part of the current review set.
 
+Before using the index as a PM view, reconcile each included row against its primary thesis ledger or case package:
+
+- state token matches [../data/controlled-vocabulary.md](../data/controlled-vocabulary.md)
+- stale status is consistent with the referenced ledger/case
+- actionability token is controlled vocabulary, with any nuance in notes
+- event-based stale conditions are marked `needs_refresh` or `stale` when the event has already occurred
+
 ### `classify-exposures`
 
 Classify each thesis by:
@@ -83,6 +90,8 @@ Output a PM-facing review:
 - catalyst calendar
 - follow-up queue
 - actionability boundary
+
+Run `python3 scripts/validate_repo.py` after updating [../memory/research/INDEX.md](../memory/research/INDEX.md), because the validator checks index state/action tokens and date-like stale cells.
 
 ## Exit Criteria
 

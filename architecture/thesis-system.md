@@ -24,7 +24,7 @@
 - 哪些 claim 支撑它。
 - 哪些输入只是 assumption、forecast、company_claim 或 sentiment。
 - 哪些证据会证伪它。
-- 当前状态是 `active`、`watch`、`upgrade_watch`、`downgrade_watch`、`stale` 还是 `retired`。
+- 当前状态使用 [controlled-vocabulary.md](../data/controlled-vocabulary.md) 的 `thesis_state`。
 
 Required fields:
 
@@ -47,7 +47,7 @@ Required fields:
 - `price_in_status`
 - `next_check`
 
-共识代理可以来自 sell-side consensus、公司指引、价格反应、估值、期权定价、持仓拥挤度、媒体叙事或同业表现。若共识不可得，必须写 `source_gap`，不能虚构 consensus。
+共识代理可以来自 sell-side consensus、公司指引、价格反应、估值、期权定价、持仓拥挤度、媒体叙事或同业表现。若共识不可得，必须写 `source_gap`，不能虚构 consensus。机构级预期差分析的战略数据依赖见 [controlled-vocabulary.md](../data/controlled-vocabulary.md) 的 `Strategic Data Dependency`。
 
 ### `event-delta`
 
@@ -62,16 +62,7 @@ Required fields:
 
 ### `decision-log`
 
-`decision-log` 记录研究动作，不是交易指令。允许的 `decision_type`：
-
-- `watch`
-- `upgrade_watch`
-- `downgrade_watch`
-- `add_to_research_queue`
-- `reduce_research_priority`
-- `hedge_context`
-- `no_action`
-- `retire_thesis`
+`decision-log` 记录研究动作，不是交易指令。`decision_type` 必须使用 [controlled-vocabulary.md](../data/controlled-vocabulary.md) 的 `research_action / decision_type` token。
 
 如果接入 PMS 或组合系统，`decision-log` 只能作为研究输入，不能绕过用户或组合规则直接变成交易。
 
@@ -109,11 +100,11 @@ Required fields:
 - catalyst calendar
 - qualitative position sizing implication
 
-允许的研究动作包括 `watch_only`、`upgrade_watch`、`event_setup`、`post_event_follow_through`、`valuation_reset_watch`、`risk_reduction_context` 和 `no_action`。
+允许的研究动作、setup type 和 position sizing token 见 [controlled-vocabulary.md](../data/controlled-vocabulary.md)。
 
 ## State Machine
 
-Thesis state:
+Thesis state tokens are defined in [controlled-vocabulary.md](../data/controlled-vocabulary.md):
 
 - `draft`: 首版研究中，证据链未完成。
 - `active`: 有完整 evidence trail、刷新条件和主要反证路径。

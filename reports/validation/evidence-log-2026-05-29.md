@@ -2,12 +2,12 @@
 
 - report_date: 2026-05-29
 - validator: `scripts/validate_repo.py --report-only`
-- schema_ref: `data/evidence-log-schema.md`
+- schema_ref: `data/evidence-log-schema.md`; `data/controlled-vocabulary.md`
 - status: strict_validator_green_with_legacy_warnings
 
 ## Summary
 
-Current repository state after introducing canonical evidence schema and `legacy_evidence_schema` handling:
+Current repository state after introducing canonical evidence schema, `legacy_evidence_schema` handling and controlled vocabulary checks:
 
 - strict errors: 0
 - warnings: 9 as of 2026-05-29
@@ -18,6 +18,8 @@ Current repository state after introducing canonical evidence schema and `legacy
   - `cases/crwv-2026-05/evidence-log.csv`
   - `cases/wolf-2026-05/evidence-log.csv`
 - remaining historical cases: explicitly marked `legacy_evidence_schema: true`
+- controlled vocabulary: enforced for `decision_type`, thesis `state`, `research_action`, `setup_type`, `position_sizing_implication` and PM index state/actionability tokens
+- PM index stale dates: date-like `stale_after` cells are checked against the validation date
 
 This report intentionally does not hide legacy drift. Existing legacy case outputs remain useful as historical research artifacts, but they should not be treated as canonical evidence-log examples until migrated.
 

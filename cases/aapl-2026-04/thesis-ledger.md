@@ -5,7 +5,7 @@
 - owner_agent: research-orchestrator
 - last_updated: 2026-05-29
 - based_on_case: `cases/aapl-2026-04`
-- state: active but stale-before-live-use
+- state: stale
 - thesis_horizon: 12-24 months
 - selected_framework: large-mega
 - selected_overlays: valuation-expectation, macro, supply-chain optional
@@ -49,7 +49,7 @@ The variant view is weak-to-moderate. The market broadly recognizes Apple qualit
 
 | date | from_state | to_state | trigger | evidence_ref |
 | --- | --- | --- | --- | --- |
-| 2026-05-29 | draft | active but stale-before-live-use | Migration from April 2026 research package into Thesis System golden-case format. | `cases/aapl-2026-04/` |
+| 2026-05-29 | draft | stale | Migration from April 2026 research package into Thesis System golden-case format; golden case is usable as a historical example, not live research. | `cases/aapl-2026-04/` |
 
 ## Must Refresh If
 

@@ -1,6 +1,7 @@
 # {{ company_name }} ({{ ticker }}) Investment Memo
 
 - market: {{ market }}
+- output_language: {{ output_language }}
 - research_question: {{ research_question }}
 - research_cutoff_date: {{ research_cutoff_date }}
 - task_mode: {{ task_mode }}

@@ -33,6 +33,7 @@ Mira 用一套明确的系统边界解决这些问题：
 - 用 `claim classification` 区分事实、公司口径、承诺、指引、目标、预测、假设、观点、市场定价和弱信号。
 - 用 `research package` 固化投资 memo、证据表和案例 notes。
 - 用 `Thesis System` 把一次性报告升级成可维护的 thesis ledger、expectation map、event delta、decision log 和 postmortem。
+- 用 [controlled vocabulary](data/controlled-vocabulary.md) 统一 thesis state、research action、setup type 和 position sizing token，避免不同 agent 产出漂移。
 - 用 `framework routing` 先判断定价机制，再决定分析权重。
 - 用 `overlay` 在主框架外叠加高价值专题研究路径。
 - 用 `monitoring loop` 对已有 thesis 做增量更新和升级判断。
@@ -158,6 +159,7 @@ scripts/check_updates.sh
 - `expectation-map`：市场共识代理、Mira 分歧、已 price-in 部分和下一验证点。
 - `event-delta`：财报、宏观、产品、监管或同业事件前后的预期差和 thesis impact。
 - `decision-log`：研究动作记录，例如 watch、upgrade_watch、no_action；不是交易指令。
+- `controlled-vocabulary`：状态和动作 token 的单一事实源。
 - `postmortem`：复盘判断错在数据、推理、时间、市场定价还是执行约束。
 - `actionability-bridge`：把 thesis 连接到研究动作、催化剂日历、下行路径和定性仓位含义，但不输出自动交易指令。
 - `outcome-scorecard`：记录原判断、结果窗口、实现路径和 confidence 校准。

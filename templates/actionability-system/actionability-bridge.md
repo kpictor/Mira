@@ -13,13 +13,7 @@
 
 Allowed values:
 
-- `watch_only`
-- `upgrade_watch`
-- `event_setup`
-- `post_event_follow_through`
-- `valuation_reset_watch`
-- `risk_reduction_context`
-- `no_action`
+Use [../../data/controlled-vocabulary.md](../../data/controlled-vocabulary.md) `setup_type` tokens.
 
 ## Valuation / Expectation Frame
 
@@ -56,11 +50,7 @@ Allowed values:
 
 Use qualitative sizing language only:
 
-- `not_applicable`
-- `watchlist_only`
-- `small_if_confirmed`
-- `normal_only_after_confirmation`
-- `reduce_risk_context`
+Use [../../data/controlled-vocabulary.md](../../data/controlled-vocabulary.md) `position_sizing_implication` tokens.
 
 ## Required Follow-Up
 
