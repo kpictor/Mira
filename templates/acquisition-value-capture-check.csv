@@ -1,0 +1,11 @@
+field,value,evidence_status,workflow_interpretation,would_trigger_downgrade
+acquired_asset,source_gap,source_gap,"Identify the acquired exposure or capability that supports the thesis.",partial
+purchase_price,source_gap,source_gap,"Price paid determines required synergy, margin and ROIC burden.",partial
+strategic_rationale,source_gap,source_gap,"Strategic fit must connect to customer value or value-chain control.",partial
+revenue_contribution,source_gap,source_gap,"Separate acquired growth from organic growth.",yes
+margin_contribution,source_gap,source_gap,"Acquisitions can dilute margins even when strategically attractive.",partial
+integration_risk,source_gap,source_gap,"Execution risk should stay explicit until integration evidence appears.",partial
+cross_sell_or_synergy_evidence,source_gap,source_gap,"Do not credit cross-sell without evidence.",yes
+incremental_roic_path,source_gap,source_gap,"Value capture is not proven until ROIC path is credible.",yes
+balance_sheet_impact,source_gap,source_gap,"Debt, dilution and cash use affect downside path.",partial
+refresh_trigger,source_gap,source_gap,"Define the next evidence point that validates or weakens the acquisition thesis.",partial

@@ -1,0 +1,9 @@
+dimension,score,minimum_public_grade,basis,next_improvement
+source_quality,4,4,"Uses SEC 10-K/10-Q filings and SEC companyfacts for the core evidence.","Add archived earnings-call transcripts and management Q&A excerpts."
+lens_coverage,4,4,"Covers consumer demand, product reality, hardware/subscription mix, inventory, unit economics and valuation gaps.","Add competitor/gym reopening and category-level consumer data."
+conflict_detection,5,4,"Workflow separates loved product and strong subscription retention from weak normalized hardware demand and negative hardware margin.","Quantify exact downgrade date using contemporaneous consensus and price action."
+valuation_expectations,3,4,"Peak price, market-cap range and approximate peak-era equity value are now source-backed; exact peak-date EV and FY2022/FY2023 consensus remain incomplete.","Add exact peak-date share count, EV, and consensus estimates before public release."
+refresh_conditions,4,4,"Defines normalized hardware demand, inventory clearance, gross margin and engagement refresh triggers.","Add dated 2021-2022 checkpoint schedule."
+decision_impact,5,4,"Workflow would have forced watch_only before FY2022 full-year collapse once Q2 FY2022 product revenue and margin deteriorated.","Create a pre-collapse-only evidence version."
+cost_efficiency,3,4,"Backtest is useful but manual and source extraction from SEC HTML is still clunky.","Create a reusable hardware/subscription mix template."
+institutional_readiness,3,4,"Strong internal failure backtest with improved valuation source trail, but not public-grade without consensus reconstruction and transcript archive.","Add public-ready appendix, transcript support and charts."

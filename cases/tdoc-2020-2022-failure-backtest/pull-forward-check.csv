@@ -1,0 +1,9 @@
+field,backtest_value,evidence_status,workflow_interpretation,would_trigger_downgrade
+shock_source,COVID-19 pandemic accelerated virtual care demand,verified_context,"Demand shock was real but externally forced.",yes
+duration_of_shock,uncertain in 2020; normalization visible by 2021-2022,partially_verified,"Workflow should require post-shock retention before treating growth as structural.",yes
+normalized_usage_baseline,source_gap in hot phase,source_gap,"Without normalized baseline, long-term demand should be provisional.",yes
+post_shock_retention,source_gap in hot phase,source_gap,"Visit growth alone does not prove retention or durable utilization.",yes
+payer_or_budget_persistence,source_gap in hot phase,source_gap,"Need employer/payer renewal and utilization economics.",yes
+valuation_if_growth_normalizes,peak price approximate equity value and near-peak EV now source-backed; consensus exception pending reviewer acceptance,partial_verified,"At peak valuation, normalized growth would likely have invalidated upside, but public-grade conclusion still needs consensus export or reviewer-accepted exception.",yes
+acquisition_value_capture_path,Livongo strategic logic clear but measurable ROIC/cross-sell path not proven,partial,"Acquisition narrative should have stayed under trial until cross-sell and margin evidence appeared.",yes
+market_heat_vs_thesis_maturity,extreme heat versus incomplete normalized evidence,modeled,"This is the core downgrade trigger.",yes

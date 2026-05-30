@@ -1,0 +1,9 @@
+dimension,score,minimum_public_grade,basis,next_improvement
+source_quality,4,4,"SEC-furnished Q1 release and 10-Q support core operating claims; market quote and SEC shares support valuation calculations.","Add transcript, order/backlog details, customer concentration, peer data and consensus estimates."
+lens_coverage,4,4,"Material lenses addressed; consumer demand translated into data-center infrastructure demand.","Add ROIC, customer concentration and capacity expansion details."
+conflict_detection,5,4,"Workflow clearly separated purity from valuation heat and avoided purity-led actionability.","Quantify purity and valuation heat across ETN/VRT comparison."
+valuation_expectations,3,4,"Forward P/E on guidance calculated, but full implied-expectations map remains incomplete.","Add FY2 consensus, EV/EBITDA, historical/peer ranges and downside scenarios."
+refresh_conditions,4,4,"Observable triggers tied to Q2 results, guidance, Americas growth, margins and order/backlog risk.","Add numeric deceleration thresholds."
+decision_impact,5,4,"Workflow changed likely conclusion from high-purity bullish view to watch-only pending expectation map.","Document ETN/VRT contrast in validation program."
+cost_efficiency,3,4,"Reusable structure improved speed, but evidence extraction and valuation map remain manual.","Create a single-company trial template and expectation-map fill guide."
+institutional_readiness,3,4,"Good internal contrast case; not colleague-ready without consensus/peer and transcript evidence.","Add ETN/VRT comparison table and historical failure backtest."

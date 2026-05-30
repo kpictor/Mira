@@ -1,0 +1,9 @@
+dimension,score,minimum_public_grade,basis,next_improvement
+source_quality,4,4,"Uses official company source paths, SEC companyfacts, improved historical price support and market-cap history; some press-release pages and transcripts still need archival verification.","Add archived releases, transcript quotes and consensus estimate archive."
+lens_coverage,4,4,"Backtest covers demand shock, product monetization, acquisition value capture, valuation and failure event.","Add peer telehealth comparison and payer/customer evidence."
+conflict_detection,5,4,"Workflow identifies real demand versus pull-forward, usage versus retention, and acquisition narrative versus ROIC path.","Quantify timing of each downgrade trigger."
+valuation_expectations,3,4,"Peak price and approximate peak-era equity value are now source-backed; enterprise value and 2021/2022 consensus expectations remain incomplete.","Add exact peak-date EV and 2021/2022 consensus estimates."
+refresh_conditions,4,4,"Backtest identifies normalized demand, retention, payer persistence and goodwill/ROIC triggers.","Add dated checkpoint schedule for 2020-2022."
+decision_impact,5,4,"Workflow would downgrade before 2022 impairment if pull-forward and acquisition value-capture patches are applied.","Prove with a pre-impairment-only evidence version."
+cost_efficiency,3,4,"Backtest is useful but still manual.","Create historical failure backtest template."
+institutional_readiness,3,4,"Strong internal backtest with improved price and market-cap source trail, but not public-grade until transcript and consensus data are added.","Add source archive, transcript support and public-ready charts/tables."

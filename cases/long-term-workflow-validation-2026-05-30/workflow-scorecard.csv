@@ -1,0 +1,9 @@
+dimension,score_1_definition,score_3_definition,score_5_definition,minimum_public_grade
+source_quality,"Mostly company narrative, media, or market chatter","Mix of company filings, institutional sources and third-party data","Primary filings, independent data, peer evidence, customer/channel evidence and contrary sources",4
+lens_coverage,"Fewer than three lenses populated","Most lenses populated but one or more important source gaps remain","All material lenses populated and immaterial lenses explicitly waived",4
+conflict_detection,"No explicit cross-lens conflict checks","Some conflicts identified but not ranked","Key conflicts ranked by thesis materiality and evidence quality",4
+valuation_expectations,"Valuation mentioned but not linked to operating assumptions","Rough market-implied expectations or scenario ranges","Explicit implied expectations, anchor quality, downside path and false-precision warning",4
+refresh_conditions,"Generic refresh language","Lens-specific refresh triggers exist","Refresh triggers are observable, dated, and tied to thesis state changes",4
+decision_impact,"Workflow does not change conclusion","Workflow changes source-gap map or confidence","Workflow changes conclusion, sizing/actionability, or kill criteria",4
+cost_efficiency,"Too heavy to use repeatedly","Usable for standard research with some trimming","Clear quick/standard/deep modes and no redundant fields",4
+institutional_readiness,"Private notes only","Internal trial quality","Clear enough for another analyst to reproduce and challenge",4

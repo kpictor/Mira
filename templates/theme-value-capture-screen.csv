@@ -1,0 +1,2 @@
+node,public_expression,role_in_theme,theme_purity,value_capture_evidence,evidence_maturity,valuation_risk,workflow_decision,notes
+example_node,example_ticker_or_company,enabler|direct_oem|supplier|application_owner,low|medium|high,source_gap,concept|pilot|commercial|segment_revenue,low|medium|high,industry_map_first|watch_only|single_equity_research|reject_for_now,"Use before single-company research when a hot theme has unclear public-company value capture."

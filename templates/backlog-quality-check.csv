@@ -1,0 +1,11 @@
+field,value,evidence_status,workflow_interpretation,would_trigger_downgrade
+backlog_metric,source_gap,source_gap,"Name the backlog/RPO/order-book metric driving the thesis.",partial
+backlog_growth,source_gap,source_gap,"Growth supports demand only if the backlog is firm and convertible.",partial
+order_growth_or_book_to_bill,source_gap,source_gap,"Orders/book-to-bill help distinguish new demand from backlog duration.",partial
+conversion_timing,source_gap,source_gap,"Backlog that converts too slowly may not support near-term valuation expectations.",partial
+cancellation_or_deferral_risk,source_gap,source_gap,"Firm contractual commitments are stronger than qualitative demand commentary.",yes
+margin_quality,source_gap,source_gap,"Backlog quality must include expected margin, not only dollars.",yes
+customer_concentration,source_gap,source_gap,"Concentrated backlog can raise cancellation, pricing and bargaining-power risk.",partial
+capacity_or_supply_constraint,source_gap,source_gap,"Supply bottlenecks can increase backlog without proving durable demand.",partial
+valuation_dependency,source_gap,source_gap,"State whether current valuation requires backlog conversion to accelerate.",yes
+refresh_trigger,source_gap,source_gap,"Define the metric change that would force thesis refresh.",partial

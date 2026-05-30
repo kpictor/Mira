@@ -1,0 +1,12 @@
+field,value,evidence_status,source,notes
+peak_price,294.54,third_party_verified,https://www.macrotrends.net/stocks/charts/TDOC/teladoc/stock-price-history,"MacroTrends search result states all-time high closing price was $294.54 on 2021-02-08; direct page returned 403 during browser open, so treat as medium confidence."
+peak_price_date,2021-02-08,third_party_verified,https://www.macrotrends.net/stocks/charts/TDOC/teladoc/stock-price-history,"Date from MacroTrends search snippet."
+shares_outstanding_reference,152.7M,regulator_verified,https://data.sec.gov/api/xbrl/companyfacts/CIK0001477449.json,"SEC companyfacts / 2020 10-K reference around 2021-02-25; not exact on peak-price date."
+derived_peak_equity_value,45.0B,derived_calculation,case-local calculation,"294.54 * 152.7M = approximately $45.0B; use as approximate peak-era equity value."
+cash_and_short_term_investments_2020,786.6M,regulator_verified,https://www.sec.gov/Archives/edgar/data/1477449/000155837021002118/tdoc-20201231x10k.htm,"2020 10-K disclosed $733.3M cash/equivalents including restricted cash and $53.2M short-term marketable securities as of 2020-12-31."
+debt_reference_2020,1.42B,regulator_verified,https://www.sec.gov/Archives/edgar/data/1477449/000155837021002118/tdoc-20201231x10k.htm,"2020 10-K balance sheet disclosed $42.6M current portion of long-term debt and $1.380B convertible senior notes net as of 2020-12-31."
+derived_peak_enterprise_value,45.6B,derived_calculation,case-local calculation,"Approximate EV: $45.0B equity value + $1.422B debt - $0.787B cash/short-term investments. Use as near-peak estimate, not exact peak-date EV."
+year_end_2020_market_cap,28.98B,third_party_verified,https://companiesmarketcap.com/teladoc-health/marketcap/,"CompaniesMarketCap year-end market-cap history shows 2020 $28.98B."
+year_end_2021_market_cap,14.69B,third_party_verified,https://companiesmarketcap.com/teladoc-health/marketcap/,"CompaniesMarketCap year-end market-cap history shows 2021 $14.69B."
+year_end_2022_market_cap,3.82B,third_party_verified,https://companiesmarketcap.com/teladoc-health/marketcap/,"CompaniesMarketCap year-end market-cap history shows 2022 $3.82B."
+valuation_reconstruction_status,improved_ev_not_final_public_grade,mira_judgment,case-local judgment,"Peak price, near-peak share reference, cash, debt and approximate EV are now sourced; transcript paths were later added, but contemporaneous consensus remains a source gap."

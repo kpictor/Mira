@@ -1,0 +1,9 @@
+check_id,requirement,pass_condition,status,notes
+g04_01,later_event,"Event date is after original memo cutoff date.",pending,"Same-window source cleanup does not qualify."
+g04_02,material_variable,"Event maps to a named thesis variable such as product monetization backlog payer access cash flow or valuation expectation.",pending,"Generic news does not qualify."
+g04_03,new_source_evidence,"Evidence log has new rows with source dates after original cutoff.",pending,"Durable claims must have source trail."
+g04_04,before_after_action_label,"Refresh states original and refreshed action labels.",pending,"Action label may remain unchanged but must be explicit."
+g04_05,trigger_quality_evaluated,"Refresh evaluates whether original must_refresh_if was specific enough too vague too strict or wrong variable.",pending,"This is required methodology feedback."
+g04_06,result_label_valid,"Refresh result label uses approved playbook vocabulary.",pending,"Prevents vague outcome language."
+g04_07,public_grade_impact,"Refresh states follow_through_gate_status pass fail or still_blocked with reason.",pending,"G04 clears only with pass."
+g04_08,downstream_logs_updated,"Public readiness audit release gate tracker and methodology review log are updated.",pending,"Required before claiming G04 cleared."

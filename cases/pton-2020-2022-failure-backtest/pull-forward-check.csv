@@ -1,0 +1,12 @@
+field,backtest_value,evidence_status,workflow_interpretation,would_trigger_downgrade
+shock_source,COVID-19 stay-at-home orders accelerated home-fitness purchases,verified_context,"Demand shock was real and explicitly disclosed by company.",yes
+duration_of_shock,uncertain in FY2020-FY2021; normalization visible by Q2 FY2022,partially_verified,"Require post-shock hardware demand evidence before actionability.",yes
+normalized_usage_baseline,engagement stayed high but average monthly workouts per subscription fell from 22.0 in FY2021 to 16.4 in FY2022,verified,"Installed-base engagement alone cannot validate new hardware demand.",partial
+post_shock_retention,average net monthly churn rose from 0.61% in FY2021 to 0.96% in FY2022,verified,"Retention remained relatively strong but weakened; not the main failure signal.",partial
+normalized_hardware_demand,FY2022 connected fitness product revenue fell 30.5% after FY2021 surge,verified,"Hardware demand normalized sharply and should have blocked actionability.",yes
+hardware_gross_margin,FY2022 connected fitness products gross margin fell to negative 11.3% from 29.0%,verified,"The hardware acquisition engine stopped subsidizing subscription growth.",yes
+inventory_or_capacity_commitment,inventory rose from $937.1M at June 30 2021 to $1.541B at December 31 2021,verified,"Inventory commitment increased before normalized demand was proven.",yes
+subscriber_growth_source,subscriber base partly downstream of prior hardware placements,derived,"Subscription growth could lag hardware weakness and therefore cannot alone prove future growth.",yes
+unit_economics_after_normalization,source gap in hot phase and negative by FY2022,partially_verified,"Actionability requires evidence that unit economics survive normal demand.",yes
+valuation_if_growth_normalizes,peak price market-cap range and near-peak EV now source-backed; consensus exception pending reviewer acceptance,partial_verified,"Valuation heat is now supported directionally, but public-grade conclusion still needs consensus export or reviewer-accepted exception.",yes
+market_heat_vs_thesis_maturity,extreme heat versus incomplete normalized hardware evidence,modeled,"This is the core pre-collapse downgrade trigger.",yes

@@ -1,0 +1,13 @@
+field,value,evidence_status,workflow_interpretation,would_trigger_downgrade
+patient_demand,tbd,tbd,tbd,tbd
+prescriber_demand,tbd,tbd,tbd,tbd
+clinical_evidence,tbd,tbd,tbd,tbd
+regulatory_status,tbd,tbd,tbd,tbd
+payer_coverage,tbd,tbd,tbd,tbd
+employer_or_government_reimbursement,tbd,tbd,tbd,tbd
+cash_pay_price,tbd,tbd,tbd,tbd
+gross_to_net_or_realized_price_trend,tbd,tbd,tbd,tbd
+prior_authorization_or_access_friction,tbd,tbd,tbd,tbd
+adherence_or_persistence,tbd,tbd,tbd,tbd
+competitive_formulary_risk,tbd,tbd,tbd,tbd
+policy_or_regulatory_risk,tbd,tbd,tbd,tbd

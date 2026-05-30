@@ -1,0 +1,2 @@
+company,ticker,as_of_date,product_or_metric,metric_type,metric_value,metric_growth,economic_link,incrementality,customer_cohort,retention_or_renewal_evidence,pricing_evidence,margin_evidence,total_company_bridge,confidence,source_id,notes
+example,EXM,2026-01-01,example_metric,usage,source_gap,source_gap,usage_proxy,source_gap,source_gap,source_gap,source_gap,source_gap,source_gap,low,example_source,Replace with case-specific record.

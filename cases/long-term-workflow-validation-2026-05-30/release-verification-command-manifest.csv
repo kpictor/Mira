@@ -1,0 +1,13 @@
+command_id,command,expected_exit_current,purpose,release_phase,notes
+cmd_01,python3 scripts/validate_long_term_release.py,0,"Internal candidate release consistency check.",internal_candidate,"Must pass before any packet work."
+cmd_02,python3 scripts/validate_long_term_release.py --require-external-ready,2,"External-ready gate check.",external_release_blocker,"Must fail until G04 and G06 clear; final release requires exit 0."
+cmd_03,python3 scripts/validate_public_release_freshness.py --as-of 2026-05-30,0,"Public material freshness check.",release_safety,"Prevents stale public or reviewer-facing materials from being reused."
+cmd_04,python3 scripts/validate_go_no_go_evidence_coverage.py,0,"Go/no-go evidence coverage check.",release_safety,"Prevents required release gates from missing final signoff evidence rows."
+cmd_05,python3 scripts/validate_final_release_cutover.py,0,"Final cutover consistency check.",release_safety,"Current state must stay cutover_ready false until external-ready clears."
+cmd_06,python3 scripts/validate_institutional_release_bundle.py,0,"Institutional release bundle control check.",release_safety,"Ensures exported bundle preserves caveats and required audit files."
+cmd_07,python3 scripts/validate_institutional_colleague_acceptance.py,0,"Institutional colleague acceptance state check.",release_safety,"Current state must stay acceptance_ready false until real colleague acceptance exists."
+cmd_08,python3 scripts/validate_objective_readiness.py,0,"Objective-level completion audit.",completion_audit,"Must report objective_complete false until G04 G06 and final release clear."
+cmd_09,python3 scripts/validate_goal_completion_audit.py,0,"Goal-level completion audit.",completion_audit,"Must report goal_complete false until G04 G06 and final release clear."
+cmd_10,python3 scripts/build_institutional_release_packet.py --dry-run,2,"Final institutional packet export guardrail.",external_release_blocker,"Must refuse export until external-ready validator exits 0."
+cmd_11,python3 scripts/validate_external_release_action_queue.py,0,"External blocker action queue audit.",release_safety,"Must preserve concrete G04/G06 external dependencies and reject internal completion substitutes."
+cmd_12,python3 scripts/validate_g06_reviewer_selection_rubric.py,0,"G06 reviewer selection rubric audit.",release_safety,"Must map required external release decisions to reviewer profiles, scorecard dimensions and evidence paths."

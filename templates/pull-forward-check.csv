@@ -1,0 +1,9 @@
+field,backtest_value,evidence_status,workflow_interpretation,would_trigger_downgrade
+shock_source,replace,source_gap,replace,no
+duration_of_shock,replace,source_gap,replace,no
+normalized_usage_baseline,replace,source_gap,replace,no
+post_shock_retention,replace,source_gap,replace,no
+payer_or_budget_persistence,replace,source_gap,replace,no
+valuation_if_growth_normalizes,replace,source_gap,replace,no
+acquisition_value_capture_path,replace,source_gap,replace,no
+market_heat_vs_thesis_maturity,replace,source_gap,replace,no

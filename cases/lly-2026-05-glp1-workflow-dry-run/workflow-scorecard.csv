@@ -1,0 +1,9 @@
+dimension,score,minimum_public_grade,basis,next_improvement
+source_quality,4,4,"Core company evidence comes from SEC-furnished Lilly Q1 2026 release, market/estimate data from StockAnalysis, FDA Foundayo approval/label evidence, CVS payer-side access evidence and CMS program evidence.","Add transcript excerpts, all-PBM confirmation, plan-level payer/access evidence and manufacturing/supply evidence."
+lens_coverage,4,4,"All material six lenses are covered; macro is correctly treated as secondary.","Add fuller industry/payer evidence and global access detail."
+conflict_detection,5,4,"Workflow identifies core conflict: real demand and direct value capture versus realized-price pressure and high valuation burden.","Quantify payer/access scenarios."
+valuation_expectations,4,4,"Expectation map includes price, market cap, EV, FY1/FY2 revenue and EPS estimates, guidance midpoint, current multiples and peer reference.","Add FCF consensus, historical multiple range and full peer table."
+refresh_conditions,4,4,"Refresh triggers are tied to Q2 results, realized prices, guidance, payer/access, Foundayo and consensus revisions.","Add exact thresholds for net price and volume growth."
+decision_impact,5,4,"Workflow changes likely conclusion from simple GLP-1 winner to watch_only_pending_expectation_map_and_realized_price_refresh after source-gap refresh.","Compare against NVO and a second-order GLP-1 read-through."
+cost_efficiency,4,4,"Public workflow pack was enough to run the case without the full methodology card.","Add a healthcare-specific overlay template."
+institutional_readiness,3,4,"Good fresh-case dry run but not external-grade until FDA/transcript/payer/source appendix is strengthened.","Run reviewer dry run and add source archive."

@@ -84,3 +84,9 @@
   target_case: `AAPL thesis ledger`, `CRWV event delta`, `WOLF expectation map`, and next live earnings event
   expected_increment: 把一次性 research package 升级为可维护的 thesis ledger、expectation map、event delta、decision log 和 postmortem，让新增信息能明确映射到预期变量和 thesis state。
   falsification_condition: 如果它不能比普通 memo 更清楚地区分预期差、证据强度、状态变化和复盘结论，或维护成本明显拖慢研究，就不升级到 `adopted`。
+
+- `long-term-integrated-thesis`
+  target_case: `AAPL-like mega-cap platform`, `consumer/product-led mid-cap`, `failed growth story`, and `macro-sensitive cyclical or financial company`
+  expected_increment: 把长期研究从单一好故事拆成 `consumer_demand`、`product_reality`、`macro_economy`、`industry_structure`、`company_execution` 和 `valuation_expectations` 六个互相校验的 lens，强制写出最弱假设、市场隐含预期、刷新触发和证伪条件。
+  falsification_condition: 如果它不能比普通 `long_term_thesis` 更早暴露 demand/product/industry/company/valuation 冲突，或只是增加模板字段而不改变结论质量，就不升级到 `adopted`。
+  notes: 初始方法论包见 `cases/long-term-methodology-2026-05-30/`。当前已完成 ETN、VRT、CRM、LLY 四个 live/contrast/dry-run trials，以及 TDOC、PTON 两个 historical failure backtests；candidate public workflow pack 已存在并在 LLY 做过 fresh-case dry run。仍需 true follow-through refresh、独立 reviewer dry run、完整 public-grade expectation map 和历史案例 source cleanup 后才能考虑升级。

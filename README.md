@@ -307,6 +307,42 @@ python3 scripts/validate_repo.py --report-only
 
 当前 schema 漂移基线见 [reports/validation/evidence-log-2026-05-29.md](reports/validation/evidence-log-2026-05-29.md)。
 
+### Long-Term Workflow Release QA
+
+长期方法论外发前必须通过 release gate，而不是只依赖文档判断。当前候选包见 [cases/long-term-workflow-validation-2026-05-30/](cases/long-term-workflow-validation-2026-05-30/)。
+
+运行：
+
+```text
+python3 scripts/run_long_term_release_checks.py
+```
+
+当前总 QA 包括 10 个 case 校验、28 个 release-control CSV shape check、G01 external method-source scan 校验、G06 reviewer packet/assignment tracker 校验、G06 reviewer candidate screen 校验、G06 reviewer selection rubric 校验、G06 reviewer independence screen 校验、G06 dispatch packet audit、G06 dispatch readiness checklist、external release action queue 校验、G04 trigger/event-watch/later-event candidate/execution tracker 校验、G04 default packet dry run、G04 four-case packet matrix、G06 packet dry run、institutional bundle 校验、public release freshness 校验、release verification command manifest 校验、go/no-go evidence coverage 校验、final release cutover 校验、objective readiness 校验、goal completion audit 和最终外发负向门禁。
+
+关键 release 控制项：
+
+- `g01-external-method-source-audit.csv` + `scripts/validate_g01_external_method_scan.py`：确认公开亚洲/中文 practitioner 来源已经补强，但仍只是 `partial_pass_improved`，需要 G06 reviewer 接受。
+- `g04-follow-through-execution-tracker.csv` + `scripts/validate_follow_through_execution_tracker.py`：确认 follow-through 已准备执行但仍等待后续事件，并交叉检查 trigger tracker/event calendar，不能被误判为完成。
+- `g04-follow-through-event-watch-calendar.csv` + `scripts/validate_g04_event_watch_calendar.py`：确认后续事件观察日历存在，且 scheduled/monitored event 不会被误判为已完成 G04。
+- `g04-later-event-candidate-screen.csv` + `scripts/validate_g04_later_event_candidate_screen.py`：确认后续事件必须先通过 post-cutoff 日期、官方来源、materiality 和 execution-state 检查，才能进入 refresh。
+- `scripts/validate_follow_through_refresh.py`：确认未来 G04 refresh 必须所有 qualification rows 为 yes，original_memo_date 匹配 cutoff，new event source 日期晚于 cutoff，stale_after 晚于 refresh_date，恰好选择一个 approved result label，refresh source_id 出现在 updated evidence log 的 later-event 行里，且 G04 intake requirements 完整。
+- `scripts/validate_follow_through_packet_matrix.py`：确认 ETN、VRT、CRM、LLY 四个 live case 都能 dry-run 导出 G04 execution packet。
+- `trial-theme-matrix.csv` + `scripts/validate_trial_theme_matrix.py`：确认近期热门方向选择覆盖 7 个主题，且每个主题都有 linked case、evidence log 和 source_id 可追踪。
+- `public-workflow-pack/` + `scripts/validate_public_workflow_pack.py`：确认 public pack 的 README、workflow、fill guide、checklist、template inventory 和 source appendix 对 11 个 overlay、10 个案例/主题 source trail 与 release boundary 保持一致。
+- `scripts/validate_public_release_freshness.py --as-of 2026-05-30`：确认 15 个公开/外审材料有未过期的 `stale_after` 和可观察 `must_refresh_if`，并确认 4 个模板保留刷新字段，防止过期材料被继续外发。
+- `scripts/validate_validation_case_set.py`：非递归执行 10 个 case 的 repo validation，供 objective/goal audit 作为可执行证据使用。
+- `g06-reviewer-assignment-tracker.csv` + `scripts/validate_external_review_assignment_tracker.py`：确认外部 reviewer 已准备分配但尚未完成，并交叉检查 independence screen 的 pending reviewer rows，不能被内部模拟替代。
+- `g06-reviewer-candidate-screen.csv` + `scripts/validate_g06_reviewer_candidate_screen.py`：确认候选 reviewer 筛选是候选人级别、可审计的，且在未命名 reviewer 前不会伪装成 G06 完成。
+- `g06-reviewer-independence-screen.csv` + `scripts/validate_g06_reviewer_independence_screen.py`：确认 reviewer 独立性、利益冲突、能力和 source-boundary 筛选标准已准备，但仍不命名 reviewer、不清 G06。
+- `scripts/validate_external_review_return.py`：确认未来 reviewer return 必须绑定 assignment tracker 和 independence screen，且在 scorecard 和 results memo 两处明确通过 G04 readiness / false-completion control，severity/impact 必须合法，P1 修复必须有 `owner:`/`fix:`，results memo Findings 表的 P0/P1 行数必须匹配 summary/scorecard，reviewer/date 必须一致，intake 必须完整，且 memo summary 必须匹配 scorecard，不能用备忘录改写评审事实。
+- `scripts/validate_external_review_dispatch_packet.py`：临时真实导出 G06 reviewer packet，确认 28 个 send items 可派发、internal rows 未外发且仍不清 G06。
+- `g06-dispatch-readiness-checklist.csv` + `scripts/validate_g06_dispatch_readiness.py`：确认派发前 9 项控制已通过，实际 reviewer assignment/return 仍是外部 pending blocker。
+- `goal-completion-audit.csv` + `scripts/validate_goal_completion_audit.py`：把原始目标映射到 10 个完成证据，逐行执行非递归 `verification_command`，额外检查 institutional packet dry-run 的 38 个 required export paths，并强制 G04/G06/final release 未完成时 `goal_complete: false`。
+- `release-verification-command-manifest.csv` + `scripts/validate_release_verification_command_manifest.py`：把最终包的复验命令、当前期望退出码和外发阻断命令做成机器可读清单，防止复验逻辑只存在于 runbook 文本里。
+- `scripts/validate_go_no_go_evidence_coverage.py`：确认 11 个外发必需 release gate 都映射到 final go/no-go 的 15 个证据行，并且 cutover validator 有对应拒绝逻辑，防止新增 gate 后最后签发模板漏检。
+- `scripts/validate_final_release_cutover.py`：确认 final cutover 仍未 ready，且 go/no-go template 或带 placeholder/pending evidence 的 dated memo 不会被误当成已签署 go memo。
+- `scripts/build_institutional_release_packet.py`：在 `python3 scripts/validate_long_term_release.py --require-external-ready` 失败时拒绝导出最终机构同事 release packet，同时 dry-run 检查 38 个 required export paths。
+
 ### Claim Classification
 
 Mira 的 evidence log 不只记录来源，还记录每条被使用信息的性质。

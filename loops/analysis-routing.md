@@ -176,6 +176,12 @@
 - `transition`
   短期证据可能改变长期 thesis，进入 `regime_transition`。
 
+If `time_boundary = gt_1y` and the question depends on multiple operating variables, hot-theme-to-company handoff, product monetization, pull-forward demand, or valuation expectations, route to:
+
+- `loops/long-term-thesis-loop.md`
+
+This loop is currently `candidate_internal_release`, not final external-grade.
+
 单票时间跨度规则见：
 
 - `skills/equity-research-core/references/thesis-horizon-routing.md`

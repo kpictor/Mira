@@ -1,0 +1,9 @@
+dimension,score,minimum_public_grade,basis,next_improvement
+source_quality,4,4,"Official SEC-filed Q1 release and 10-Q support core operating claims; market price and SEC shares support valuation calculations.","Add transcript, peer filings, consensus estimates and hyperscaler capex sources."
+lens_coverage,4,4,"All material lenses were addressed; consumer demand was correctly translated into compute/data-center end demand.","Add more explicit ROIC and free-cash-flow evidence."
+conflict_detection,4,4,"Workflow separated strong AI-power business exposure from valuation/actionability risk.","Rank conflicts quantitatively after peer/consensus map."
+valuation_expectations,3,4,"Forward P/E on guidance was calculated, but no full implied-expectations or peer/historical range exists yet.","Build expectation map with FY2027/FY2028 consensus, peer multiples and margin scenarios."
+refresh_conditions,4,4,"Refresh triggers are observable and tied to Q2 earnings, backlog, guidance, Boyd integration and valuation.","Add threshold levels for backlog deceleration and multiple compression."
+decision_impact,4,4,"Workflow changed conclusion from likely broad bullish theme view to watch-only pending expectation map.","Compare against a control ordinary memo to document delta explicitly."
+cost_efficiency,3,4,"The workflow produced a useful memo, but manual evidence extraction and valuation bridge remain slow.","Create a reusable single-company workflow trial template."
+institutional_readiness,3,4,"Readable internal trial, not yet colleague-ready because consensus, peer and transcript evidence are missing.","Complete expectation map and add failure backtest comparison."

@@ -1,0 +1,11 @@
+field,value,evidence_status,workflow_interpretation,would_trigger_downgrade
+cash_flow_metric,source_gap,source_gap,"Name the cash-flow metric used in the thesis.",partial
+operating_cash_flow_trend,source_gap,source_gap,"OCF trend should be separated from one-time working-capital effects.",partial
+capex_trend,source_gap,source_gap,"Capex intensity determines whether FCF is durable.",partial
+working_capital_driver,source_gap,source_gap,"Working-capital release can inflate short-term FCF.",yes
+stock_compensation_or_non_cash_addback,source_gap,source_gap,"High non-cash addbacks can weaken per-share cash-flow quality.",partial
+fcf_margin,source_gap,source_gap,"FCF margin must be compared with revenue growth and reinvestment needs.",partial
+fcf_conversion,source_gap,source_gap,"Conversion from earnings to FCF should be explainable.",partial
+debt_or_buyback_dependency,source_gap,source_gap,"FCF per share can be distorted by leverage or buybacks.",partial
+multi_year_durability,source_gap,source_gap,"One strong quarter is insufficient for a long-term thesis.",yes
+refresh_trigger,source_gap,source_gap,"Define the next cash-flow event that changes confidence.",partial

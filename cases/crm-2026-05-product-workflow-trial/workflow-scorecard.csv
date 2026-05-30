@@ -1,0 +1,9 @@
+dimension,score,minimum_public_grade,basis,next_improvement
+source_quality,4,4,"SEC-furnished Q1 FY27 release and 10-Q support financial and product metrics; market quote and SEC shares support valuation calculations.","Add earnings transcript, customer evidence, product cohort metrics and peer AI-agent disclosures."
+lens_coverage,4,4,"Material lenses covered; product evidence ladder applied directly.","Add industry competition and customer switching-cost evidence."
+conflict_detection,5,4,"Workflow separated real product traction from still-unproven company-level acceleration.","Quantify product-to-company revenue bridge."
+valuation_expectations,5,4,"Expectation map now includes EV, FY2027/FY2028 revenue and EPS estimates, FY2027 modeled FCF, MarketScreener FY2028 FCF forecast, EV/Sales, EV/FCF, broader peer table and historical forward P/E / EV/Sales / EV/FCF context.","External reviewer should challenge MarketScreener and StockAnalysis source definitions under G06."
+refresh_conditions,4,4,"Triggers tied to Q2 results, product metrics, guidance and organic acceleration.","Add thresholds for Agentforce ARR and AWU deceleration."
+decision_impact,5,4,"Workflow changed likely conclusion from AI narrative acceptance/rejection to watch-only pending monetization map.","Compare against NOW or PLTR to test ladder consistency."
+cost_efficiency,3,4,"Reusable evidence ladder helped, but product-to-company bridge remains manual.","Create product monetization map template."
+institutional_readiness,3,4,"Good internal trial; not colleague-ready without transcript, customer cohort and peer evidence.","Run one contrast software case and a failure backtest."

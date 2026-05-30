@@ -136,6 +136,8 @@
 - `what changes the price`
 - `what falsifies the view`
 
+如果研究对象适合做 3-5 年 multi-lens long-term thesis，优先路由到 `loops/long-term-thesis-loop.md`，不要只把长期研究当成普通 research-loop 里的一个小 checklist。
+
 如果研究对象适合做长期 10x / 100x / multibagger 分析，允许在这里插入 `long-term-multibagger checklist`，用于把初判转成：
 
 - `target_return_path`
