@@ -28,6 +28,7 @@ Every formal output must:
 | Thesis update / expectation change | [loops/thesis-update-loop.md](loops/thesis-update-loop.md) | thesis ledger, expectation map and decision-log templates |
 | Event or earnings delta | [loops/event-delta-loop.md](loops/event-delta-loop.md) | earnings skill and event-delta template |
 | PM / book review | [loops/portfolio-review-loop.md](loops/portfolio-review-loop.md) | portfolio register template and research index |
+| Source routing | [data/source-taxonomy.md](data/source-taxonomy.md) | [data/source-coverage-matrix.csv](data/source-coverage-matrix.csv) |
 | Evidence logging | [data/evidence-log-schema.md](data/evidence-log-schema.md) | [data/claim-taxonomy.md](data/claim-taxonomy.md) |
 | State/action tokens | [data/controlled-vocabulary.md](data/controlled-vocabulary.md) | task-specific template |
 | Final self-check | [templates/delivery-checklist.md](templates/delivery-checklist.md) | task-specific quality bar |

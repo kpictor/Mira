@@ -1,0 +1,13 @@
+source_class,mapped_source_count,coverage_status,practice_interpretation
+issuer_primary_disclosure,7,covered,"Primary issuer disclosures are represented and usable as durable company-fact anchors."
+regulatory_and_exchange,6,covered,"Regulatory, exchange, and official filing routes are represented."
+official_macro_and_industry,7,covered,"Official macro and industry data sources are represented."
+market_price_and_trading,10,covered,"Price, trading, options, holder, and market snapshot sources are represented."
+aggregated_financial_data,7,covered,"Aggregator financial-data sources are represented and explicitly secondary."
+consensus_and_estimates,1,covered,"Consensus/estimate coverage exists but remains a strategic data dependency."
+sellside_and_expert_research,3,covered,"Institutional interpretation and forecast sources are represented."
+professional_media,4,covered,"Professional and industry media discovery/context sources are represented."
+industry_and_supply_chain_signal,2,covered,"Supply-chain and ecosystem signal sources are represented after this run."
+social_and_community_signal,2,covered,"Social and creator signal sources are represented with signal-only role."
+local_user_material,1,covered,"Local user material is represented through a restricted source-note template."
+mira_derived_analysis,3,covered,"Derived Mira artifacts are represented and require upstream links."
