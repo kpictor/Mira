@@ -42,7 +42,8 @@ secondary, or low-confidence when appropriate.
 
 ## Source Quality
 
-Use `data/source-policy.md`, `data/source-schema.md`, and
+Use `data/source-policy.md`, `data/source-schema.md`,
+`data/source-taxonomy.md`, `data/source-class-map.csv`, and
 `data/claim-taxonomy.md` when adding new source records. Facts should prefer
 primary sources. Sell-side, social, and community sources can inform framing but
 should not replace primary evidence.

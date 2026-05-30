@@ -1,0 +1,12 @@
+workflow,coverage_status,required_inputs_status,practice_gate
+single_equity_first_pass,covered,documented,pass
+earnings_event,covered,documented,pass
+thesis_update,covered,documented,pass
+event_delta,covered,documented,pass
+industry_concept,covered,documented,pass
+macro_context,covered,documented,pass
+etf_listing_discovery,covered,documented,pass
+etf_listing_analysis,covered,documented,pass
+methodology_review,covered,documented,pass
+small_cap_catalyst,covered,documented,pass
+portfolio_review,covered,documented,pass

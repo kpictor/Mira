@@ -12,7 +12,7 @@
 | `source_name` | yes | 来源名称 |
 | `source_type` | yes | `text` / `structured` / `derived` |
 | `source_group` | yes | `official_and_industry` / `market_data` / `sellside_research` / `social_and_community` / `derived_analysis` |
-| `content_mode` | yes | `filing` / `press_release` / `news` / `market_data` / `transcript` / `note` / `dataset` |
+| `content_mode` | yes | `filing` / `press_release` / `news` / `market_data` / `transcript` / `note` / `dataset` / `report` / `policy_report` / `chartbook` / `outlook` |
 | `authority_level` | yes | `L1` 到 `L6` |
 | `credibility_level` | yes | `A` / `B` / `C` / `D` |
 | `content_type` | yes | `fact` / `evidence` / `logic` / `opinion` / `sentiment` / `rumor` |
@@ -20,7 +20,7 @@
 | `market_scope` | yes | `US` / `CN` / `global` / `multi` |
 | `access_method` | yes | `repo_local` / `web_search` / `web_read` / `public_api` / `manual_attach` / `derived` |
 | `acquisition_mode` | yes | `free` / `free_with_key` / `paid` / `manual` |
-| `update_frequency` | yes | `real_time` / `daily` / `quarterly` / `event_driven` / `irregular` |
+| `update_frequency` | yes | `real_time` / `daily` / `quarterly` / `semiannual` / `annual` / `event_driven` / `irregular` |
 | `latency_class` | yes | `live` / `delayed` / `filing_cycle` / `archival` |
 | `as_of_date_required` | yes | `yes` / `no` |
 | `usable_for` | yes | 该来源适用的研究任务，使用 `;` 分隔 |
@@ -84,6 +84,20 @@ Canonical case-level evidence schema 见 [evidence-log-schema.md](evidence-log-s
 - `sellside_research`：券商研报、付费研究、专家访谈纪要。
 - `social_and_community`：X、论坛、社区、自媒体、短视频、花边。
 - `derived_analysis`：由 agent 或研究员整理出的中间表、判断和结论。
+
+## Content Modes
+
+- `filing`：监管文件、交易所文件、招股书、10-K、10-Q、8-K 等。
+- `press_release`：公司或机构发布的新闻稿。
+- `news`：媒体报道、新闻聚合、采访或事件报道。
+- `market_data`：价格、成交量、估值、期权、持仓和交易数据。
+- `transcript`：业绩会、会议、采访或电话会文字稿。
+- `note`：本地说明、case-local source note 或 workflow note。
+- `dataset`：结构化数据集或 API 数据。
+- `report`：宏观、行业、机构或官方专题报告。
+- `policy_report`：监管、央行、财政、政策机构发布的正式政策报告。
+- `chartbook`：图表集、市场手册或多图快照。
+- `outlook`：展望类报告、预测集合或年度/季度观点材料。
 
 ## Credibility Levels
 

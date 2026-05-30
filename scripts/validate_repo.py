@@ -163,6 +163,41 @@ SOURCE_RECORD_COLUMNS = {
     "last_checked_date",
 }
 
+SOURCE_CLASSES = {
+    "issuer_primary_disclosure",
+    "regulatory_and_exchange",
+    "official_macro_and_industry",
+    "market_price_and_trading",
+    "aggregated_financial_data",
+    "consensus_and_estimates",
+    "sellside_and_expert_research",
+    "professional_media",
+    "industry_and_supply_chain_signal",
+    "social_and_community_signal",
+    "local_user_material",
+    "mira_derived_analysis",
+}
+
+SOURCE_CLASS_MAP_COLUMNS = [
+    "source_id",
+    "source_class",
+    "classification_basis",
+    "review_status",
+    "notes",
+]
+
+SOURCE_REVIEW_STATUSES = {"reviewed", "needs_review", "deprecated"}
+
+SOURCE_COVERAGE_MATRIX_COLUMNS = [
+    "workflow",
+    "required_inputs",
+    "minimum_coverage",
+    "preferred_inputs",
+    "source_gap_action",
+    "refresh_rule",
+    "notes",
+]
+
 
 @dataclass
 class Issue:
@@ -558,8 +593,106 @@ def validate_root_readiness(root: Path) -> list[Issue]:
     return issues
 
 
+def validate_source_class_map(root: Path) -> list[Issue]:
+    registry_path = root / "data" / "source-registry.csv"
+    map_path = root / "data" / "source-class-map.csv"
+    issues: list[Issue] = []
+
+    registry_header, registry_rows, registry_issues = read_csv(registry_path)
+    map_header, map_rows, map_issues = read_csv(map_path)
+    issues.extend(registry_issues)
+    issues.extend(map_issues)
+    if registry_issues or map_issues:
+        return issues
+
+    if "source_id" not in registry_header:
+        issues.append(Issue("ERROR", registry_path, 1, "missing `source_id` column"))
+        return issues
+
+    if map_header != SOURCE_CLASS_MAP_COLUMNS:
+        missing = [c for c in SOURCE_CLASS_MAP_COLUMNS if c not in set(map_header)]
+        extra = [c for c in map_header if c not in SOURCE_CLASS_MAP_COLUMNS]
+        issues.append(
+            Issue(
+                "ERROR",
+                map_path,
+                1,
+                f"non-canonical source-class-map header; missing={missing}; extra={extra}",
+            )
+        )
+        return issues
+
+    registry_ids = [row.get("source_id", "").strip() for row in registry_rows]
+    map_ids = [row.get("source_id", "").strip() for row in map_rows]
+    registry_set = set(registry_ids)
+    map_set = set(map_ids)
+
+    duplicate_map_ids = sorted(source_id for source_id in map_set if map_ids.count(source_id) > 1)
+    for source_id in duplicate_map_ids:
+        issues.append(Issue("ERROR", map_path, 0, f"duplicate source_id `{source_id}`"))
+
+    for source_id in sorted(registry_set - map_set):
+        issues.append(Issue("ERROR", map_path, 0, f"missing source_class mapping for `{source_id}`"))
+
+    for source_id in sorted(map_set - registry_set):
+        issues.append(Issue("ERROR", map_path, 0, f"source_class mapping for unknown `{source_id}`"))
+
+    for i, row in enumerate(map_rows, start=2):
+        for field in SOURCE_CLASS_MAP_COLUMNS:
+            if not (row.get(field) or "").strip():
+                issues.append(Issue("ERROR", map_path, i, f"missing required field `{field}`"))
+
+        source_class = row.get("source_class", "").strip()
+        if source_class and source_class not in SOURCE_CLASSES:
+            issues.append(Issue("ERROR", map_path, i, f"invalid source_class `{source_class}`"))
+
+        review_status = row.get("review_status", "").strip()
+        if review_status and review_status not in SOURCE_REVIEW_STATUSES:
+            issues.append(Issue("ERROR", map_path, i, f"invalid review_status `{review_status}`"))
+
+    return issues
+
+
+def validate_source_coverage_matrix(root: Path) -> list[Issue]:
+    path = root / "data" / "source-coverage-matrix.csv"
+    header, rows, issues = read_csv(path)
+    if issues:
+        return issues
+
+    if header != SOURCE_COVERAGE_MATRIX_COLUMNS:
+        missing = [c for c in SOURCE_COVERAGE_MATRIX_COLUMNS if c not in set(header)]
+        extra = [c for c in header if c not in SOURCE_COVERAGE_MATRIX_COLUMNS]
+        issues.append(
+            Issue(
+                "ERROR",
+                path,
+                1,
+                f"non-canonical source-coverage-matrix header; missing={missing}; extra={extra}",
+            )
+        )
+        return issues
+
+    if not rows:
+        issues.append(Issue("ERROR", path, 1, "source-coverage-matrix.csv has no workflow rows"))
+        return issues
+
+    workflow_ids = [row.get("workflow", "").strip() for row in rows]
+    duplicate_workflows = sorted(workflow for workflow in set(workflow_ids) if workflow_ids.count(workflow) > 1)
+    for workflow in duplicate_workflows:
+        issues.append(Issue("ERROR", path, 0, f"duplicate workflow `{workflow}`"))
+
+    for i, row in enumerate(rows, start=2):
+        for field in SOURCE_COVERAGE_MATRIX_COLUMNS:
+            if not (row.get(field) or "").strip():
+                issues.append(Issue("ERROR", path, i, f"missing required field `{field}`"))
+
+    return issues
+
+
 def validate_repo(root: Path, as_of: date) -> list[Issue]:
     issues = validate_root_readiness(root)
+    issues.extend(validate_source_class_map(root))
+    issues.extend(validate_source_coverage_matrix(root))
     for path in sorted(root.glob("**/evidence-log.csv")):
         if ".git" in path.parts:
             continue

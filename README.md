@@ -432,6 +432,7 @@ ETF 新发发现可先输出一个轻量 `etf-listing-discovery package`：
 [data/](data/) 定义统一的数据协议：
 
 - 来源字段 schema
+- 来源类别 taxonomy 和覆盖矩阵
 - 来源优先级与使用规则
 - 公开网页和公开端点的按需读取目标
 - 获取方式分类
@@ -567,9 +568,12 @@ ETF 新发发现可先输出一个轻量 `etf-listing-discovery package`：
 ├── data/
 │   ├── methodology-source-policy.md
 │   ├── public-source-targets.md
+│   ├── source-class-map.csv
+│   ├── source-coverage-matrix.csv
 │   ├── source-policy.md
 │   ├── source-registry.csv
 │   ├── source-schema.md
+│   ├── source-taxonomy.md
 │   └── time-policy.md
 ├── loops/
 │   ├── methodology-research-loop.md
