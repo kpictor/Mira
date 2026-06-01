@@ -100,3 +100,8 @@
   target_case: `next 3-5 formal Mira outputs with thesis-level judgments`
   expected_increment: 用四问压缩质量控制：现实依据、一阶变量、决策增量、可被打脸。目标是减少低质量结论和背景堆砌，而不是增加新流程。
   falsification_condition: 如果它只是重复 delivery checklist、让简单任务变慢，或不能在至少两个真实 case 中改善结论降级/刷新条件/一阶变量清晰度，就不升级到 `adopted`。
+
+- `roadmap-to-bottleneck-recursion`
+  target_case: `CPO / silicon photonics`, `AI power / grid bottleneck`, and one historical failed-bottleneck backtest
+  expected_increment: 从已确认路线图出发，沿物理、工艺、材料、产能、认证和集成约束递归上游，找到比普通产业链图更窄、更可验证、更可映射到股票代理的下一层瓶颈。
+  falsification_condition: 如果它不能比普通 `industry-concept-analysis` 和 `supply-chain` 更好地改变瓶颈排序、公司 handoff、source-gap map 或 refresh trigger，或反复把技术节点误判成可投资价值捕获，就不升级到 `adopted`。
