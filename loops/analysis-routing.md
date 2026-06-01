@@ -203,7 +203,7 @@ This loop is currently `candidate_internal_release`, not final external-grade.
 1. 运行 `thesis-horizon-routing`
 2. 运行 `framework-routing`
 3. 运行 `overlay-routing`
-4. 判断是否使用 `variant-perception` lens
+4. 判断是否使用 `variant-perception` 或 `long-term-multibagger` lens
 5. 选择输出包和刷新条件
 
 单票主框架只回答“当前主要由什么变量定价”，不回答任务是不是财报、产业、宏观或方法论。
@@ -232,6 +232,8 @@ lens 是对 thesis 的约束视角，不是额外研究对象。
 
 - `variant-perception`
   用于判断市场预期、分歧点和重定价路径。
+- `long-term-multibagger`
+  用于长期右尾 / 多倍股候选，强制检查 5 年收入空间、10 年终局、5x upside path、市场误解、文化适应性、证据阶梯和错过赢家风险。
 
 使用 lens 时必须写：
 

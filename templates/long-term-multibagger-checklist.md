@@ -15,16 +15,28 @@
 - target_multiple: {{ target_multiple }}
 - target_years: {{ target_years }}
 - implied_cagr: {{ implied_cagr }}
+- five_year_sales_test: {{ five_year_sales_test }}
+- ten_year_outcome: {{ ten_year_outcome }}
+- five_times_upside_question: {{ five_times_upside_question }}
 - required_revenue_outcome: {{ required_revenue_outcome }}
 - required_margin_or_fcf_outcome: {{ required_margin_or_fcf_outcome }}
 - required_valuation_outcome: {{ required_valuation_outcome }}
 - dividend_or_buyback_contribution: {{ dividend_or_buyback_contribution }}
+
+## Market Misunderstanding
+
+- current_consensus_proxy: {{ current_consensus_proxy }}
+- market_misunderstanding: {{ market_misunderstanding }}
+- what_is_priced_in: {{ what_is_priced_in }}
+- evidence_that_forces_rerating: {{ evidence_that_forces_rerating }}
+- what_would_show_market_is_right: {{ what_would_show_market_is_right }}
 
 ## Business Compounding Engine
 
 - market_expansion: {{ market_expansion }}
 - current_penetration: {{ current_penetration }}
 - right_to_win: {{ right_to_win }}
+- culture_adaptability: {{ culture_adaptability }}
 - reinvestment_runway: {{ reinvestment_runway }}
 - operating_leverage: {{ operating_leverage }}
 - capital_intensity: {{ capital_intensity }}
@@ -37,7 +49,9 @@
 - dilution_risk: {{ dilution_risk }}
 - balance_sheet_survivability: {{ balance_sheet_survivability }}
 - capital_allocation_quality: {{ capital_allocation_quality }}
+- probability_weighted_upside: {{ probability_weighted_upside }}
 - position_sizing_implication: {{ position_sizing_implication }}
+- missed_winner_risk: {{ missed_winner_risk }}
 
 ## Evidence Ladder
 
@@ -56,6 +70,7 @@
 - market_size_break: {{ market_size_break }}
 - valuation_break: {{ valuation_break }}
 - management_or_governance_break: {{ management_or_governance_break }}
+- market_misunderstanding_break: {{ market_misunderstanding_break }}
 
 ## Must Refresh If
 

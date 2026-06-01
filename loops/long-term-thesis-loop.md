@@ -12,6 +12,7 @@ Use this loop when the research question depends on several linked variables:
 - industry structure and value migration
 - company execution and capital allocation
 - valuation expectations and what is already priced
+- long-term right-tail / multibagger potential
 
 Do not use this loop for same-day earnings reaction, narrow fact checking, pure macro views, or catalyst-only trades.
 
@@ -87,6 +88,33 @@ Run all six lenses and name the weakest lens:
 6. valuation expectations
 
 Keep facts, inferences and judgments separate.
+
+### `right-tail-gate`
+
+Use this gate when the case is framed as a long-term growth winner, platform compounder, multibagger, outlier company or 5-10 year right-tail candidate.
+
+This is a lens, not a primary framework and not an actionability shortcut. It borrows from institutional long-term growth practice, including Baillie Gifford LTGG, but must stay inside Mira's source-trail and expectation-map discipline.
+
+Required fields:
+
+- five-year sales test
+- ten-year outcome
+- five-times-upside path
+- market misunderstanding
+- culture and adaptability
+- probability-weighted upside
+- missed-winner risk
+- evidence ladder
+- kill criteria
+
+Stop rules:
+
+- no 5x path -> do not label as long-term multibagger
+- no market misunderstanding -> downgrade to ordinary quality company analysis
+- no expectation map when valuation is material -> watch-only
+- no evidence ladder -> no durable conclusion
+- thesis depends on multiple heroic assumptions with no interim refresh variables -> reject or watch-only
+- weak balance sheet or severe dilution can block shareholder upside even if the company survives
 
 ### `trigger-overlays`
 
@@ -184,6 +212,7 @@ For a single-equity case:
 - `case-notes.md`
 - `evidence-log.csv`
 - `expectation-map.csv`
+- `long-term-multibagger-checklist.md`, if `right-tail-gate` is triggered
 - `workflow-scorecard.csv`
 - triggered overlay files
 - `methodology-delta.md`
