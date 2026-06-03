@@ -129,3 +129,9 @@
   expected_increment: 把系统性期权流从 UOA 叙事升级为可回测的 market-pricing framework，默认按 `rational_prior_position_enhancement` 分析机构级大单，先重构此前理性既有仓位和既有 thesis，再判断新交易是增强、保护、重构、融资、变现还是新增暴露，用历史样本改善 risk window、refresh trigger、event delta 和 false-positive control。
   falsification_condition: 如果数据质量不足、classification 需要未来信息、不能稳定区分新仓/平仓/spread/roll/hedge，或回测不能优于简单 event calendar / stock volume / IV rank baseline，就不升级到 `adopted`。
   notes: 方法论卡见 `memory/methodologies/options-flow-analysis.md`，填写模板见 `templates/options-flow-analysis-check.csv` 和 `templates/options-flow-data-quality-check.csv`。
+
+- `top-bottom-risk-overlay`
+  target_case: `AI semis / opticals / memory 2026`, `CPO optical suppliers`, `commodity squeeze`, `macro index drawdown`, `failed growth top`, and `capitulation bottom`
+  expected_increment: 把“顶部 / 底部 / 过热 / 洗出”问题拆成 fundamental_slope、expectation_burden、positioning_liquidity、reaction_quality 和 next_catalyst_burden，避免把强基本面误判成好风险收益，或把大跌误判成底部。
+  falsification_condition: 如果它只是重复 valuation / technical / macro 检查，不能改变 action label、refresh trigger 或 evidence gap，或系统性过早叫顶 / 抄底，就不升级到 `adopted`。
+  notes: 方法论卡见 `memory/methodologies/top-bottom-risk-overlay.md`，填写模板见 `templates/top-bottom-risk-check.csv`。
