@@ -9,8 +9,11 @@
 所有新的 `evidence-log.csv` 必须使用以下表头，顺序固定：
 
 ```csv
-source_id,claim_area,claim_type,claim_text,source_speaker,verification_status,authority_level,source_date,as_of_date,url_or_path,used_by_agent,used_by_skill,confidence,upstream_sources,notes
+source_id,claim_area,claim_type,claim_text,source_speaker,verification_status,authority_level,source_date,as_of_date,url_or_path,used_by_agent,used_by_skill,confidence,upstream_sources,notes,evidence_category,freshness_status,conflict_status,treatment,readiness_impact
 ```
+
+历史 canonical v1 表头缺少最后五个 evidence posture 字段。validator 会继续兼容
+v1 历史 case，但新模板和新 case 应使用上面的 v1.1 表头。
 
 ## Required Fields
 
@@ -31,6 +34,11 @@ source_id,claim_area,claim_type,claim_text,source_speaker,verification_status,au
 | `confidence` | yes | `high` / `medium` / `low`。 |
 | `upstream_sources` | yes | L6 或派生 claim 必须列上游 L1-L5 source id；非派生可写 `not_applicable`。 |
 | `notes` | yes | 口径、限制、刷新条件或证据降权说明。 |
+| `evidence_category` | yes | 必须来自 [evidence-posture-taxonomy.md](evidence-posture-taxonomy.md)。 |
+| `freshness_status` | yes | `current` / `acceptable_for_period` / `preliminary` / `stale` / `unknown`。 |
+| `conflict_status` | yes | `none` / `unresolved` / `contradicted` / `not_checked`。 |
+| `treatment` | yes | `use_normally` / `attribute` / `sensitize` / `haircut` / `source_gap` / `monitor` / `exclude` / `open_item`。 |
+| `readiness_impact` | yes | `supports_durable_conclusion` / `supports_working_view` / `monitoring_only` / `blocks_actionability` / `blocks_publication` / `not_material`。 |
 
 ## Validation Rules
 
@@ -40,11 +48,14 @@ source_id,claim_area,claim_type,claim_text,source_speaker,verification_status,au
 - `authority_level` 必须是 `L1` 到 `L6`。
 - `source_date` 和 `as_of_date` 必须是 `YYYY-MM-DD`。
 - `confidence` 必须是 `high`、`medium` 或 `low`。
+- v1.1 表头中的 evidence posture 字段必须使用允许枚举。
 - `derived_calculation` 或 `authority_level=L6` 的记录必须有非空 `upstream_sources`，且不能写 `not_applicable`。
 - 影响 durable conclusion 的 `derived_calculation` 必须有 `calculation-ledger.csv` 记录或 explicit formula note。
 - `rumor_signal` 不能有 `confidence=high`。
 - `sentiment`、`opinion`、`rumor_signal` 默认不能作为 durable conclusion 的唯一证据。
 - `market_pricing` 只能说明市场如何定价，不能写成基本面验证。
+- `evidence_category=verified_fact` 不应搭配 `verification_status=unverified`、`claim_type=assumption`、`claim_type=opinion`、`claim_type=sentiment` 或 `claim_type=rumor_signal`。
+- `readiness_impact=supports_durable_conclusion` 不应搭配 `evidence_category=unknown`、`weak_signal`、`stale` 或 `contradicted`，除非 notes 说明控制来源和降级方式。
 
 ## Legacy Handling
 
@@ -63,6 +74,13 @@ source_id,claim_area,claim_type,claim_text,source_speaker,verification_status,au
 - 这条 claim 改变了哪个 expectation variable。
 - 它是事实、公司口径、预测、市场定价还是 Mira 推断。
 - 如果它错了，哪个 thesis、event delta 或 research action 会被影响。
+
+证据姿态字段提供这个实战分层：
+
+- `claim_type` 回答“这是什么信息”。
+- `authority_level` 回答“来源层级多高”。
+- `evidence_category` 回答“这条信息对当前结论有多可用”。
+- `readiness_impact` 回答“它能不能支撑 durable conclusion 或 actionability”。
 
 ## Calculation Relationship
 

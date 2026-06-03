@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import re
 import sys
 from dataclasses import dataclass
@@ -47,7 +48,7 @@ DISCLAIMER_MARKERS = (
     "不构成投资建议",
 )
 
-CANONICAL_EVIDENCE_COLUMNS = [
+CANONICAL_EVIDENCE_COLUMNS_V1 = [
     "source_id",
     "claim_area",
     "claim_type",
@@ -64,6 +65,16 @@ CANONICAL_EVIDENCE_COLUMNS = [
     "upstream_sources",
     "notes",
 ]
+
+EVIDENCE_POSTURE_COLUMNS = [
+    "evidence_category",
+    "freshness_status",
+    "conflict_status",
+    "treatment",
+    "readiness_impact",
+]
+
+CANONICAL_EVIDENCE_COLUMNS = CANONICAL_EVIDENCE_COLUMNS_V1 + EVIDENCE_POSTURE_COLUMNS
 
 CLAIM_TYPES = {
     "fact",
@@ -94,6 +105,55 @@ VERIFICATION_STATUSES = {
 
 AUTHORITY_LEVELS = {"L1", "L2", "L3", "L4", "L5", "L6"}
 CONFIDENCE_LEVELS = {"high", "medium", "low"}
+EVIDENCE_CATEGORIES = {
+    "verified_fact",
+    "reported_fact",
+    "company_statement",
+    "management_guidance",
+    "market_pricing",
+    "assumption",
+    "inference",
+    "estimate",
+    "weak_signal",
+    "stale",
+    "contradicted",
+    "unknown",
+}
+FRESHNESS_STATUSES = {
+    "current",
+    "acceptable_for_period",
+    "preliminary",
+    "stale",
+    "unknown",
+}
+CONFLICT_STATUSES = {"none", "unresolved", "contradicted", "not_checked"}
+EVIDENCE_TREATMENTS = {
+    "use_normally",
+    "attribute",
+    "sensitize",
+    "haircut",
+    "source_gap",
+    "monitor",
+    "exclude",
+    "open_item",
+}
+READINESS_IMPACTS = {
+    "supports_durable_conclusion",
+    "supports_working_view",
+    "monitoring_only",
+    "blocks_actionability",
+    "blocks_publication",
+    "not_material",
+}
+READINESS_LEVELS = {
+    "draft",
+    "working_view",
+    "research_ready",
+    "actionable_with_caveats",
+    "watch_only",
+    "not_actionable",
+    "needs_refresh",
+}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 DATE_IN_TEXT_RE = re.compile(r"\b(\d{4}-\d{2}-\d{2})\b")
 STALE_AFTER_RE = re.compile(r"stale_after:\s*(\d{4}-\d{2}-\d{2})", re.IGNORECASE)
@@ -201,6 +261,26 @@ SOURCE_COVERAGE_MATRIX_COLUMNS = [
     "notes",
 ]
 
+RESEARCH_PACKAGE_MANIFEST_REQUIRED_FIELDS = [
+    "manifest_version",
+    "case_id",
+    "research_object",
+    "market_scope",
+    "time_boundary",
+    "research_cutoff_date",
+    "package_type",
+    "readiness_level",
+    "readiness_basis",
+    "blocking_gaps",
+    "hero_artifacts",
+    "support_artifacts",
+    "source_scope",
+    "evidence_log_status",
+    "quant_gate_status",
+    "stale_after",
+    "must_refresh_if",
+]
+
 
 @dataclass
 class Issue:
@@ -276,7 +356,9 @@ def validate_evidence_log(path: Path) -> list[Issue]:
         return issues
 
     header_set = set(header)
-    if header != CANONICAL_EVIDENCE_COLUMNS:
+    is_v1 = header == CANONICAL_EVIDENCE_COLUMNS_V1
+    is_v1_1 = header == CANONICAL_EVIDENCE_COLUMNS
+    if not (is_v1 or is_v1_1):
         missing = [c for c in CANONICAL_EVIDENCE_COLUMNS if c not in header_set]
         extra = [c for c in header if c not in CANONICAL_EVIDENCE_COLUMNS]
         if SOURCE_RECORD_COLUMNS & header_set:
@@ -302,7 +384,8 @@ def validate_evidence_log(path: Path) -> list[Issue]:
         return issues
 
     for i, row in enumerate(rows, start=2):
-        for field in CANONICAL_EVIDENCE_COLUMNS:
+        required_fields = CANONICAL_EVIDENCE_COLUMNS if is_v1_1 else CANONICAL_EVIDENCE_COLUMNS_V1
+        for field in required_fields:
             if not (row.get(field) or "").strip():
                 issues.append(Issue("ERROR", path, i, f"missing required field `{field}`"))
 
@@ -323,6 +406,32 @@ def validate_evidence_log(path: Path) -> list[Issue]:
         confidence = row.get("confidence", "").strip()
         if confidence and confidence not in CONFIDENCE_LEVELS:
             issues.append(Issue("ERROR", path, i, f"invalid confidence `{confidence}`"))
+
+        evidence_category = row.get("evidence_category", "").strip()
+        freshness_status = row.get("freshness_status", "").strip()
+        conflict_status = row.get("conflict_status", "").strip()
+        treatment = row.get("treatment", "").strip()
+        readiness_impact = row.get("readiness_impact", "").strip()
+
+        if is_v1_1:
+            if evidence_category and evidence_category not in EVIDENCE_CATEGORIES:
+                issues.append(
+                    Issue("ERROR", path, i, f"invalid evidence_category `{evidence_category}`")
+                )
+            if freshness_status and freshness_status not in FRESHNESS_STATUSES:
+                issues.append(
+                    Issue("ERROR", path, i, f"invalid freshness_status `{freshness_status}`")
+                )
+            if conflict_status and conflict_status not in CONFLICT_STATUSES:
+                issues.append(
+                    Issue("ERROR", path, i, f"invalid conflict_status `{conflict_status}`")
+                )
+            if treatment and treatment not in EVIDENCE_TREATMENTS:
+                issues.append(Issue("ERROR", path, i, f"invalid treatment `{treatment}`"))
+            if readiness_impact and readiness_impact not in READINESS_IMPACTS:
+                issues.append(
+                    Issue("ERROR", path, i, f"invalid readiness_impact `{readiness_impact}`")
+                )
 
         for field in ("source_date", "as_of_date"):
             value = row.get(field, "").strip()
@@ -358,8 +467,99 @@ def validate_evidence_log(path: Path) -> list[Issue]:
                 )
             )
 
+        if is_v1_1:
+            if evidence_category == "verified_fact" and (
+                verification_status == "unverified"
+                or claim_type in {"assumption", "opinion", "sentiment", "rumor_signal"}
+            ):
+                issues.append(
+                    Issue(
+                        "ERROR",
+                        path,
+                        i,
+                        "verified_fact posture conflicts with weak/unverified claim classification",
+                    )
+                )
+            if evidence_category == "market_pricing" and claim_type != "market_pricing":
+                issues.append(
+                    Issue(
+                        "WARN",
+                        path,
+                        i,
+                        "evidence_category=market_pricing usually pairs with claim_type=market_pricing",
+                    )
+                )
+            if readiness_impact == "supports_durable_conclusion" and evidence_category in {
+                "unknown",
+                "weak_signal",
+                "stale",
+                "contradicted",
+            }:
+                issues.append(
+                    Issue(
+                        "ERROR",
+                        path,
+                        i,
+                        f"{evidence_category} cannot directly support a durable conclusion",
+                    )
+                )
+            if freshness_status == "stale" and evidence_category not in {"stale", "unknown"}:
+                issues.append(
+                    Issue(
+                        "WARN",
+                        path,
+                        i,
+                        "freshness_status=stale should normally downgrade evidence_category",
+                    )
+                )
+            if conflict_status in {"unresolved", "contradicted"} and evidence_category != "contradicted":
+                issues.append(
+                    Issue(
+                        "WARN",
+                        path,
+                        i,
+                        "unresolved or contradicted conflict_status should normally downgrade evidence_category",
+                    )
+                )
+
     if not rows:
         issues.append(Issue("ERROR", path, 1, "evidence-log.csv has no claim rows"))
+
+    return issues
+
+
+def validate_research_package_manifest(path: Path) -> list[Issue]:
+    issues: list[Issue] = []
+    try:
+        data = json.loads(read_text(path))
+    except Exception as exc:
+        return [Issue("ERROR", path, 0, f"could not parse JSON manifest: {exc}")]
+
+    for field in RESEARCH_PACKAGE_MANIFEST_REQUIRED_FIELDS:
+        if field not in data:
+            issues.append(Issue("ERROR", path, 0, f"missing manifest field `{field}`"))
+
+    readiness = str(data.get("readiness_level", "")).strip()
+    if readiness and not is_placeholder(readiness) and readiness not in READINESS_LEVELS:
+        issues.append(Issue("ERROR", path, 0, f"invalid readiness_level `{readiness}`"))
+
+    for field in ("research_cutoff_date", "stale_after"):
+        value = str(data.get(field, "")).strip()
+        if value and not is_placeholder(value) and not DATE_RE.match(value):
+            issues.append(Issue("ERROR", path, 0, f"`{field}` must be YYYY-MM-DD"))
+
+    for field in ("blocking_gaps", "hero_artifacts", "support_artifacts", "must_refresh_if"):
+        if field in data and not isinstance(data.get(field), list):
+            issues.append(Issue("ERROR", path, 0, f"`{field}` must be a list"))
+
+    if not data.get("hero_artifacts"):
+        issues.append(Issue("ERROR", path, 0, "manifest must name at least one hero artifact"))
+    if not data.get("support_artifacts"):
+        issues.append(Issue("ERROR", path, 0, "manifest must name support artifacts"))
+
+    package_type = str(data.get("package_type", "")).strip()
+    if package_type and package_type != "research_package":
+        issues.append(Issue("WARN", path, 0, f"unexpected package_type `{package_type}`"))
 
     return issues
 
@@ -726,6 +926,10 @@ def validate_repo(root: Path, as_of: date) -> list[Issue]:
         if ".git" in path.parts:
             continue
         issues.extend(validate_decision_log(path))
+    for path in sorted(root.glob("**/research-package-manifest.json")):
+        if ".git" in path.parts:
+            continue
+        issues.extend(validate_research_package_manifest(path))
     for path in sorted(root.glob("**/*.md")):
         if ".git" in path.parts:
             continue
@@ -772,14 +976,26 @@ def validate_paths(paths: list[Path], as_of: date) -> list[Issue]:
             if decision_log.exists():
                 issues.extend(validate_no_local_absolute_paths(decision_log))
                 issues.extend(validate_decision_log(decision_log))
+            manifest = path / "research-package-manifest.json"
+            if manifest.exists():
+                issues.extend(validate_research_package_manifest(manifest))
         elif path.name == "evidence-log.csv":
             issues.extend(validate_no_local_absolute_paths(path))
             issues.extend(validate_evidence_log(path))
         elif path.name == "decision-log.csv":
             issues.extend(validate_no_local_absolute_paths(path))
             issues.extend(validate_decision_log(path))
+        elif path.name == "research-package-manifest.json":
+            issues.extend(validate_research_package_manifest(path))
         else:
-            issues.append(Issue("ERROR", path, 0, "expected evidence-log.csv or case directory"))
+            issues.append(
+                Issue(
+                    "ERROR",
+                    path,
+                    0,
+                    "expected evidence-log.csv, decision-log.csv, research-package-manifest.json or case directory",
+                )
+            )
     return issues
 
 

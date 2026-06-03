@@ -9,12 +9,15 @@ Use this before handing off a formal research output.
 - [ ] `depth_mode` is stated, and artifacts match `quick_map`, `standard` or `deep_dive`.
 - [ ] Facts, inferences and judgments are separated.
 - [ ] Every durable conclusion has an evidence-log row or explicit source note.
+- [ ] New evidence logs include evidence posture fields or explicitly state why legacy v1 schema is being used.
+- [ ] `readiness_level`, `readiness_basis` and `blocking_gaps` are stated before any actionability conclusion.
 - [ ] Numeric conclusions were routed through `data-analysis-quality-gate` or explicitly waived with a reason.
 - [ ] Derived calculations have a `calculation-ledger` row or explicit formula note.
 - [ ] Numeric claims that affect thesis/actionability were cross-checked, or downgraded to `calculation_gap`, `source_gap`, `watch_only`, `needs_refresh` or equivalent.
 - [ ] No unresolved `{{ placeholder }}` remains.
 - [ ] `stale_after`, `must_refresh_if` or equivalent refresh condition is present.
 - [ ] Weak evidence is downgraded to `source_gap`, `watch_only`, `needs_refresh` or equivalent.
+- [ ] Cross-skill handoffs preserve source IDs, evidence categories, freshness/conflict status and named gaps.
 - [ ] Output states `not_investment_advice` or an equivalent boundary.
 
 ## Single-Equity Additions
