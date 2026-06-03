@@ -15,6 +15,7 @@
 - lens_basis: {{ lens_basis }}
 - financial_data_through: {{ financial_data_through }}
 - price_date: {{ price_date }}
+- technical_context_ref: {{ technical_context_ref }}
 - thesis_horizon: {{ thesis_horizon }}
 - horizon_bucket: {{ horizon_bucket }}
 - horizon_basis: {{ horizon_basis }}
@@ -29,6 +30,8 @@
 | conviction | {{ conviction }} |
 | horizon | {{ horizon }} |
 | what_is_priced_in | {{ what_is_priced_in }} |
+| technical_context | {{ technical_context }} |
+| event_reaction_quality | {{ event_reaction_quality }} |
 | invalidation_level_or_condition | {{ invalidation_level_or_condition }} |
 | implied_risk_reward | {{ implied_risk_reward }} |
 | next_catalyst_date | {{ next_catalyst_date }} |
@@ -54,6 +57,12 @@
 {{ valuation_and_expectation_quant }}
 
 At minimum, include current valuation anchor, what is priced in, base/bull/bear scenario assumptions, downside path, and whether the valuation anchor quality is `high`, `medium`, `low`, or `source_gap`.
+
+## Technical / Market Pricing Context
+
+{{ technical_market_pricing_context }}
+
+Use [../../templates/technical-analysis-check.csv](../../templates/technical-analysis-check.csv) when the research action depends on current price behavior, event follow-through, volatility, liquidity, positioning or trigger / invalidation levels. Treat this section as `market_pricing` and `derived_calculation`; it cannot prove fundamental execution or thesis durability.
 
 ## Actionability Bridge
 
