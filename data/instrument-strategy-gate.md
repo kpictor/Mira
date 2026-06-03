@@ -157,4 +157,3 @@ For a quick instrument answer, include:
 
 For a formal output, use
 [../templates/actionability-system/instrument-strategy-gate.md](../templates/actionability-system/instrument-strategy-gate.md).
-
