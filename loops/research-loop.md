@@ -38,6 +38,9 @@
 - `routing_basis`
 - `routing_mismatch_risk`
 - `expected_output_package`
+- `expected_handoffs`
+- `readiness_level`
+- `readiness_basis`
 
 如果总路由显示任务应进入 `earnings_event`、`monitoring_update`、`methodology_review`、`macro_asset_or_regime` 或 `etf_or_product_listing`，不要继续强行走普通单票 research loop。
 
@@ -105,6 +108,15 @@
 - `verification_status`
 - `as_of_date`
 - `confidence`
+
+同时按 [../data/evidence-posture-taxonomy.md](../data/evidence-posture-taxonomy.md)
+标注：
+
+- `evidence_category`
+- `freshness_status`
+- `conflict_status`
+- `treatment`
+- `readiness_impact`
 
 必须特别区分：
 
@@ -180,6 +192,17 @@
 
 识别缺口、冲突、低可信结论，以及框架错配风险。
 
+按 [../data/research-readiness-gate.md](../data/research-readiness-gate.md)
+给当前 package 预设：
+
+- `readiness_level`
+- `readiness_basis`
+- `blocking_gaps`
+
+如果存在 `stale`、`contradicted`、`unknown`、`weak_signal` 或未复算的 material
+`estimate`，不得把 package 升级为 `research_ready` 或 `actionable_with_caveats`，
+除非已经有更高质量证据明确解决缺口。
+
 如果使用了 `variant perception checklist`，这里还要额外检查：
 
 - 共识是不是被清晰刻画
@@ -213,6 +236,7 @@
 - `investment memo`
 - `evidence log`
 - `case notes`
+- `research-package-manifest.json`
 
 并显式写入：
 
@@ -230,6 +254,11 @@
 - `overlay_basis`
 - `selected_lenses`
 - `lens_basis`
+- `readiness_level`
+- `readiness_basis`
+- `blocking_gaps`
+- `evidence_log_status`
+- `quant_gate_status`
 
 如果处于 `industry-concept` 分支，则输出 `industry-analysis-package`：
 
@@ -249,6 +278,10 @@
 - `calculation_gate_basis`
 - `tool_consent_required`
 - `calculation_status`
+
+如果研究结果会交接给 earnings、SEC、industry、macro 或 thesis system 以外的
+模块，必须按 [../data/handoff-contracts.md](../data/handoff-contracts.md) 写入
+handoff note 或在 `research-package-manifest.json` 中登记 handoff。
 
 ### `write-thesis-ledger`
 

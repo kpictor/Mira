@@ -14,6 +14,8 @@ Every formal output must:
 - run [loops/analysis-routing.md](loops/analysis-routing.md) before formal analysis
 - separate `facts`, `inferences` and `judgments`
 - keep every durable conclusion tied to an evidence log or explicit source note
+- label evidence posture with [data/evidence-posture-taxonomy.md](data/evidence-posture-taxonomy.md) when creating new evidence logs
+- assign a package/actionability readiness level using [data/research-readiness-gate.md](data/research-readiness-gate.md)
 - include `stale_after`, `must_refresh_if` or equivalent refresh conditions
 - downgrade conclusions when evidence quality is weak
 - avoid autonomous trade instructions; use research actions only
@@ -31,8 +33,9 @@ Every formal output must:
 | SEC filing deep dive | [skills/sec-filing-analysis/SKILL.md](skills/sec-filing-analysis/SKILL.md) | [templates/sec-filing-analysis-package/](templates/sec-filing-analysis-package/) |
 | PM / book review | [loops/portfolio-review-loop.md](loops/portfolio-review-loop.md) | portfolio register template and research index |
 | Source routing | [data/source-taxonomy.md](data/source-taxonomy.md) | [data/source-coverage-matrix.csv](data/source-coverage-matrix.csv) |
-| Evidence logging | [data/evidence-log-schema.md](data/evidence-log-schema.md) | [data/claim-taxonomy.md](data/claim-taxonomy.md) |
+| Evidence logging | [data/evidence-log-schema.md](data/evidence-log-schema.md) | [data/claim-taxonomy.md](data/claim-taxonomy.md) and [data/evidence-posture-taxonomy.md](data/evidence-posture-taxonomy.md) |
 | Numeric / calculation gate | [skills/data-analysis-quality-gate/SKILL.md](skills/data-analysis-quality-gate/SKILL.md) | [templates/data-requirement-brief.md](templates/data-requirement-brief.md) and [templates/calculation-ledger.csv](templates/calculation-ledger.csv) |
+| Readiness / handoff | [data/research-readiness-gate.md](data/research-readiness-gate.md) | [data/handoff-contracts.md](data/handoff-contracts.md) and [templates/research-package/research-package-manifest.json](templates/research-package/research-package-manifest.json) |
 | State/action tokens | [data/controlled-vocabulary.md](data/controlled-vocabulary.md) | task-specific template |
 | Final self-check | [templates/delivery-checklist.md](templates/delivery-checklist.md) | task-specific quality bar |
 
@@ -66,5 +69,6 @@ Stop or downgrade when:
 - valuation anchor is missing for an actionability claim
 - the case is past `stale_after` and the user wants live use
 - facts, inferences and judgments cannot be separated
+- `readiness_level` cannot be upgraded past `working_view` without resolving named evidence, calculation or freshness gaps
 
 When stopped, return `source_gap`, `watch_only`, `no_action` or `needs_refresh` instead of forcing a stronger conclusion. Use [data/controlled-vocabulary.md](data/controlled-vocabulary.md) for machine-facing state/action tokens.

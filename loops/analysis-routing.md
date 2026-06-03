@@ -15,7 +15,8 @@
 5. `primary_skill_or_loop`
 6. `equity_route`
 7. `overlays_and_lenses`
-8. `output_package`
+8. `handoff_and_readiness`
+9. `output_package`
 
 如果前面步骤已经说明任务不是单票公司研究，就不要强行进入 `equity-research-core`。
 
@@ -33,6 +34,9 @@
 - `routing_basis`
 - `routing_mismatch_risk`
 - `expected_output_package`
+- `expected_handoffs`
+- `readiness_level`
+- `readiness_basis`
 
 如果进入单票研究，还要继续记录：
 
@@ -266,7 +270,35 @@ This loop is currently `candidate_internal_release`, not final external-grade.
 
 如果 `calculation_gate = required` 但用户选择不计算，或当前来源不足以计算，必须把相关结论降级为 `calculation_gap`、`source_gap`、`watch_only`、`needs_refresh` 或 `no_action`。
 
-## Step 4: Single-Equity Route
+## Step 4: Handoff And Readiness
+
+在进入具体 loop / skill 前，先判断当前任务是否会把结果交给另一个模块。
+
+如果存在跨模块流转，按 [../data/handoff-contracts.md](../data/handoff-contracts.md)
+记录：
+
+- `handoff_type`
+- `producer`
+- `consumer`
+- `required_artifacts`
+- `evidence_log_refs`
+- `calculation_refs`
+- `readiness_level`
+- `blocking_gaps`
+- `must_refresh_if`
+
+常见 handoff：
+
+- `earnings_to_equity_research`
+- `sec_to_research_package`
+- `industry_to_single_equity`
+- `macro_to_equity_overlay`
+
+同时按 [../data/research-readiness-gate.md](../data/research-readiness-gate.md)
+给任务当前输出预设 `readiness_level`。默认不要超过 `working_view`，除非来源、
+计算、冲突和刷新条件都能支撑更高等级。
+
+## Step 5: Single-Equity Route
 
 如果 `research_object = single_equity`，按以下顺序继续：
 

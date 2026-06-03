@@ -190,6 +190,19 @@ overlay 选择规则见：
 - `overlay_basis`
 - `selected_lenses`
 - `lens_basis`
+- `readiness_level`
+- `readiness_basis`
+- `blocking_gaps`
+- `evidence_log_status`
+- `quant_gate_status`
+
+新的 `evidence-log.csv` 应使用 [../../data/evidence-posture-taxonomy.md](../../data/evidence-posture-taxonomy.md)
+中的 evidence posture 字段。不要因为来源层级高就自动把 claim 升级成
+`verified_fact`；必须匹配 claim、期间、口径、单位和当前研究用途。
+
+研究包还应包含或更新 `research-package-manifest.json`，用于记录 hero artifacts、
+support artifacts、readiness、handoffs、source scope、quant gate 和 refresh
+条件。
 
 如果研究问题明显属于“预期差判断”，建议额外使用：
 

@@ -116,3 +116,21 @@ LLM 在 Mira 中应优先用于：
 ## Output Rule
 
 研究输出中任何 durable conclusion 都应能回溯到 evidence log 中至少一条高权重 claim。若结论主要依赖 `company_claim`、`forecast`、`assumption`、`opinion`、`sentiment` 或 `rumor_signal`，必须降级置信度并写明刷新条件。
+
+## Relationship To Evidence Posture
+
+`claim_type` 不等于结论强度。新 evidence log 还应使用
+[evidence-posture-taxonomy.md](evidence-posture-taxonomy.md) 中的
+`evidence_category`、`freshness_status`、`conflict_status`、`treatment` 和
+`readiness_impact`。
+
+例如：
+
+- `claim_type=reported_metric` 可以是 `verified_fact`，也可以是
+  `reported_fact`、`stale` 或 `contradicted`。
+- `claim_type=guidance` 通常对应 `management_guidance`，不能写成已经兑现的
+  `verified_fact`。
+- `claim_type=market_pricing` 通常对应 `market_pricing`，只能证明市场定价，
+  不能证明基本面。
+- `claim_type=derived_calculation` 通常对应 `estimate`，除非上游来源、公式、
+  口径和复算路径都已记录。
