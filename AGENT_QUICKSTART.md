@@ -68,6 +68,8 @@ Mira, 研究 CRWV
 
 正式分析前必须先运行 [loops/analysis-routing.md](loops/analysis-routing.md)，不要直接套股票模板。
 
+路由第一步是 Step 0 意图入口：先把复合 prompt 拆成 `primary_intent` / `secondary_intents`，显式声明本轮运行假设，并按 `depth_mode` 给出可缩放的路由卡（quick_map 只需一行假设条）。如果问题接近“能不能买 / 加 / 减 / 冲 / 抄底 / 目标价到了还能买”或 position / portfolio，必须同时跑 Step 0.5 decision pressure gate：标注 `decision_pressure` 与 `framing_risk`（锚问题不锚人、瞬时不存储），压力为 medium/high 时给一个反向检验。选定 depth 后，用 Step 3.3 校验信息价值和可知性；主导变量不可知时输出 `irreducible_uncertainty`，不要强行深挖。
+
 如果 context 紧张，先读 [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md)。它给出最短 loading map：每一步只读当前需要的 loop、skill 或模板。
 
 先确定 `depth_mode`，避免快看被完整模板拖慢，也避免正式研究缺少证据：
@@ -77,6 +79,8 @@ Mira, 研究 CRWV
 | `quick_map` | “看一下”、早期 triage、来源边界不完整 | routing card、核心判断、source notes、source gaps、refresh triggers、1 个 light follow-up 或显式 waiver |
 | `standard` | “研究 X”、正式 case、普通财报或 monitoring update | routed package 的必需文件 |
 | `deep_dive` | “深挖”、长期 thesis、复杂估值、SEC 深拆、PM / 方法论复核 | 完整 package + 被 gate 触发的附加 artifact |
+
+注意 `interaction_mode`（答案形状，Step 0）和 `depth_mode`（研究力度）是两个轴，别因为都带 “quick” 就混用：`quick_answer + quick_map`（看一下方向，浅研究一句话）、`quick_answer + deep_dive`（只要一句结论，但问题需要真估值才答得诚实）、`routed_research + quick_map`（triage 但仍出结构化卡）。组合样例见 [examples/routing-examples.md](examples/routing-examples.md)。
 
 | 用户意图 | 默认路由 | 输出 |
 | --- | --- | --- |
@@ -367,6 +371,11 @@ Mira 输出里必须分开写：
 
 - 是否记录 `task_mode`, `research_object`, `market_scope`, `time_boundary`。
 - 是否完成总路由，而不是直接套模板。
+- 是否先做 Step 0 意图入口：拆分复合意图、声明运行假设、按 depth 给出路由卡。
+- 若问题涉及 actionability / position / portfolio，是否输出 `decision_pressure`，压力高时是否给 disconfirmation。
+- 是否做了信息价值 / 可知性判断；主导变量不可知时是否诚实输出 `irreducible_uncertainty`，而非强行深挖。
+- 正式判断是否带 `judgment_confidence`、`confidence_basis` 和 `reversal_condition`。
+- 同一会话内 carryover 是否只沿用范围 / 时间 / 对象等白名单字段，未把偏误读数当长期偏好。
 - 是否遵守 [MIRA.md](MIRA.md) 的唤醒词、人格边界和 memory 规则。
 - 单票研究是否写明 `horizon_bucket`, `selected_framework`, `selected_overlays`。
 - 若维护已有 thesis，是否更新或明确 waived `thesis-ledger`、`expectation-map` 和 state change。
