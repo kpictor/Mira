@@ -18,6 +18,7 @@ Every formal output must:
 - label evidence posture with [data/evidence-posture-taxonomy.md](data/evidence-posture-taxonomy.md) when creating new evidence logs
 - assign a package/actionability readiness level using [data/research-readiness-gate.md](data/research-readiness-gate.md)
 - include `stale_after`, `must_refresh_if` or equivalent refresh conditions
+- end with 1-3 route-bound, object-specific progressive follow-up prompts when they can improve research boundary, evidence quality, readiness, or next-route selection
 - downgrade conclusions when evidence quality is weak
 - avoid autonomous trade instructions; use research actions only
 - apply [data/actionability-risk-control.md](data/actionability-risk-control.md) before any participation, add, trim, chase or event-trade framing

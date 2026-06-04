@@ -129,6 +129,7 @@ Every formal Mira research output must include or explicitly waive:
 - `depth_mode`
 - `primary_skill_or_loop`
 - `routing_basis`
+- `followup_prompt_mode` and route-bound, object-specific progressive follow-up prompts, or an explicit waiver
 - source notes or evidence log
 - `quant_dependency`, `calculation_gate`, or an explicit waiver when conclusions depend on derived numbers
 - facts / inferences / judgments separation

@@ -17,7 +17,8 @@
 7. `equity_route`
 8. `overlays_and_lenses`
 9. `handoff_and_readiness`
-10. `output_package`
+10. `progressive_followup_prompts`
+11. `output_package`
 
 如果前面步骤已经说明任务不是单票公司研究，就不要强行进入 `equity-research-core`。
 
@@ -42,6 +43,13 @@
 - `expected_handoffs`
 - `readiness_level`
 - `readiness_basis`
+- `followup_prompt_mode`
+- `followup_questions`
+- `followup_basis`
+- `next_route_if_answered`
+- `followup_route_binding`
+- `followup_object_anchor`
+- `followup_decision_impact`
 
 如果进入单票研究，还要继续记录：
 
@@ -403,6 +411,140 @@ This loop is currently `candidate_internal_release`, not final external-grade.
 给任务当前输出预设 `readiness_level`。默认不要超过 `working_view`，除非来源、
 计算、冲突和刷新条件都能支撑更高等级。
 
+## Step 4.5: Progressive Follow-Up Prompts
+
+progressive follow-up 是研究输出末尾的渐进式反问，用于帮助用户把一个松散问题升级为更科学、更可验证、更机构化的下一步任务。
+
+它不是阻塞性澄清。默认先完成当前 route 能支持的回答，再给 1-3 个高杠杆反问。只有当研究对象、时间边界或数据权限完全不清楚，且继续分析会制造误导时，才把反问提前为 `routing_unclear`。
+
+### Prompt Modes
+
+至少记录：
+
+- `followup_prompt_mode`: `none` / `light` / `standard` / `decision_grade`
+- `followup_questions`
+- `followup_basis`
+- `next_route_if_answered`
+- `followup_route_binding`
+- `followup_object_anchor`
+- `followup_decision_impact`
+
+默认规则：
+
+- `none`: 用户明确要求只要结论、机械更新、格式转换或已有下一步非常明确。
+- `light`: quick_map、monitoring 小更新或用户只问“看一下”；输出 1 个反问。
+- `standard`: 标准研究、产业 / 宏观 / 方法论任务、单票首次覆盖；输出 2-3 个反问。
+- `decision_grade`: 任何接近 actionability、position review、portfolio construction、instrument strategy、PM handoff 或 durable thesis 的任务；输出 2-3 个反问，并明确回答后会进入哪个 loop / skill。
+
+### Generation Gate
+
+每个 progressive follow-up 必须按以下顺序生成。不要先写一个通用问题，再事后贴 route。
+
+1. `route-bound`: 先从 routing 输出中选择问题类型。
+   - 使用 `task_mode`、`research_object`、`time_boundary`、`depth_mode`、`quant_dependency`、`readiness_level`、`selected_framework`、`selected_overlays` 和 `expected_handoffs`。
+   - 问题必须能说明它会改变哪个 route 字段，或会触发哪个 loop / skill / gate。
+2. `object-specific`: 再把问题内容锚定到当前研究对象。
+   - 单票研究必须点名公司、ticker、主业务、当前定价变量、关键客户、主要产品、核心风险或估值锚中的至少一个。
+   - 产业 / 宏观 / 商品 / 方法论研究必须点名主题变量、数据口径、市场范围或待验证机制。
+   - position / portfolio review 必须点名持仓语境、组合约束、风险预算或 thesis conflict；没有真实持仓数据时必须保持 `research_only`。
+3. `decision-impact explicit`: 最后说明用户回答后会改变什么。
+   - 可选影响类型：`boundary`、`evidence_path`、`calculation_depth`、`readiness_level`、`thesis_state`、`actionability_boundary`、`position_review_scope`、`output_package`、`refresh_condition`。
+   - 如果答案可能把输出从 `working_view` 升级到更高 readiness，必须同时说明还缺哪些来源、计算或持仓数据。
+
+合格标准：
+
+- 每个问题都必须同时有 `route_binding`、`object_anchor` 和 `decision_impact`。
+- 如果无法做到 object-specific，说明当前来源或对象信息不足，并把问题降级为边界澄清。
+- 如果问题只适用于任意股票、任意行业或任意组合，视为不合格。
+
+### Question Design Rules
+
+每个反问必须至少满足以下一个目的：
+
+- 缩窄研究边界：明确时间窗口、市场范围、研究对象、输出深度或来源权限。
+- 暴露隐含假设：指出结论真正依赖的变量、共识代理、估值隐含预期或关键反事实。
+- 推动机构化决策框架：把问题连接到 watchlist、research package、thesis update、position review、portfolio review 或 actionability bridge。
+- 明确可证伪条件：要求用户定义什么证据会改变判断、降级 thesis 或触发 refresh。
+- 连接下一层证据路径：说明回答后会进入哪个 loop、skill、overlay、quant gate 或 handoff。
+
+反问必须避免：
+
+- 泛泛问“你还想了解什么？”
+- 要求用户重复已经给出的信息。
+- 在证据不足时用反问掩盖结论降级。
+- 把 research-only 输出诱导成交易建议、订单或仓位大小结论。
+- 一次给超过 3 个问题，除非用户明确要求设计完整 research questionnaire。
+- 使用只适用于任何对象的通用问题，而没有对象锚点。
+- 只写“下一步 route”，但不说明会改变哪类结论或 readiness。
+
+### Route-Specific Prompt Patterns
+
+以下只是问题类型，不是可直接照抄的最终问题。输出时必须用当前研究对象、市场变量和 route 结果改写成 object-specific 问题。
+
+`first_pass_research`:
+
+- 你希望这次覆盖服务于 watchlist、正式 thesis，还是后续 position review？
+- 你更关心 1-2 个季度的 revision，还是 2-3 年的竞争格局和终局空间？
+- 哪个变量如果被证伪，应该直接降级这个 thesis？
+
+`monitoring_update`:
+
+- 这次增量信息要更新 thesis state、expectation map，还是只放入 watchlist note？
+- 你希望我只判断事件影响，还是同步检查原框架是否仍然有效？
+
+`earnings_event`:
+
+- 你更关心业绩是否超预期、指引是否改变 FY1/FY2，还是长期 thesis 是否被改写？
+- 是否需要把财报 delta 转成 actionability bridge？如果需要，必须补时间窗口、持仓语境和失效条件。
+
+`methodology_review`:
+
+- 这个方法准备用于生成候选、验证 thesis，还是管理组合风险？
+- 你接受它作为辅助 lens，还是需要达到能写入 methodology memory 的证据标准？
+
+`industry_concept`:
+
+- 你要的是产业图谱、可投资标的筛选，还是从主题落到单票 handoff？
+- 这个主题真正要验证的是 TAM、渗透率、成本曲线、监管路径，还是竞争格局？
+
+`macro_asset_or_regime`:
+
+- 你要把宏观判断用于指数 / 资产配置，还是作为某类股票的 overlay？
+- 哪个变量最可能推翻当前宏观 regime 判断：通胀、就业、利率、信用、美元还是流动性？
+
+`position_review`:
+
+- 这次 review 是检查 thesis 是否变了、仓位是否匹配 thesis，还是是否需要风险降级？
+- 如果要讨论仓位动作，需要补持仓、权重、成本、风险预算、时间窗口和 mandate。
+
+`portfolio_construction_review`:
+
+- 你更想检查集中度、重复 bet、因子暴露、催化剂拥挤，还是 thesis stale risk？
+- 哪些组合约束是硬约束：最大单票、行业上限、流动性、回撤、杠杆或现金比例？
+
+### Output Shape
+
+默认在输出末尾加入短节：
+
+```md
+## Progressive Follow-Up
+
+1. [问题]
+   - route_binding: `[routing_field / loop_or_skill / gate]`
+   - object_anchor: `[company / product / customer / variable / position context]`
+   - decision_impact: `[boundary / evidence_path / calculation_depth / readiness_level / actionability_boundary]`
+2. [问题]
+   - route_binding: `[routing_field / loop_or_skill / gate]`
+   - object_anchor: `[company / product / customer / variable / position context]`
+   - decision_impact: `[boundary / evidence_path / calculation_depth / readiness_level / actionability_boundary]`
+```
+
+如果当前输出非常短，可以压缩为一行：
+
+```md
+下一步最有用的问题：围绕 `[object_anchor]`，你更希望验证 `[route-bound choice]` 还是 `[route-bound choice]`？回答后会改变 `[decision_impact]`，并把 route 升级到 `[loop_or_skill]`。
+```
+
 ## Step 5: Single-Equity Route
 
 如果 `research_object = single_equity`，按以下顺序继续：
@@ -612,6 +754,7 @@ lens 是对 thesis 的约束视角，不是额外研究对象。
 - 把 research book review 误写成真实组合建议
 - 在没有持仓、权重、mandate 或风险预算时输出仓位大小判断
 - 把 position review action 误写成已执行交易或具体订单
+- 把 progressive follow-up 写成泛泛闲聊，而不是连接边界、证据、readiness 或下一层 route
 
 ## Stop Rules
 
@@ -619,3 +762,4 @@ lens 是对 thesis 的约束视角，不是额外研究对象。
 - 如果时间边界不清楚，默认按用户问题最近的显性时间词判断，并写 `horizon_uncertainty`。
 - 如果来源不足以支撑 durable conclusion，只能输出低置信判断和刷新条件。
 - 如果总路由与用户明确要求冲突，遵循用户要求，但记录 `routing_override`。
+- 如果 progressive follow-up 的答案会改变核心结论等级，先把当前结论标成 preliminary / working_view，不要假装已经 decision-ready。
