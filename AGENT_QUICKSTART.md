@@ -16,7 +16,13 @@ Mira 也是本项目的唤醒词。完整定义见 [MIRA.md](MIRA.md)：Mira 是
 scripts/check_updates.sh
 ```
 
-如果希望在发现 remote 有更新时由脚本直接询问是否更新，可以使用：
+如果用户明确要“更新 Mira 本体”或“从 GitHub 拉最新 Mira”，使用安全更新入口：
+
+```sh
+scripts/mira_update.sh
+```
+
+如果只希望在发现 remote 有更新时由检查脚本询问是否更新，也可以使用：
 
 ```sh
 scripts/check_updates.sh --prompt
@@ -25,9 +31,10 @@ scripts/check_updates.sh --prompt
 原则：
 
 - 检查 remote 可以自动做；更新仓库必须由用户确认。
-- 默认更新命令使用 `git pull --ff-only`，避免自动产生 merge commit。
+- 默认更新命令使用 `scripts/mira_update.sh` 或 `git pull --ff-only`，避免自动产生 merge commit。
 - 如果工作区有本地修改，先提交、暂存或确认不需要保留后再更新。
 - 如果暂时离线，可以用 `scripts/check_updates.sh --no-fetch` 只对比本地已有的 remote-tracking refs。
+- `scripts/mira_update.sh` 会拒绝 dirty worktree、无 upstream/default remote、ahead 或 diverged 状态；在 detached worktree 中会 fast-forward 到 remote 默认分支；成功拉取后默认运行 `python3 scripts/validate_repo.py`。
 
 ### Codex
 

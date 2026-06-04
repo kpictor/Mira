@@ -32,16 +32,25 @@ scripts/check_updates.sh
 
 Mira should check whether the local workspace is behind remote before substantive work when network access is available. It should not update automatically; run `git pull --ff-only` only after user confirmation.
 
+To update Mira itself from GitHub after confirming that is the intended action:
+
+```sh
+scripts/mira_update.sh
+```
+
+The update script only performs fast-forward pulls, refuses dirty or diverged worktrees, and runs repository validation after a successful update by default.
+
 ## Quickstart
 
 Minimal workflow:
 
 1. Check remote freshness with `scripts/check_updates.sh`.
-2. Read [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md) for the lazy-loading map.
-3. Run [loops/analysis-routing.md](loops/analysis-routing.md) before formal analysis.
-4. Load only the routed loop, skill and templates needed for the task.
-5. Produce artifacts with evidence logs, time boundaries, refresh conditions and downgraded conclusions where evidence is weak.
-6. Validate formal cases with [templates/delivery-checklist.md](templates/delivery-checklist.md) and the relevant script.
+2. If the user explicitly wants to update Mira itself, run `scripts/mira_update.sh`.
+3. Read [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md) for the lazy-loading map.
+4. Run [loops/analysis-routing.md](loops/analysis-routing.md) before formal analysis.
+5. Load only the routed loop, skill and templates needed for the task.
+6. Produce artifacts with evidence logs, time boundaries, refresh conditions and downgraded conclusions where evidence is weak.
+7. Validate formal cases with [templates/delivery-checklist.md](templates/delivery-checklist.md) and the relevant script.
 
 Typical prompt:
 
