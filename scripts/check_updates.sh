@@ -5,21 +5,24 @@ set -eu
 
 usage() {
   cat <<'EOF'
-Usage: scripts/check_updates.sh [--local-first] [--ttl-hours N] [--no-fetch] [--prompt]
+Usage: scripts/check_updates.sh [--always-fetch] [--ttl-hours N] [--no-fetch] [--prompt]
 
 Checks whether the current branch has remote updates.
 
+By default the check is local-first: it contacts the remote only when the last
+fetch attempt is older than the TTL (default 24h); otherwise it compares against
+cached remote-tracking refs. This keeps standard/deep_dive research from doing a
+network fetch on every task while still catching a stale protocol once per TTL.
+
 Options:
-  --local-first  Local-first freshness gate: only contact the remote when the
-                 last fetch attempt is older than the TTL (default 24h);
-                 otherwise compare against cached remote-tracking refs. Use this
-                 for standard/deep_dive research so freshness is checked at most
-                 once per TTL instead of once per task.
-  --ttl-hours N  TTL window in hours for --local-first (default 24; 0 forces a
-                 fetch attempt every run).
-  --no-fetch     Never contact the remote; compare against cached remote-tracking
-                 refs only. Wins over --local-first.
-  --prompt       If the branch is behind, ask whether to run `git pull --ff-only`.
+  --always-fetch  Contact the remote on every run (the "check the remote right
+                  now" mode), ignoring the TTL cache.
+  --ttl-hours N   TTL window in hours for the default local-first mode (default
+                  24; 0 forces a fetch attempt every run).
+  --no-fetch      Never contact the remote; compare against cached remote-tracking
+                  refs only. Wins over every other mode.
+  --local-first   Accepted for compatibility; this is now the default.
+  --prompt        If the branch is behind, ask whether to run `git pull --ff-only`.
 
 Freshness-check state (last attempt/success, status, remote head) is recorded in
 local/mira-update-check.json (gitignored; override with MIRA_UPDATE_STATE_FILE).
@@ -31,13 +34,16 @@ EOF
 
 fetch_remote=1
 prompt_update=0
-local_first=0
+local_first=1
 ttl_hours=24
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --no-fetch)
       fetch_remote=0
+      ;;
+    --always-fetch)
+      local_first=0
       ;;
     --local-first)
       local_first=1
