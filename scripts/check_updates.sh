@@ -87,10 +87,12 @@ fi
 
 # Read one value from the gitignored state file. Prints nothing if the key,
 # file, or python3 is unavailable, so callers must tolerate an empty result.
+# Never fails the script (trailing `|| true`), so reading a freshness cache can
+# only degrade to "no cache", never abort the check.
 state_get() {
   [ "$have_python" -eq 1 ] || return 0
   [ -f "$state_file" ] || return 0
-  python3 - "$state_file" "$1" <<'PY'
+  python3 - "$state_file" "$1" <<'PY' || true
 import json, sys
 try:
     with open(sys.argv[1]) as fh:
@@ -105,11 +107,13 @@ PY
 }
 
 # Merge key/value pairs into the state file (JSON). Keys ending in _at are
-# stored as integers. A no-op when python3 is unavailable.
+# stored as integers. A no-op when python3 is unavailable, and never fatal: an
+# unwritable state path degrades to an uncached local check rather than
+# aborting the freshness gate under `set -e`.
 state_set() {
   [ "$have_python" -eq 1 ] || return 0
   mkdir -p "$(dirname "$state_file")" 2>/dev/null || true
-  python3 - "$state_file" "$@" <<'PY'
+  python3 - "$state_file" "$@" >/dev/null 2>&1 <<'PY' || true
 import json, sys
 path = sys.argv[1]
 args = sys.argv[2:]
@@ -197,14 +201,16 @@ fi
 attempt_fetch() {
   attempt_now="$(date +%s)"
   echo "Checking remote updates from '$remote'..."
-  state_set last_attempt_at "$attempt_now"
+  # Record the scope (upstream/remote) with every attempt so the TTL cache is
+  # only honored for the same target it was taken against.
+  state_set last_attempt_at "$attempt_now" upstream "$upstream" remote "$remote"
   if git fetch --quiet "$remote" 2>/dev/null; then
     fetched_head="$(git rev-parse "$upstream" 2>/dev/null || true)"
-    state_set last_remote_check_at "$attempt_now" status ok upstream "$upstream" remote_head "$fetched_head"
+    state_set last_remote_check_at "$attempt_now" status ok remote_head "$fetched_head"
   else
     echo "Could not fetch '$remote' (network blocked or unavailable)." >&2
     echo "Mira protocol remote freshness not checked; using local refs." >&2
-    state_set status fetch_failed upstream "$upstream"
+    state_set status fetch_failed
   fi
 }
 
@@ -213,11 +219,26 @@ if [ "$fetch_remote" -eq 0 ]; then
 elif [ "$local_first" -eq 1 ]; then
   now="$(date +%s)"
   last_attempt="$(state_get last_attempt_at || true)"
+  stored_upstream="$(state_get upstream || true)"
+  stored_remote="$(state_get remote || true)"
   ttl_seconds=$((ttl_hours * 3600))
-  if [ -n "$last_attempt" ] && [ "$ttl_seconds" -gt 0 ] && [ "$((now - last_attempt))" -lt "$ttl_seconds" ]; then
-    age_hours=$(((now - last_attempt) / 3600))
+  # Honor the TTL only when the cached attempt is recent AND was taken against
+  # the same upstream/remote; otherwise re-fetch for the current target.
+  if [ -n "$last_attempt" ] && [ "$ttl_seconds" -gt 0 ] \
+    && [ "$((now - last_attempt))" -lt "$ttl_seconds" ] \
+    && [ "$stored_upstream" = "$upstream" ] && [ "$stored_remote" = "$remote" ]; then
     last_status="$(state_get status || true)"
-    echo "Remote checked within the last ${ttl_hours}h (about ${age_hours}h ago, status: ${last_status:-unknown}); comparing against cached refs."
+    last_ok="$(state_get last_remote_check_at || true)"
+    # Only claim "checked" when the last attempt actually succeeded within the
+    # TTL; a recent failed attempt still throttles re-tries but must disclose
+    # that remote freshness is unknown.
+    if [ "$last_status" = "ok" ] && [ -n "$last_ok" ] && [ "$((now - last_ok))" -lt "$ttl_seconds" ]; then
+      age_hours=$(((now - last_ok) / 3600))
+      echo "Remote checked within the last ${ttl_hours}h (about ${age_hours}h ago); comparing against cached refs."
+    else
+      echo "Last remote fetch within the last ${ttl_hours}h did not succeed (status: ${last_status:-unknown}); not re-fetching yet." >&2
+      echo "Mira protocol remote freshness not checked; using local refs." >&2
+    fi
   else
     attempt_fetch
   fi
