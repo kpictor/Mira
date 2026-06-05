@@ -17,6 +17,11 @@
     "depth_mode": {"$ref": "vocab.json#/depth_mode"},
     "information_value": {"$ref": "vocab.json#/information_value"},
     "knowability_status": {"$ref": "vocab.json#/knowability_status"},
+    "primary_question_lens": {"$ref": "vocab.json#/question_expansion_lens"},
+    "selected_question_lenses": {"type": "array"},
+    "lens_selection_basis": {"type": "string", "minLength": 1},
+    "lens_data_required": {"type": "string", "minLength": 1},
+    "lens_failure_mode": {"type": "string", "minLength": 1},
     "decision_pressure": {"$ref": "vocab.json#/decision_pressure"},
     "framing_risk": {"$ref": "vocab.json#/framing_risk"},
     "disconfirmation_required": {"$ref": "vocab.json#/disconfirmation_required"},
@@ -63,6 +68,11 @@
       "$comment": "quant: any non-none dependency requires a calculation gate",
       "if": {"properties": {"quant_dependency": {"enum": ["low", "medium", "high"]}}, "required": ["quant_dependency"]},
       "then": {"required": ["calculation_gate"]}
+    },
+    {
+      "$comment": "question lens: any active lens requires basis, data requirements, and failure mode",
+      "if": {"properties": {"primary_question_lens": {"enum": ["comparison_association", "scale_shift", "trend_dynamics", "anomaly_detection"]}}, "required": ["primary_question_lens"]},
+      "then": {"required": ["lens_selection_basis", "lens_data_required", "lens_failure_mode"]}
     },
     {
       "$comment": "route: decision_support interaction is actionability — must emit decision_pressure even if none (analysis-routing.md line 124 / Step 0.5)",
