@@ -329,6 +329,9 @@ INFORMATION_VALUES = _vocab_set("information_value")
 KNOWABILITY_STATUSES = _vocab_set("knowability_status")
 SCOPE_CONFIRMATION_REQUIRED = _vocab_set("scope_confirmation_required")
 TASK_MODES = _vocab_set("task_mode")
+LIVE_DATA_GATES = _vocab_set("live_data_gate")
+LIVE_FRESHNESS_STATUSES = _vocab_set("live_freshness_status")
+CROSS_CHECK_STATUSES = _vocab_set("cross_check_status")
 
 ROUTING_EXAMPLE_TOKEN_FIELDS = {
     "interaction_mode": INTERACTION_MODES,
@@ -341,6 +344,9 @@ ROUTING_EXAMPLE_TOKEN_FIELDS = {
     "information_value": INFORMATION_VALUES,
     "knowability_status": KNOWABILITY_STATUSES,
     "scope_confirmation_required": SCOPE_CONFIRMATION_REQUIRED,
+    "live_data_gate": LIVE_DATA_GATES,
+    "live_freshness_status": LIVE_FRESHNESS_STATUSES,
+    "cross_check_status": CROSS_CHECK_STATUSES,
 }
 
 ROUTING_EXAMPLE_EXPECTATIONS = {
@@ -382,6 +388,13 @@ ROUTING_EXAMPLE_EXPECTATIONS = {
         "execution_order": "earnings → peer compare → position review",
         "scope_confirmation_required": "yes",
         "decision_pressure": "low",
+    },
+    "今天目前大盘是调整还是崩盘？": {
+        "interaction_mode": "quick_answer",
+        "depth_mode": "quick_map",
+        "live_data_gate": "required",
+        "live_freshness_status": "delayed",
+        "cross_check_status": "partial",
     },
 }
 

@@ -54,7 +54,7 @@ Every live or same-day market-pricing answer should state or carry internally:
 - `quote_time` or `publish_time`
 - `as_of_date`
 - `source_names`
-- `freshness_status`: `live`, `delayed`, `stale`, or `unavailable`
+- `live_freshness_status`: `live`, `delayed`, `stale`, or `unavailable`
 - `cross_check_status`: `passed`, `partial`, or `failed`
 - `stale_after`
 - `must_refresh_if`
@@ -74,6 +74,22 @@ freshness claims:
 
 When the question asks only for a stable definition, historical explanation or
 methodology, this gate can be waived with `live_data_gate=waived_definition`.
+
+## Evidence-Posture Mapping
+
+Do not reuse evidence-log `freshness_status` for live-source acquisition
+quality. The evidence-log field already has a separate schema:
+`current`, `acceptable_for_period`, `preliminary`, `stale`, or `unknown`.
+
+Use:
+
+- `live_freshness_status` for live-source freshness in routing cards, source
+  notes and quick-map outputs.
+- evidence-log `freshness_status` for claim-level evidence posture after a row
+  is logged.
+- `cross_check_status` for whether live-source lookup was corroborated.
+- evidence-log `conflict_status` for whether claim-level evidence rows conflict
+  after evidence is logged.
 
 ## Classification Heuristics
 
@@ -120,4 +136,3 @@ For a live market quick map, include:
 Do not give trade execution instructions. If the user asks about buying,
 selling, adding, trimming, hedging or options, route through the actionability
 and instrument gates after the live-data gate.
-

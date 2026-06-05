@@ -177,22 +177,38 @@ visible judgment.
 
 `live_data_gate`:
 
+<!-- vocab:live_data_gate start (tokens bound to schemas/vocab.json) -->
 - `required`: the prompt depends on current or same-day data and fresh lookup is required.
 - `waived_definition`: the prompt uses live-market language but asks only for a stable definition or method.
 - `not_applicable`: the prompt does not depend on live or same-day data.
+<!-- vocab:live_data_gate end -->
 
-`freshness_status`:
+`live_freshness_status`:
 
+<!-- vocab:live_freshness_status start (tokens bound to schemas/vocab.json) -->
 - `live`: source claims real-time or near-real-time data and has a usable quote/publish time.
 - `delayed`: source is delayed or likely delayed, but still usable for a bounded quick map.
 - `stale`: source timestamp is outside the stated live-use window.
 - `unavailable`: no usable fresh source was obtained.
+<!-- vocab:live_freshness_status end -->
 
 `cross_check_status`:
 
+<!-- vocab:cross_check_status start (tokens bound to schemas/vocab.json) -->
 - `passed`: two independent sources align, or one official/primary market source is sufficient for the bounded claim.
 - `partial`: only one usable source, delayed source, or source boundary caveat remains.
 - `failed`: sources conflict materially or the timestamp cannot support the judgment.
+<!-- vocab:cross_check_status end -->
+
+Mapping note:
+
+- `live_freshness_status` is a routing/source-note field for same-day market
+  acquisition quality. It is intentionally separate from evidence-log
+  `freshness_status`, whose allowed values remain `current`,
+  `acceptable_for_period`, `preliminary`, `stale`, and `unknown`.
+- `cross_check_status` records whether the live-source lookup was corroborated.
+  Evidence-log `conflict_status` still records whether claim-level evidence rows
+  conflict after evidence is logged.
 
 ## Data / Tool Ingestion
 

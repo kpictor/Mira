@@ -116,6 +116,23 @@ def main() -> int:
         mutate(task_mode="position_review"),
     )
 
+    # --- live-data gate: same-day market calls must carry freshness + quote context ---
+    expect_invalid(
+        "live_data_gate required without live fields",
+        mutate(live_data_gate="required"),
+        "live_freshness_status",
+    )
+    expect_valid(
+        "live_data_gate required with live fields",
+        mutate(
+            live_data_gate="required",
+            live_freshness_status="delayed",
+            cross_check_status="partial",
+            quote_time="2026-06-05T10:07:00-04:00",
+            source_boundary="single delayed public aggregator plus timestamped market-news search",
+        ),
+    )
+
     print("routing_schema_tests: pass")
     return 0
 

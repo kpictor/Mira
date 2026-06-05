@@ -169,3 +169,47 @@ primary_intent: NVDA earnings-event read
 question lens: compare NVDA and AMD on same-definition variables, while keeping position review separate until real holding data is provided.
 readiness_level: working_view until peer definitions, quant checks and position context are available.
 ```
+
+## 4. Live Data Gate
+
+Prompt: `今天目前大盘是调整还是崩盘？`
+
+Machine routing object:
+
+```json
+{
+  "schema_version": "routing.v1",
+  "interaction_mode": "quick_answer",
+  "primary_intent": "intraday broad-market classification as pullback versus crash",
+  "task_mode": "monitoring_update",
+  "research_object": "broad_market:indexes",
+  "market_scope": "US equities by assumption until user corrects",
+  "time_boundary": "intraday_current_session",
+  "depth_mode": "quick_map",
+  "information_value": "high",
+  "knowability_status": "knowable",
+  "live_data_gate": "required",
+  "live_freshness_status": "delayed",
+  "cross_check_status": "partial",
+  "quote_time": "2026-06-05T10:07:00-04:00",
+  "source_boundary": "single delayed public aggregator plus timestamped market-news search; downgrade if not cross-checked",
+  "primary_skill_or_loop": "loops/monitoring-loop.md",
+  "routing_basis": "The prompt asks about today/current market state and uses a strong crash label, so Mira must refresh or search live sources before judging and must show quote time plus freshness caveat.",
+  "followup_prompt_mode": "light",
+  "followup_questions": [
+    {
+      "question": "Should the live read use US indexes, A-shares, Hong Kong, or another market as the default broad-market scope?",
+      "rung": "Rung A - boundary",
+      "route_binding": "market_scope + live_data_gate",
+      "object_anchor": "current broad-market snapshot",
+      "decision_impact": "source_boundary"
+    }
+  ]
+}
+```
+
+Visible routing card:
+
+```text
+按默认市场范围 / quick_map / live_data_gate=required；先刷新或搜索同日行情，带 quote_time 和 live_freshness_status，再判断“调整”还是“崩盘”。
+```

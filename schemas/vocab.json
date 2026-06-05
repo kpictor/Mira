@@ -30,6 +30,15 @@
   "question_expansion_lens": {
     "enum": ["none", "comparison_association", "scale_shift", "trend_dynamics", "anomaly_detection"]
   },
+  "live_data_gate": {
+    "enum": ["required", "waived_definition", "not_applicable"]
+  },
+  "live_freshness_status": {
+    "enum": ["live", "delayed", "stale", "unavailable"]
+  },
+  "cross_check_status": {
+    "enum": ["passed", "partial", "failed"]
+  },
   "scope_confirmation_required": {
     "enum": ["yes", "no"]
   },
