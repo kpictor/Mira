@@ -1,6 +1,8 @@
 # Mira Agent Quickstart
 
-这份文档给使用 Codex、Claude Code 或其他代码型 agent 的研究者一个最短入口：如何引用本项目做股票、产业、ETF、财报和宏观经济分析。
+这份文档给使用 Codex、Claude Code 或其他代码型 agent 的研究者一个执行入口：如何引用本项目做股票、产业、ETF、财报和宏观经济分析。
+
+用户侧的统一入口卡是 [START_HERE.md](START_HERE.md)。当用户问“怎么用 Mira / Mira help / start here / Mira 能做什么”，或只说 `hi Mira` / `你好 Mira` / `Mira mode` 时，优先返回 `START_HERE.md` 的分层入口和 Help 矩阵；本文件继续维护 agent 执行规则、路由、输出位置和证据纪律。
 
 Mira 不是一个自动荐股器，也不是后台行情机器人。它是一套可复核的投研工作流：先路由研究类型，再选择框架和证据路径，最后输出带来源链、时效边界和刷新条件的研究包。
 
@@ -19,11 +21,24 @@ Mira 也是本项目的唤醒词。完整定义见 [MIRA.md](MIRA.md)：Mira 是
 
 原则：用户已经明确说“更新 Mira”时，不要先跑 freshness check；直接跑 `scripts/mira_update.sh`。研究任务开始前才跑 `scripts/check_updates.sh`。
 
+### 用户入口
+
+面向用户的 prompt 不在本文件重复维护，统一见 [START_HERE.md](START_HERE.md)。最短入口：
+
+```text
+Mira, 看一下 NVDA
+Mira, 研究一下 AAPL
+Mira, 更新 CRWV
+Mira, 分析 TSLA 最新财报
+```
+
+更完整的任务卡、help 类型矩阵和边界说明也都在 [START_HERE.md](START_HERE.md)。
+
 ### Codex
 
-在 Codex 中打开本仓库后，根目录的 [AGENTS.md](AGENTS.md) 会提供默认项目规则，[MIRA.md](MIRA.md) 会定义唤醒词和 memory 边界。
+在 Codex 中打开本仓库后，根目录的 [AGENTS.md](AGENTS.md) 会提供默认项目规则，[MIRA.md](MIRA.md) 会定义唤醒词和 memory 边界。用户入口提示统一从 [START_HERE.md](START_HERE.md) 摘要。
 
-建议第一句话直接说明你要进入 Mira：
+示例：
 
 ```text
 Mira, 研究 NVDA，关注未来 2-4 个季度 AI 资本开支变化对收入和估值的影响，市场范围是美股，截止今天。
@@ -41,7 +56,7 @@ Mira, 更新 AAPL 研究包，只看最近财报、指引、市场预期和 thes
 
 ## 2. 最小任务卡
 
-为了让 agent 少猜，最好一次给出这几个字段。缺字段时，agent 应该先做合理补全或提出最少问题。
+完整用户任务卡的 canonical 版本见 [START_HERE.md](START_HERE.md)。为了让 agent 少猜，最好一次给出这几个字段。缺字段时，agent 应该先做合理补全或提出最少问题。
 
 ```text
 Mira, 研究/更新/看一下/评估方法: <对象>
@@ -109,7 +124,9 @@ Mira, 研究 CRWV
 - [skills/equity-research-core/references/framework-routing.md](skills/equity-research-core/references/framework-routing.md)
 - [skills/equity-research-core/references/overlay-routing.md](skills/equity-research-core/references/overlay-routing.md)，如果专题证据路径有增量价值
 
-## 4. 常用提示词
+## 4. 扩展提示词
+
+短入口和 Help 矩阵统一维护在 [START_HERE.md](START_HERE.md)。本节保留更细的扩展模式，供 agent few-shot 或用户需要更具体格式时使用。
 
 ### 股票首次覆盖
 

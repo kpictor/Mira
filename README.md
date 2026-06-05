@@ -14,13 +14,37 @@ This repository is for research workflow design, documentation, and historical e
 
 ## Start Here
 
-If you want Codex, Claude Code or another code agent to use this repository for stock, industry, ETF, earnings or macro research, start with these files:
+If you just want to start using Mira, read [START_HERE.md](START_HERE.md). It is the single user-facing entry card for layered prompts, examples, the help matrix and usage boundaries.
+
+After cloning this repository and opening it in an agent for the first time, the agent should return a concise `START_HERE.md` summary by default. If the first prompt is already a concrete research task, it should route the task directly instead of interrupting with onboarding.
+
+Shortest prompts:
+
+```text
+Mira, look at NVDA
+Mira, research AAPL
+Mira, update CRWV
+Mira, analyze TSLA's latest earnings
+```
+
+Better prompt:
+
+```text
+Mira, research NVDA.
+Question: can cloud capex support revenue upside over the next 2-4 quarters?
+Market scope: US equities.
+Time boundary: through today.
+Output: start with quick_map and say whether this deserves a standard research package.
+```
+
+If you want Codex, Claude Code or another code agent to use this repository directly, the main documents are:
 
 | Need | Read |
 | --- | --- |
+| User entry, layered prompts and help matrix | [START_HERE.md](START_HERE.md) |
 | Wake word, identity boundary and memory contract | [MIRA.md](MIRA.md) |
 | One-screen agent loading contract | [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md) |
-| User-facing prompts and task cards | [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md) |
+| Agent execution quickstart, routing and output locations | [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md) |
 | Codex project rules | [AGENTS.md](AGENTS.md) |
 | Claude Code entry | [CLAUDE.md](CLAUDE.md) |
 
@@ -47,13 +71,7 @@ Minimal workflow:
 6. Produce artifacts with evidence logs, time boundaries, refresh conditions and downgraded conclusions where evidence is weak.
 7. Validate formal cases with [templates/delivery-checklist.md](templates/delivery-checklist.md) and the relevant script.
 
-Typical prompt:
-
-```text
-Mira, research AAPL. Market scope: US. Time boundary: through 2026-04-14.
-Run analysis routing, thesis horizon routing, framework selection and overlay selection first.
-Then produce a research package with stale_after and must_refresh_if.
-```
+For more prompt types, use the Help matrix in [START_HERE.md](START_HERE.md).
 
 ## What Mira Does
 
@@ -106,8 +124,9 @@ Single-equity research should also run:
 
 | Topic | Document |
 | --- | --- |
+| User entry, prompt examples and task cards | [START_HERE.md](START_HERE.md) |
 | Agent contract and lazy loading | [OPERATING_CONTRACT.md](OPERATING_CONTRACT.md) |
-| Prompt examples and task cards | [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md) |
+| Agent execution quickstart and output locations | [AGENT_QUICKSTART.md](AGENT_QUICKSTART.md) |
 | Wake word and memory boundary | [MIRA.md](MIRA.md) |
 | Research artifacts and validation | [docs/research-artifacts.md](docs/research-artifacts.md) |
 | Modules, loops, skills, cases and roadmap | [docs/module-map.md](docs/module-map.md) |
