@@ -22,6 +22,12 @@
     "lens_selection_basis": {"type": "string", "minLength": 1},
     "lens_data_required": {"type": "string", "minLength": 1},
     "lens_failure_mode": {"type": "string", "minLength": 1},
+    "live_data_gate": {"$ref": "vocab.json#/live_data_gate"},
+    "live_freshness_status": {"$ref": "vocab.json#/live_freshness_status"},
+    "cross_check_status": {"$ref": "vocab.json#/cross_check_status"},
+    "quote_time": {"type": "string", "minLength": 1},
+    "publish_time": {"type": "string", "minLength": 1},
+    "source_boundary": {"type": "string", "minLength": 1},
     "decision_pressure": {"$ref": "vocab.json#/decision_pressure"},
     "framing_risk": {"$ref": "vocab.json#/framing_risk"},
     "disconfirmation_required": {"$ref": "vocab.json#/disconfirmation_required"},
@@ -73,6 +79,16 @@
       "$comment": "question lens: any active lens requires basis, data requirements, and failure mode",
       "if": {"properties": {"primary_question_lens": {"enum": ["comparison_association", "scale_shift", "trend_dynamics", "anomaly_detection"]}}, "required": ["primary_question_lens"]},
       "then": {"required": ["lens_selection_basis", "lens_data_required", "lens_failure_mode"]}
+    },
+    {
+      "$comment": "live data: time-sensitive market quote answers require live-source freshness and quote-time fields",
+      "if": {"properties": {"live_data_gate": {"const": "required_quote_time"}}, "required": ["live_data_gate"]},
+      "then": {"required": ["live_freshness_status", "cross_check_status", "quote_time", "source_boundary"]}
+    },
+    {
+      "$comment": "live data: time-sensitive publication answers require live-source freshness and publish-time fields",
+      "if": {"properties": {"live_data_gate": {"const": "required_publish_time"}}, "required": ["live_data_gate"]},
+      "then": {"required": ["live_freshness_status", "cross_check_status", "publish_time", "source_boundary"]}
     },
     {
       "$comment": "route: decision_support interaction is actionability — must emit decision_pressure even if none (analysis-routing.md line 124 / Step 0.5)",

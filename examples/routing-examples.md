@@ -81,3 +81,17 @@ Prompt: `Mira, 看 NVDA 这次财报，顺便对比 AMD，这俩我都重仓了`
 - `scope_confirmation_required`: `yes`
 - `decision_pressure`: `low` (持仓被陈述但**无动作语**：未问“能不能加/减/冲”。陈述持仓 → low；叠加动作语才升 `medium`，见 #1 counter-example)
 - routing_basis: 复合 prompt，先确认范围再花 depth 预算；持仓部分进 position review，无真实持仓数据时保持 `research_only`。“都重仓了”只是陈述语境，不是动作请求，故 `decision_pressure=low`（仍显式输出，不静默跳过）。
+
+## 6. Time-sensitive market question triggers live data gate
+
+Prompt: `今天目前大盘是调整还是崩盘？`
+
+- `interaction_mode`: `quick_answer`
+- `depth_mode`: `quick_map`
+- `research_object`: broad_market
+- `market_scope`: default from user context or explicit assumption (for example US equities)
+- `time_boundary`: intraday_current_session
+- `live_data_gate`: `required_quote_time`
+- `live_freshness_status`: `delayed`
+- `cross_check_status`: `partial`
+- routing_basis: “今天 / 目前 / 调整还是崩盘”是同日行情定性问题，必须先搜索或刷新 live-source，记录 `quote_time` / `source_boundary`，再判断；若只有单一延迟聚合源，则降级为 delayed quick_map。宏观发布或新闻发布类无盘中报价时改用 `live_data_gate=required_publish_time`。
