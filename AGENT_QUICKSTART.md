@@ -86,7 +86,7 @@ Claude Code 默认读取根目录 [CLAUDE.md](CLAUDE.md)。该文件会要求 Cl
 
 ## 4. 用户 prompt 源头
 
-用户可见 prompt、分角色入口和 Help 矩阵统一维护在 [START_HERE.md](START_HERE.md)。本 quickstart 不维护第二份 prompt 菜单；需要选择执行 loop 或 artifact 时，使用上面的路由表和下面的输出位置。
+用户可见 prompt、完整任务卡和按任务类型的 Help 矩阵统一维护在 [START_HERE.md](START_HERE.md)。本 quickstart 不维护第二份 prompt 菜单；需要选择执行 loop 或 artifact 时，使用上面的路由表和下面的输出位置。
 
 ## 5. 输出位置
 
