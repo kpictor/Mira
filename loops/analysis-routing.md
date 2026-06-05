@@ -40,6 +40,12 @@
 用户可见模板。交付时只按 [../data/output-surface-matrix.md](../data/output-surface-matrix.md)
 展示对应 `depth_mode` 需要的字段；短答不得因为本清单而暴露全部机器字段。
 
+Machine-first rule: 当 formal task 需要保留路由结果时，优先生成符合
+[../schemas/routing.schema.json](../schemas/routing.schema.json) 的
+`routing.json`。用户可见 routing card 是该对象按 depth surface 渲染后的摘要，
+不是第二套字段来源。示例见
+[../examples/routing-json-examples.md](../examples/routing-json-examples.md)。
+
 每次正式研究前先记录：
 
 - `interaction_mode`

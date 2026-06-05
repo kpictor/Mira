@@ -43,6 +43,10 @@ investment recommendations.
    Use as few-shot references and as a validated regression fixture for
    `loops/analysis-routing.md`.
 
+9. `examples/routing-json-examples.md`
+   Schema-backed routing examples. Use this to see the canonical `routing.json`
+   machine artifact and the depth-scaled visible routing card rendered from it.
+
 ## How To Reuse A Case Pattern
 
 1. Pick the closest package type from `templates/`.

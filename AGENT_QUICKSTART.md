@@ -432,6 +432,10 @@ python3 scripts/validate_sec_filing_package.py templates/sec-filing-analysis-pac
 
 上面的脚本校验的是**语法**（schema、词表、路由卡 token）。要校验**行为**——模型在真实回答里是否真的做了契约要求的事（决策压力下的反向检验、弱证据降级、不可知时的诚实终态、无持仓不给仓位），跑行为级 eval：
 
+`examples/routing-json-examples.md` 中的 JSON code block 也会被
+`scripts/validate_repo.py` 按 `schemas/routing.schema.json` 校验；更新 routing
+示例时不要只改可见 markdown 卡片。
+
 ```sh
 python3 scripts/score_behavior_eval.py --transcripts evals/transcripts
 ```

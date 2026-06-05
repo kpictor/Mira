@@ -6,6 +6,12 @@ regression fixture for [../loops/analysis-routing.md](../loops/analysis-routing.
 They are routing examples, not investment recommendations. Key fields are
 validated by `scripts/validate_repo.py`.
 
+This file locks semantic routing behavior in a compact markdown form. For the
+canonical machine artifact shape, use
+[routing-json-examples.md](routing-json-examples.md): `routing.json` is the
+schema-backed object, and the visible routing card is only a depth-scaled
+rendering.
+
 - not_investment_advice: true
 - purpose: lock routing behavior for ambiguous prompts (预期差 sense, interaction_mode vs depth_mode, knowability, compound intent)
 

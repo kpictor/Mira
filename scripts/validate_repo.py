@@ -189,6 +189,8 @@ FIELD_RE = re.compile(r"^-\s*(state|research_action):\s*(.+?)\s*$")
 ROUTING_PROMPT_RE = re.compile(r"^Prompt:\s*`(.+?)`\s*$")
 ROUTING_FIELD_RE = re.compile(r"^-\s*`([^`]+)`:\s*(.+?)\s*$")
 ROUTING_BASIS_RE = re.compile(r"^-\s*routing_basis:\s*(.+?)\s*$")
+FENCED_JSON_RE = re.compile(r"^```json\s*$")
+FENCE_RE = re.compile(r"^```\s*$")
 LOCAL_ABSOLUTE_PATH_RE = re.compile(
     r"(/" r"Users/[^)\s,]+|/" r"private/(?:tmp|var)/[^)\s,]+)"
 )
@@ -1290,6 +1292,49 @@ def validate_routing_json(path: Path) -> list[Issue]:
     return [Issue("ERROR", path, 0, message) for message in schema_errors(data, schema)]
 
 
+def validate_routing_json_examples(root: Path) -> list[Issue]:
+    path = root / "examples" / "routing-json-examples.md"
+    if not path.exists():
+        return [Issue("ERROR", path, 0, "missing routing JSON examples fixture")]
+
+    issues: list[Issue] = []
+    lines = read_text(path).splitlines()
+    schema = _load_schema_doc(SCHEMA_DIR / "routing.schema.json")
+    in_json = False
+    start_line = 0
+    block: list[str] = []
+    block_count = 0
+
+    for line_no, line in enumerate(lines, start=1):
+        if not in_json and FENCED_JSON_RE.match(line):
+            in_json = True
+            start_line = line_no + 1
+            block = []
+            continue
+
+        if in_json and FENCE_RE.match(line):
+            block_count += 1
+            raw = "\n".join(block)
+            try:
+                data = json.loads(raw)
+            except json.JSONDecodeError as exc:
+                issues.append(Issue("ERROR", path, start_line, f"invalid JSON example: {exc}"))
+            else:
+                for message in schema_errors(data, schema):
+                    issues.append(Issue("ERROR", path, start_line, f"routing JSON example: {message}"))
+            in_json = False
+            continue
+
+        if in_json:
+            block.append(line)
+
+    if in_json:
+        issues.append(Issue("ERROR", path, start_line, "unterminated JSON code block"))
+    if block_count == 0:
+        issues.append(Issue("ERROR", path, 0, "routing JSON examples fixture has no JSON blocks"))
+    return issues
+
+
 def load_routing_exempt(root: Path) -> set[str]:
     exempt_file = root / "cases" / "legacy-routing-exempt.txt"
     if not exempt_file.exists():
@@ -1327,6 +1372,7 @@ def validate_repo(root: Path, as_of: date) -> list[Issue]:
     issues.extend(validate_source_class_map(root))
     issues.extend(validate_source_coverage_matrix(root))
     issues.extend(validate_routing_examples(root))
+    issues.extend(validate_routing_json_examples(root))
     issues.extend(validate_vocab_doc_consistency(root))
     issues.extend(validate_localization_glossary(root))
     for path in sorted(root.glob("**/routing.json")):

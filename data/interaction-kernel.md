@@ -65,6 +65,10 @@ Triggered safety, source, ingestion, private-state, instrument and calculation
 gates override brevity: show them when they affect confidence, boundary,
 readiness or research action.
 
+For formal tasks that retain routing, the canonical machine artifact is a
+`routing.json` object conforming to [../schemas/routing.schema.json](../schemas/routing.schema.json).
+The visible routing card is only a depth-scaled rendering of that object.
+
 ## Final Strong-Habit Gate
 
 Before handoff, run this final gate:
