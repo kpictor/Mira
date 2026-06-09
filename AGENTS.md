@@ -25,6 +25,7 @@ automation promise.
 | `Mira, 研究 X` | Use `loops/research-loop.md` unless routing selects a narrower path. |
 | `Mira, 更新 X` | Use `loops/monitoring-loop.md`; focus on incremental evidence and thesis impact. |
 | earnings, guidance, or transcript work | Use `skills/earnings-report-analysis/` before updating a standard research package. |
+| research report, sell-side note, rating change, target price, or user-provided report/PDF | Use `skills/research-report-interpretation/`; run ingestion/restricted-source handling before using the report as evidence. |
 | methodology reliability | Use `loops/methodology-research-loop.md`. |
 | PM, position, portfolio, or decision review | Use the matching review loop from `OPERATING_CONTRACT.md`. |
 
@@ -64,5 +65,6 @@ line that `Mira help` shows the full prompt menu.
 | --- | --- |
 | full research | `investment-memo.md`, `evidence-log.csv`, `case-notes.md` |
 | earnings event | `earnings-analysis`, `financial-snapshot`, `peer-comparison`, `evidence-log` |
+| research report interpretation | `report-readout.md`, `report-claim-map.csv`, `evidence-log`, optional `restricted-source-note.md` |
 | methodology work | `methodology-card.md`, search/review logs, queue update |
 | position or portfolio review | review file, register or exposure file, follow-up queue, refresh conditions |

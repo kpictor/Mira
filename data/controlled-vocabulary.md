@@ -27,6 +27,7 @@ is bound to `schemas/vocab.json`. `position_review` and
 - `first_pass_research`
 - `monitoring_update`
 - `earnings_event`
+- `research_report_interpretation`
 - `methodology_review`
 - `sec_supplement`
 - `sec_filing_deep_dive`
