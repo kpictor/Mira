@@ -1,0 +1,28 @@
+# Mira data substrate — local configuration (example).
+#
+# Copy this file to  private/mira-data.env  (gitignored) and fill in your real
+# contact. This file is the standard place for user-specific contact + API keys,
+# kept out of tracked files per the repo's private-state boundary.
+#
+# Format: simple KEY=value, '#' starts a comment. No quotes needed.
+# Resolution order: environment variable > MIRA_DATA_CONFIG file >
+# private/mira-data.env > ~/.config/mira/mira-data.env
+#
+#   cp templates/mira-data-config.example private/mira-data.env
+#   $EDITOR private/mira-data.env
+
+# --- Contact (required for official-data sources) -------------------------
+# SEC's access policy requires a contactable User-Agent to fetch filings /
+# companyfacts. Adapters that hit SEC refuse to run under the shipped
+# placeholder, so set your REAL email here to enable official-data fetches.
+MIRA_CONTACT_EMAIL=you@your-domain.com
+
+# Optional display name placed before the email in the User-Agent.
+# MIRA_CONTACT_NAME=Your Name or Org
+
+# Or set the full User-Agent string directly (overrides the two fields above).
+# MIRA_HTTP_UA=Your Name you@your-domain.com
+
+# --- Optional API keys (only for keyed sources; not needed for SEC/BLS/Yahoo) -
+# FRED_API_KEY=
+# BEA_API_KEY=
