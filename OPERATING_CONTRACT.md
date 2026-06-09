@@ -63,6 +63,7 @@ research task, skip onboarding and route the task normally.
 | Live / time-sensitive market data | [data/live-data-source-policy.md](data/live-data-source-policy.md) | [data/public-source-targets.md](data/public-source-targets.md) Live Market Snapshot Targets and market default pack |
 | Continue / save user view | [loops/view-continuity-loop.md](loops/view-continuity-loop.md) | `private/research/<OBJECT>/` and `private/views/view-register.csv` only when relevant |
 | First-pass single equity | [loops/research-loop.md](loops/research-loop.md) | thesis horizon, framework and overlay references |
+| Research report interpretation | [skills/research-report-interpretation/SKILL.md](skills/research-report-interpretation/SKILL.md) | [data/ingestion-layer.md](data/ingestion-layer.md), [templates/research-report-interpretation-package/](templates/research-report-interpretation-package/) and restricted source note when the report is user-provided, paid or licensed |
 | Thesis update / expectation change | [loops/thesis-update-loop.md](loops/thesis-update-loop.md) | thesis ledger, expectation map and decision-log templates |
 | Event or earnings delta | [loops/event-delta-loop.md](loops/event-delta-loop.md) | earnings skill and event-delta template |
 | SEC fact supplement | [skills/sec-filing-analysis/SKILL.md](skills/sec-filing-analysis/SKILL.md) | [templates/sec-supplement-source-note.csv](templates/sec-supplement-source-note.csv) |

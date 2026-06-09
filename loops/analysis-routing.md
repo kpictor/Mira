@@ -261,6 +261,21 @@ Mira 的领域安全门——不给交易指令、无持仓不给仓位、instru
 
 - `templates/research-package/`
 
+### `research_report_interpretation`
+
+用于解读券商、卖方、机构、专家或投资者研究报告，包括 target price update、rating change、initiation note、industry note、thematic note、用户提供 PDF / 截图 / 摘要，以及“这篇研报怎么看 / 靠谱吗 / 对 thesis 有什么影响”。
+
+默认进入：
+
+- `skills/research-report-interpretation/SKILL.md`
+
+使用边界：
+
+- 研报默认是 `sellside_and_expert_research` 或 `local_user_material`，通常只提供 secondary / signal，不替代公司披露、监管文件、市场数据或可复算模型。
+- 新提供的研报、截图、付费材料、专家研究或 vendor 导出必须先走 `data/ingestion-layer.md`，并按权限决定是否需要 `restricted_source_note`。
+- 如果任务重点是“报告里隐含的方法是否值得纳入 Mira”，再 handoff 到 `methodology_review`。
+- 如果研报解读改变已有 thesis、expectation map 或事件判断，再 handoff 到 `thesis_system_update` 或 `event_delta`。
+
 ### `methodology_review`
 
 用于研究方法本身、框架质量、方法是否值得纳入 Mira。

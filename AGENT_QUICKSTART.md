@@ -74,6 +74,7 @@ Claude Code 默认读取根目录 [CLAUDE.md](CLAUDE.md)。该文件会要求 Cl
 | 更新 thesis object / 看预期差 / 复盘判断 | [loops/thesis-update-loop.md](loops/thesis-update-loop.md) | thesis-ledger, expectation-map, decision-log, postmortem |
 | 事件前后 delta | [loops/event-delta-loop.md](loops/event-delta-loop.md) | event-delta, expectation map update, thesis impact |
 | 财报、业绩会、指引 | [skills/earnings-report-analysis/SKILL.md](skills/earnings-report-analysis/SKILL.md) | earnings package |
+| 研报、目标价、评级、用户提供报告/PDF | [skills/research-report-interpretation/SKILL.md](skills/research-report-interpretation/SKILL.md) | report readout, claim map, evidence log |
 | SEC 补充核验 | [skills/sec-filing-analysis/SKILL.md](skills/sec-filing-analysis/SKILL.md) | `sec-supplement-source-note.csv` + active case updates |
 | SEC 文件专项拆解 | [skills/sec-filing-analysis/SKILL.md](skills/sec-filing-analysis/SKILL.md) | SEC filing analysis package |
 | 多 thesis / PM 研究 book 视角 | [loops/portfolio-review-loop.md](loops/portfolio-review-loop.md) | thesis register, exposure notes, follow-up queue |
@@ -126,6 +127,17 @@ cases/<ticker>-<YYYY-MM>/
 ├── financial-snapshot.csv
 ├── peer-comparison.csv
 └── evidence-log.csv
+```
+
+研报解读：
+
+```text
+cases/<object>-<YYYY-MM>/
+├── README.md
+├── report-readout.md
+├── report-claim-map.csv
+├── evidence-log.csv
+└── restricted-source-note.md   # paid/licensed/user-provided reports only
 ```
 
 用户私有观点和工作视图默认位置：

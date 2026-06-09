@@ -78,6 +78,21 @@ Use `issuer_primary_disclosure` first. `aggregated_financial_data` can speed up 
 
 Use `consensus_and_estimates` for market expectation baseline. If unavailable, write `source_gap` and avoid replacing consensus with price action, media tone or company guidance.
 
+### Research Reports
+
+Use `sellside_and_expert_research` for report framing, forecast assumptions,
+variant perception, valuation methods, target-price decomposition and author
+views. A report claim can enter the evidence log as `forecast`, `assumption`,
+`interpretation` or `opinion`, but it does not become a verified company fact
+unless cross-checked against a higher-weight source such as issuer disclosure,
+regulatory data, official industry data, market data or a reproducible
+calculation.
+
+When a report is user-provided, paid, licensed, clipped, screenshot-only or
+permission-unclear, first apply [ingestion-layer.md](ingestion-layer.md). Tracked
+artifacts may include compliant metadata, short effect notes and claim-level
+summaries, not raw restricted report content.
+
 ### Market Reaction
 
 Use `market_price_and_trading` for price, volume, valuation and options-implied reaction. Treat it as `market_pricing`, not evidence that fundamentals improved or deteriorated.

@@ -42,6 +42,7 @@ Use [README.md](../README.md) as the project entry point and [OPERATING_CONTRACT
 | [skills/equity-research-core/](../skills/equity-research-core/) | Core single-equity research, framework routing and overlay selection. |
 | [skills/industry-concept-analysis/](../skills/industry-concept-analysis/) | Industry, technology and supply-chain concept analysis before stock handoff. |
 | [skills/earnings-report-analysis/](../skills/earnings-report-analysis/) | Earnings disclosure, call, guidance, peer comparison and thesis impact. |
+| [skills/research-report-interpretation/](../skills/research-report-interpretation/) | Sell-side, institutional or user-provided report interpretation with claim mapping and thesis impact. |
 | [skills/sec-filing-analysis/](../skills/sec-filing-analysis/) | SEC supplement and filing deep dive provenance. |
 | [skills/macro-economic-analysis/](../skills/macro-economic-analysis/) | Macro variables and asset-pricing transmission. |
 | [skills/commodity-cycle-analysis/](../skills/commodity-cycle-analysis/) | Commodity cycle analysis where supply/demand and pricing cycles dominate. |
