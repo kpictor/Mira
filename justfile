@@ -38,3 +38,18 @@ check: validate test eval-strict
 # Print the routing controlled vocabulary as seen by the machine (schemas/vocab.json).
 vocab:
     @python3 -c "import json; v=json.load(open('schemas/vocab.json')); [print(f'{k}: {x[\"enum\"]}') for k,x in v.items() if isinstance(x,dict) and 'enum' in x]"
+
+# --- Data substrate (tools/mira_data; stdlib core, yfinance optional) ---
+
+# Show resolved data-substrate config (contact + API keys). Set up via templates/mira-data-config.example.
+data-config:
+    PYTHONPATH=tools python3 -m mira_data config
+
+# Fetch a canonical family and emit the artifact bundle, e.g. `just data-fetch market_price AAPL`.
+# Families: company_financials (SEC), market_price (Yahoo v8), macro_series (BLS).
+data-fetch FAMILY SYMBOL OUT="private/data-smoke":
+    PYTHONPATH=tools python3 -m mira_data fetch {{FAMILY}} {{SYMBOL}} --out {{OUT}}
+
+# Validate an emitted artifact bundle directory, e.g. `just data-validate private/data-smoke`.
+data-validate DIR:
+    PYTHONPATH=tools python3 -m mira_data validate {{DIR}}
