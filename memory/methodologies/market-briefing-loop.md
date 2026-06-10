@@ -6,9 +6,9 @@
 - source_bucket: institutional; practitioner; first_principles; derived_internal
 - source_quality: medium_high
 - credibility_score: 4
-- credibility_basis: Public institutional examples consistently show daily market updates, weekly market recaps, weekly commentary and market calendars as recurring products. The method is operationally simple, but its investment value depends on freshness, attribution discipline and escalation quality.
-- search_coverage: English institutional public sources plus Mira internal loop comparison
-- search_gaps: Did not inspect paid sell-side morning notes, internal buy-side desk notes, Bloomberg terminal templates, or Chinese brokerage daily/weekly products.
+- credibility_basis: Public institutional examples consistently show daily market updates, weekly market recaps, weekly commentary and market calendars as recurring products. Internal-grade structure (expectation delta, flows/positioning, announcement triage, morning-meeting action discipline) is reconstructed from public copies of Chinese sell-side 晨会纪要, sell-side practice literature, and media-documented desk notes. The method is operationally simple, but its investment value depends on freshness, attribution discipline and escalation quality.
+- search_coverage: English retail/wealth public products; Chinese sell-side 晨会纪要 public PDF copies (aggregators); A股实战盘后复盘 practitioner material; sell-side morning call practice literature (Valentine); buy-side morning meeting day-in-the-life accounts; flows/positioning desk notes via media coverage (GS Prime Services, Nomura QIS); Bridgewater Daily Observations public description; Mira internal loop comparison
+- search_gaps: Did not read full paid texts of live sell-side morning notes, Bloomberg terminal templates, or internal buy-side desk notes directly; internal-grade structure is reverse-engineered from public copies, practice literature and media citations rather than primary internal documents. Positioning data referenced in media (prime brokerage, CTA models) is not reproducible from free public sources and can only enter briefs as dated secondary citations.
 - comparison_baseline: `monitoring-loop` for existing thesis updates
 - empirical_validation_mode: live_trial
 - follow_through_plan: Use on at least three market scopes: US equity daily brief, US equity weekly review, and one sector/theme weekly. Review whether the escalation queue produces useful follow-up research.
@@ -29,11 +29,67 @@ Mira 应把它作为独立 loop，而不是塞进 `monitoring_update`。`monitor
 - UBS Daily Outlook: https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/daily.html
 - Fidelity Weekly Market Update: https://www.fidelity.com/learning-center/trading-investing/weekly-market-update
 
+以上为零售/财富管理向公开评论。以下为 2026-06-10 补充的机构/台内级样本：
+
+### 中文卖方与实战样本
+
+- 券商晨会纪要公开副本（东方财富研报中心晨会纪要栏目，含国信、东海、财信等）:
+  https://stock.eastmoney.com/a/cchjy.html
+  共同结构：市场表现 + 市场情绪（涨跌停家数、封板率）+ 资金（两融余额）+
+  宏观要闻点评 + 行业与公司快评 + 重点推荐 / 评级与盈利预测变化。
+- 东海证券晨会纪要样例（新浪财经转载）:
+  https://finance.sina.com.cn/wm/2026-05-13/doc-inhxtvfp4561315.shtml
+- A股实战盘后复盘结构（涨停复盘、连板梯队、龙头晋级、涨停题材复盘、情绪周期）:
+  https://img3.gelonghui.com/pdf/33dde-21366a86-9b23-48da-9d38-84bac6fcfefc.pdf
+- A股情绪周期四阶段（冰点、复苏启动、主升高潮、衰退退潮）与连板高度/涨跌停比值
+  作为情绪量化指标: https://caifuhao.eastmoney.com/news/20260425144232343083610
+
+### 英文机构/台内级样本
+
+- James Valentine, Best Practices for Equity Research Analysts（前 Morgan Stanley
+  分析师；morning call 纪律与 FaVeS 框架——每个 call 必须在 Forecast / Valuation /
+  Sentiment 至少一项上有 out-of-consensus 观点）: CFA Institute 公开样章
+  https://www.cfainstitute.org/-/media/documents/support/research-challenge/challenge/best-practices-equity-sample.pdf
+- Bridgewater Daily Observations（机构日度宏观笔记的标杆，"the wire"，面向客户与
+  政策制定者的实时世界观处理）:
+  https://www.bridgewater.com/50-years-of-the-bridgewater-daily-observations
+- Goldman Sachs Prime Services 周度仓位数据（net leverage 分位、long/short ratio、
+  行业买卖流向；经 Reuters 等媒体长期引用，结构稳定）: 例
+  https://www.investing.com/news/economy-news/hedge-fund-tech-positions-hover-near-record-highs-goldman-sachs-says-4708371
+- Nomura QIS / Charlie McElligott 日度跨资产笔记（CTA 仓位触发位、dealer gamma
+  状态、vol 体制；经媒体公开转述）: 例
+  https://www.macrovoices.com/podcast-transcripts/870-charlie-mcelligott-explains-the-upside-catalyst-for-equity-markets
+- 买方晨会实践（隔夜新闻对持仓影响 -> 分析师 quick take -> 建议动作）:
+  https://www.wallstreetoasis.com/forum/asset-management/day-in-the-life-of-an-investment-analyst
+
+## Internal-Grade Increments
+
+对照台内级样本，零售向公开评论缺少、且已编码进 loop v2 的五个结构差异：
+
+1. **预期差纪律**：宏观数据与财报类 driver 必须记录 consensus/prior vs actual；
+   escalation 条目优先承载 out-of-consensus 信息（Valentine FaVeS），而不是复述
+   已被定价的新闻。
+2. **资金面与仓位是 first-class 输入**：A股为两融余额、涨跌停/连板梯队、龙虎榜、
+   北向盘后成交额（注意披露口径限制）；美股为 breadth、vol、CFTC COT、ETF 流向等
+   公开免费口径，prime brokerage / CTA 数据只能以带 publish time 的媒体转引进入。
+3. **隔夜公告与评级变化 triage**：晨会纪要的核心不是行情复述，而是公告点评、
+   评级/盈利预测变化和重点推荐；daily brief 必须有对应扫描问题。
+4. **A股情绪结构指标**：连板高度、涨跌停家数比、封板率、情绪周期阶段是 A股
+   close wrap 的标准件，不是可选项。
+5. **So-what-for-book 与队列生命周期**：买方晨会以"对持仓/watchlist 的影响 +
+   建议动作"收尾；escalation queue 必须跨期累积、带状态流转（open / escalated /
+   expired / dismissed），而不是一次性表格。
+
 ## Search Paths Used
 
 - `daily market update`, `market open report`, `weekly market recap`
 - `weekly market commentary`, `weekly trader outlook`, `markets this week`
 - institutional public sites from Schwab, J.P. Morgan Asset Management, BlackRock, Morningstar, UBS and Fidelity
+- `券商晨会纪要 结构 宏观要闻 评级变化 重点推荐`、`中金早班车 晨会纪要`
+- `A股 盘后复盘 涨停板梯队 连板 情绪周期 北向资金 两融 龙虎榜`
+- `Valentine best practices equity research morning call consensus`
+- `Bridgewater Daily Observations`、`Goldman Sachs prime brokerage weekly positioning`
+- `Nomura McElligott CTA positioning dealer gamma`、buy-side `morning meeting` accounts
 - internal comparison against `loops/monitoring-loop.md`
 
 ## Use When
@@ -113,7 +169,8 @@ Mira 应把它作为独立 loop，而不是塞进 `monitoring_update`。`monitor
 - brief 是否写清了 `stale_after` 和 `must_refresh_if`
 - source notes 是否包含 quote/publish/as-of time
 - major moves 是否有 attribution quality，而不是单一叙事
-- escalation queue 是否能产生后续有效研究
+- 宏观/财报类 driver 是否记录了 consensus_or_prior vs actual 的预期差
+- escalation queue 是否能产生后续有效研究，open 条目是否在下一次 brief 被复核
 - 被升级对象是否真的改善了 thesis freshness 或 source coverage
 
 ## Trial Design
@@ -122,8 +179,12 @@ Mira 应把它作为独立 loop，而不是塞进 `monitoring_update`。`monitor
 - target_case_2: `US equities weekly_market_review`
 - target_case_3: `AI semiconductors sector_theme_weekly`
 - target_case_4: optional `HK equities weekly_market_review`
+- target_case_5: `A shares market_close_wrap`（检验情绪结构指标：连板梯队、
+  涨跌停比、两融、龙虎榜）
+- target_case_6: `US equities risk_positioning_watch`（research-only，检验与
+  position/portfolio loops 的边界是否清晰、是否漂移成仓位建议）
 
-每个 case 都要检查：source freshness、driver attribution、facts/inferences/judgments 分离、escalation queue 命中率和下一轮 follow-through。
+每个 case 都要检查：source freshness、driver attribution、expectation delta、facts/inferences/judgments 分离、escalation queue 命中率与状态流转，以及下一轮 follow-through。close wrap 和 risk watch 两类必须至少各跑一次才能进入 adoption decision。
 
 ## Falsification Conditions
 

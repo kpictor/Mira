@@ -1,2 +1,2 @@
-object,market_scope,briefing_type,trigger,source_id,source_time,suggested_route,urgency,information_value,source_quality,refresh_condition,notes
-{{ object }},{{ market_scope }},{{ briefing_type }},{{ trigger }},{{ source_id }},{{ source_time }},{{ suggested_route }},{{ urgency }},{{ low_medium_high }},{{ source_quality }},{{ refresh_condition }},{{ notes }}
+object,market_scope,briefing_type,trigger,source_id,source_time,suggested_route,urgency,information_value,source_quality,refresh_condition,status,escalated_to,status_updated,notes
+{{ object }},{{ market_scope }},{{ briefing_type }},{{ trigger }},{{ source_id }},{{ source_time }},{{ suggested_route }},{{ urgency }},{{ low_medium_high }},{{ source_quality }},{{ refresh_condition }},{{ open_or_escalated_or_expired_or_dismissed }},{{ route_or_case_path_or_na }},{{ status_updated_date }},{{ notes }}

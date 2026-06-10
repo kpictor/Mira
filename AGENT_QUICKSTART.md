@@ -141,6 +141,17 @@ cases/<object>-<YYYY-MM>/
 └── restricted-source-note.md   # paid/licensed/user-provided reports only
 ```
 
+市场日报/周报（briefing 按市场范围 + 月份归档，escalation queue 跨期累积）：
+
+```text
+cases/<market_scope>-briefing-<YYYY-MM>/
+├── README.md
+├── daily-brief-<YYYY-MM-DD>.md
+├── close-wrap-<YYYY-MM-DD>.md
+├── weekly-review-<YYYY>-W<ww>.md
+└── escalation-queue.csv
+```
+
 用户私有观点和工作视图默认位置：
 
 ```text

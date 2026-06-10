@@ -27,9 +27,9 @@
 
 ## Calendar And Catalyst Watch
 
-| date | event | expected_variable | market_relevance | source |
-| --- | --- | --- | --- | --- |
-| {{ date }} | {{ event }} | {{ expected_variable }} | {{ market_relevance }} | {{ source }} |
+| date | event | expected_variable | consensus_or_prior | market_relevance | source |
+| --- | --- | --- | --- | --- | --- |
+| {{ date }} | {{ event }} | {{ expected_variable }} | {{ consensus_or_prior_or_na }} | {{ market_relevance }} | {{ source }} |
 
 ## Thesis Impact Queue
 
