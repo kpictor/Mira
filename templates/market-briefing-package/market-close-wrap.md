@@ -24,6 +24,12 @@
 
 {{ sector_theme_factor_breadth_summary }}
 
+## Flows And Sentiment Structure
+
+{{ volume_breadth_vol_summary }}
+
+{{ a_share_only_limit_up_down_counts_seal_rate_consecutive_board_ladder_margin_balance_dragon_tiger_northbound_after_close }}
+
 ## Reaction Quality
 
 {{ reaction_quality_assessment }}

@@ -37,6 +37,9 @@ risk/positioning watch。
 
 - 隔夜或盘前哪些资产、行业、主题和宏观变量移动最大？
 - 哪些移动有清晰催化剂，哪些只是噪音或流动性？
+- 隔夜数据和财报相对公开预期（consensus / prior）是超预期还是低于预期？
+  哪些已被定价、哪些还没有？
+- 隔夜有哪些公司公告、评级/盈利预测变化或重点推荐变动需要 triage？
 - 今天有哪些宏观数据、央行、财报、政策或公司事件可能改变判断？
 - 哪些对象需要刷新 quote、source 或 thesis？
 
@@ -55,6 +58,8 @@ risk/positioning watch。
 收盘后复盘。默认问题：
 
 - 当天涨跌、风格/行业/主题轮动和广度是否一致？
+- 资金面和情绪结构怎么走：成交额、breadth、vol；A股加涨跌停家数、封板率、
+  连板高度/梯队、两融余额、龙虎榜和北向盘后成交额？
 - 市场叙事是否解释了价格行为，还是存在未解释的 divergence？
 - 哪些 move 改变了短期 risk window 或已有 thesis 的刷新条件？
 
@@ -64,6 +69,7 @@ risk/positioning watch。
 - `move attribution`
 - `sector / theme / factor rotation`
 - `breadth and reaction quality`
+- `flows and sentiment structure`
 - `unexplained moves`
 - `next-session watchpoints`
 
@@ -140,23 +146,36 @@ PM 或交易台风格的风险观察。默认问题：
 - broad index / benchmark
 - rates / FX / commodities / credit proxy when relevant
 - sector / theme / factor movers
-- macro / policy / earnings calendar
+- flows / positioning / sentiment structure（公开免费口径）:
+  - A股: 成交额、涨跌停家数与连板梯队、封板率、两融余额、龙虎榜、
+    北向盘后成交额（无盘中实时口径）
+  - US / global: breadth、vol（VIX 等）、CFTC COT、公开 ETF 流向；
+    prime brokerage / CTA / gamma 数据只能以带 publish time 的媒体转引进入
+- overnight announcements / rating and estimate changes for watchlist names
+- macro / policy / earnings calendar，关键条目带 consensus_or_prior
 - company or theme watchlist items
 - official / primary source for material claims where practical
 
+`quick_map` 只取其中与本次问题直接相关的最小子集；缺哪类数据就标 source gap，
+不为凑齐快照而降低来源质量。
+
 ### `classify-moves-and-claims`
 
-把输入分为：
+把输入分为以下桶；写入 evidence log 时映射到
+[../data/claim-taxonomy.md](../data/claim-taxonomy.md) 的规范 token：
 
-- `reported_fact`
-- `market_pricing`
-- `company_or_policy_claim`
-- `macro_release`
-- `sellside_or_expert_view`
-- `weak_signal`
-- `mira_inference`
+| briefing 桶 | claim-taxonomy 映射 |
+| --- | --- |
+| `reported_fact` | `fact` / `reported_metric` |
+| `market_pricing` | `market_pricing` |
+| `company_or_policy_claim` | `company_claim` / `guidance`（speaker=`company`/`regulator`） |
+| `macro_release` | `reported_metric`（speaker=`official_agency`） |
+| `sellside_or_expert_view` | `opinion` / `forecast`（speaker=`sellside`/`buyside`） |
+| `weak_signal` | `rumor_signal` / `sentiment` |
+| `mira_inference` | `interpretation` / `derived_calculation`（speaker=`mira`） |
 
-不得把价格反应直接写成基本面验证。
+不得把价格反应直接写成基本面验证。对 `macro_release` 和财报类条目，记录
+consensus_or_prior vs actual：超预期/低于预期才是信息，复述已定价结果不是。
 
 ### `build-driver-map`
 
@@ -172,7 +191,10 @@ PM 或交易台风格的风险观察。默认问题：
 按信息价值排序：
 
 - 影响多资产或多行业的变量优先
+- 相对公开预期有 surprise 的结果优先于已被定价的好坏消息
 - 改变预期、贴现率、盈利、流动性或风险溢价的变量优先
+- 与用户 watchlist / 已有 thesis / 持仓直接相关的条目优先给出
+  so-what 和建议动作
 - 有 follow-through 可能的异常移动优先
 - 单日 price-only 且无来源支持的解释降级为 `watch_only`
 
@@ -193,6 +215,17 @@ PM 或交易台风格的风险观察。默认问题：
 - 真实持仓或组合风险 -> `position_review` / `portfolio_construction_review`
 - 仅价格异动且来源弱 -> `watch_only`
 
+escalation queue 是跨期累积的工作队列，不是单次输出表格：
+
+- 同一 briefing package 内维护一份累积 `escalation-queue.csv`，每条带
+  `status`（`open` / `escalated` / `expired` / `dismissed`）、`escalated_to`
+  和 `status_updated`。
+- 每次新 brief 先复核上一次的 `open` 条目：仍有效保留，已升级标
+  `escalated` 并写明去向，过了 refresh_condition 标 `expired`，证伪标
+  `dismissed`。
+- 升级条目优先承载预期差信息；连续多期 `open` 而无人升级的条目要么给出
+  升级理由，要么显式 `expired`，不允许无限挂账。
+
 ## Source Handling Rules
 
 - 日报和收盘复盘必须优先使用带时间戳的市场数据、官方日历、公司 IR、监管、交易所、
@@ -202,8 +235,30 @@ PM 或交易台风格的风险观察。默认问题：
   [../data/ingestion-layer.md](../data/ingestion-layer.md)。
 - 弱信号、社媒和传闻只能进入 `weak_signal` 或 `watch_only`，不能支撑 durable
   conclusion。
+- 仓位/资金面数据只用公开免费口径：A股两融、涨跌停、龙虎榜为每日公开；北向资金
+  无盘中实时披露，只能引用盘后口径，不得出现"实时北向流入"类表述。prime
+  brokerage、CTA 模型、dealer gamma 等台内数据只能以带 publish time 的媒体转引
+  进入，标 `sellside_or_expert_view`，不得当作可复现数据。
 - 任何实时或接近实时的结论都必须写清 `stale_after`；盘前简报通常在开盘后失效，
   收盘复盘通常在下一交易日前或重大隔夜事件后失效。
+
+## Output Location
+
+briefing 输出按市场范围 + 月份归档，brief 文件按日期命名，escalation queue
+在 package 内跨期累积：
+
+```text
+cases/<market_scope>-briefing-<YYYY-MM>/
+├── README.md
+├── daily-brief-<YYYY-MM-DD>.md
+├── close-wrap-<YYYY-MM-DD>.md
+├── weekly-review-<YYYY>-W<ww>.md
+├── sector-theme-weekly-<YYYY>-W<ww>.md
+└── escalation-queue.csv   # 累积队列，带 status 生命周期
+```
+
+`market_scope` 用短 slug（如 `us-equities`、`a-shares`、`ai-semis`）。用户私有
+watchlist/持仓相关的 brief 增量写入 `private/research/<OBJECT>/`，不进公共 cases。
 
 ## Output
 
