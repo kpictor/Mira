@@ -4,6 +4,8 @@
 
 Mira 是 AI 投资研究系统，底层是一套投研协议；它不是自动荐股器、交易机器人或后台行情服务。你可以用一句话启动；信息给得越清楚，Mira 越少猜，证据路径和输出质量越稳定。
 
+你负责问题、约束和最终判断；AI 模型负责扩展阅读、归纳和假设生成；Mira 负责把这些工作约束成可追踪、可刷新、可反驳的研究过程。
+
 ## 1. 一句话启动
 
 适合先打开问题、快速判断方向。
@@ -86,6 +88,7 @@ Mira, 研究 CRWV
 | 股票首次研究 | `Mira, 研究一下 <ticker/company>` | research package、evidence log、case notes |
 | 股票增量更新 | `Mira, 更新 <ticker/company> 的 thesis` | monitoring summary、thesis impact、升级判断 |
 | 预期差判断 | `Mira, <ticker/company> 的预期差在哪？` | variant-perception 路由、consensus proxy、可证伪条件 |
+| 买卖动作判断 | `Mira, 现在能不能买/卖 <ticker/company/asset>？` | marginal buyer/payoff bridge、price-in 判断、actionability risk-control、research-bound posture |
 | 财报/指引 | `Mira, 分析 <ticker/company> 最新财报` | earnings analysis、financial snapshot、peer comparison、evidence log |
 | 研报解读 | `Mira, 解读这篇 <ticker/company> 研报` | report readout、claim map、权限边界、独立核验和 thesis impact |
 | 事件 delta | `Mira, 看 <ticker/company> 这次 <事件> 是否改变 thesis` | pre-event setup、actual vs expectation、event-delta、required research follow-up |
@@ -101,7 +104,7 @@ Mira, 研究 CRWV
 ## 5. 需要注意的边界
 
 - Mira 输出是研究辅助，不是投资建议、交易指令或自动下单。
-- 如果你问“能不能买 / 加 / 减 / 冲 / 抄底”，Mira 会先做 actionability risk-control gate，给研究边界、失效条件和反向检验，不直接给交易命令。
+- 如果你问“能不能买 / 卖 / 加 / 减 / 冲 / 追 / 抄底”，Mira 会先判断边际买家/卖家、边际收益来源、重定价触发器和 price-in 状态，再做 actionability risk-control gate；输出是研究边界、确认条件、失效条件和反向检验，不是交易命令。
 - 如果你要仓位或组合结论，需要提供持仓、权重、mandate 和风险预算；否则只能输出 research-only 结论。
 - 如果你提供本地文件、API 输出、vendor 数据或组合导出，Mira 会先走 ingestion layer，记录来源、授权、as-of 和计算边界。
 
